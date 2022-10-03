@@ -16,6 +16,10 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapRazorPages();
+//app.MapRazorPages();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=AdminAuthentication}/{action=Login}/{id?}");
 
 app.Run();
