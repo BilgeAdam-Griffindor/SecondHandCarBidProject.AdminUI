@@ -13,5 +13,10 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult ResetPassword()
+        {
+            return View();
+        }
     }
 }
