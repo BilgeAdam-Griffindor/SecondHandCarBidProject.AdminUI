@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecondHandCarBidProject.Adm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecondHandCarBidProject.ApiService", "SecondHandCarBidProject.ApiService\SecondHandCarBidProject.ApiService.csproj", "{E2C8AAA4-7A24-480C-B853-80D9C53A16A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecondHandCarBidProject.AdminUI.DTO", "SecondHandCarBidProject.AdminUI.DTO\SecondHandCarBidProject.AdminUI.DTO.csproj", "{31070EEE-59AA-49D3-9198-56EE6BA8AAA0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecondHandCarBidProject.AdminUI.DTO", "SecondHandCarBidProject.AdminUI.DTO\SecondHandCarBidProject.AdminUI.DTO.csproj", "{381884AF-25E1-4545-82B1-AF2A34824045}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{E2C8AAA4-7A24-480C-B853-80D9C53A16A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2C8AAA4-7A24-480C-B853-80D9C53A16A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2C8AAA4-7A24-480C-B853-80D9C53A16A6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{31070EEE-59AA-49D3-9198-56EE6BA8AAA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31070EEE-59AA-49D3-9198-56EE6BA8AAA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31070EEE-59AA-49D3-9198-56EE6BA8AAA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31070EEE-59AA-49D3-9198-56EE6BA8AAA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{381884AF-25E1-4545-82B1-AF2A34824045}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{381884AF-25E1-4545-82B1-AF2A34824045}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{381884AF-25E1-4545-82B1-AF2A34824045}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{381884AF-25E1-4545-82B1-AF2A34824045}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
