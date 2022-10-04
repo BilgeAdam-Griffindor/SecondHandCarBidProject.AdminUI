@@ -17,7 +17,7 @@ namespace SecondHandCarBidProject.ApiService.Concrete
 
         public async Task LogIn()
         {
-            
+            //Deneme
         }
         public async Task LogOut()
         {
