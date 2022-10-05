@@ -1,3 +1,5 @@
+using SecondHandCarBidProject.AdminUI.GUI.ApiServices;
+
 using SecondHandCarBidProject.ApiService.ApiServices;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,11 @@ builder.Services.AddHttpClient<BidApiServices>(opt =>
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 var app = builder.Build(); 
+
+//builder.Services.AddHttpClient<BaseServices>(opt =>
+//{
+//    opt.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+//});
 
 
 
