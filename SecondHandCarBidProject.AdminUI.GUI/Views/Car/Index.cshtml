@@ -1,28 +1,41 @@
 ﻿@using SecondHandCarBidProject.AdminUI.GUI.ViewModels
 @model CarListViewModel
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
 
-<form asp-action="Index" method="post">
-    Araç Marka:
-    <select asp-for="BrandId" asp-items="@Model.BrandList">
-        <option value="@null">Boş</option>
-    </select>
-    Araç Model:
-    <select asp-for="ModelId" asp-items="@Model.ModelList">
-        <option value="@null">Boş</option>
-    </select>
-    Statü:
-    <select asp-for="StatusId" asp-items="@Model.StatusList">
-        <option value="@null">Boş</option>
-    </select>
-    <br />
-    <input type="submit" value="Listele" />
+<form asp-action="Index" method="post" style="margin-top:10px;">
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <label for="brand">Araç Marka:</label>
+            <select class="form-control" asp-for="BrandId" asp-items="@Model.BrandList">
+                <option value="@null">Boş</option>
+            </select>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <label for="model">Araç Model:</label>
+            <select class="form-control" asp-for="ModelId" asp-items="@Model.ModelList">
+                <option value="@null">Boş</option>
+            </select>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <label for="status">Araç Statü:</label>
+            <select class="form-control" asp-for="StatusId" asp-items="@Model.StatusList">
+                <option value="@null">Boş</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-12">
+            <input class="btn btn-success float-right" type="submit" value="Listele" />
+        </div>
+    </div>
 </form>
-<br />
-<br />
-<div class="p-3" style="margin-top:50px;box-shadow: 6px 15px 30px #575757; background-color:#ffff ">
+
+<div class="p-3" style="margin-top:10px;box-shadow: 6px 15px 30px #575757; background-color:#ffff ">
     <table class="table">
         <thead class="thead-dark">
             <tr>
