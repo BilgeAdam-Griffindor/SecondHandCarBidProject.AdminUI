@@ -1,23 +1,14 @@
-using SecondHandCarBidProject.AdminUI.GUI.ApiServices;
 
-using SecondHandCarBidProject.ApiService.ApiServices;
 using SecondHandCarBidProject.ApiService.HttpConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddHttpClient<BidApiServices>(opt =>
-{
-    opt.BaseAddress = new Uri(builder.Configuration["ApiURL"]);
-});
+
 // Add services to the container.
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 builder.Services.AddHttpService();
-var app = builder.Build(); 
+var app = builder.Build();
 
-//builder.Services.AddHttpClient<BaseServices>(opt =>
-//{
-//    opt.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
-//});
 
 
 
