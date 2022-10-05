@@ -10,7 +10,7 @@ builder.Services.AddHttpClient<BidApiServices>(opt =>
 // Add services to the container.
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
-var app = builder.Build(); 
+var app = builder.Build();
 
 //builder.Services.AddHttpClient<BaseServices>(opt =>
 //{
