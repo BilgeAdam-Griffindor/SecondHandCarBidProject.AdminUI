@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace SecondHandCarBidProject.AdminUI.GUI.Common.Validation
+namespace SecondHandCarBidProject.ApiService.Validation
 {
     public enum BusinessValidationRule
     {

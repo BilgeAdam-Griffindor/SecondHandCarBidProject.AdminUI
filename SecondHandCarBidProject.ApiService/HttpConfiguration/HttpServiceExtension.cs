@@ -24,10 +24,10 @@ namespace SecondHandCarBidProject.ApiService.HttpConfiguration
             {
                 opt.BaseAddress = new Uri(_Configuration.GetSection("ApiURL").Value);
             });
-            //builder.Services.AddHttpClient<BaseServices>(opt =>
-            //{
-            //    opt.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
-            //});
+            services.AddHttpClient<BaseServices>(opt =>
+            {
+                opt.BaseAddress = new Uri(_Configuration.GetSection("BaseUrl").Value);
+            });
         }
     }
 }

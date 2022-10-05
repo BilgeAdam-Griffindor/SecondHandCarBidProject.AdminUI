@@ -1,6 +1,6 @@
-﻿using SecondHandCarBidProject.AdminUI.GUI.Common.Validation;
+﻿using SecondHandCarBidProject.ApiService.Validation;
 
-namespace SecondHandCarBidProject.AdminUI.GUI.Common.DTOs
+namespace SecondHandCarBidProject.ApiService.Dto_s
 {
     public class ResponseModel<T>
     {
