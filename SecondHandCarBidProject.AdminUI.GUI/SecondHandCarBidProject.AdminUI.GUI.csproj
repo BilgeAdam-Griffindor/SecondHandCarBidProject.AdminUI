@@ -16,4 +16,8 @@
     <ProjectReference Include="..\SecondHandCarBidProject.ApiService\SecondHandCarBidProject.ApiService.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SecondHandCarBidProject.AdminUI.DTO\SecondHandCarBidProject.AdminUI.DTO.csproj" />
+  </ItemGroup>
+
 </Project>

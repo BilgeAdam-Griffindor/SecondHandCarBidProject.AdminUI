@@ -1,0 +1,70 @@
+﻿@using SecondHandCarBidProject.AdminUI.GUI.ViewModels
+@model CarListViewModel
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<form asp-action="Index" method="post" style="margin-top:10px;">
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <label for="brand">Araç Marka:</label>
+            <select class="form-control" asp-for="BrandId" asp-items="@Model.BrandList">
+                <option value="@null">Boş</option>
+            </select>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <label for="model">Araç Model:</label>
+            <select class="form-control" asp-for="ModelId" asp-items="@Model.ModelList">
+                <option value="@null">Boş</option>
+            </select>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <label for="status">Araç Statü:</label>
+            <select class="form-control" asp-for="StatusId" asp-items="@Model.StatusList">
+                <option value="@null">Boş</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-12">
+            <input class="btn btn-success float-right" type="submit" value="Listele" />
+        </div>
+    </div>
+</form>
+
+<div class="p-3" style="margin-top:10px;box-shadow: 6px 15px 30px #575757; background-color:#ffff ">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Araç Id</th>
+                <th style="padding-left:1rem">Araç Marka</th>
+                <th style="padding-left:1rem">Araç Model</th>
+                <th style="padding-left:1rem">Statü</th>
+                <th style="padding-left:1rem">Kaydeden Kullanıcı</th>
+                <th style="padding-left:1rem">Kaydetme Zamanı</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CarTableRows)
+            {
+                <tr>
+                    <td>@item.CarId</td>
+                    <td style="padding-left:1rem">@item.CarBrandName</td>
+                    <td style="padding-left:1rem">@item.CarModelName</td>
+                    <td style="padding-left:1rem">@item.Status</td>
+                    <td style="padding-left:1rem">@item.UserName</td>
+                    <td style="padding-left:1rem">@item.RegisterDate</td>
+                    <td style="padding-left:1rem">
+                        <a asp-action="UpdateCar" asp-route-carId="@item.CarId">Güncelle</a>
+                    </td>
+                    <td style="padding-left:1rem">
+                        <a asp-action="Delete Car" asp-route-carId="@item.CarId">Sil</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
