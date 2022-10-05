@@ -12,6 +12,9 @@ namespace SecondHandCarBidProject.AdminUI.DTO
         public List<SelectListItem> BireyselKurumsalListe { get; set; }
         public int BireyselKurumsalId { get; set; }
 
+        public List<SelectListItem> KurumsalSirketAdiListe { get; set; }
+        public int KurumsalSirketAdireyselKurumsalId { get; set; }
+
         public string description { get; set; }
         public string SelectedItem { get; set; }
         public List<SelectListItem> selectItemList

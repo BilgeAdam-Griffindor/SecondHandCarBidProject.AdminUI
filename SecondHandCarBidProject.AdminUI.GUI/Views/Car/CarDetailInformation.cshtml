@@ -1,151 +1,139 @@
 ﻿@using SecondHandCarBidProject.AdminUI.DTO
 @model CarDetailDto
 
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<form>
+  <div class="container overflow-hidden" style="margin-top:50px;">
+
+      <h4>Araç Detay Bilgileri</h4>
+  <div class="row gy-8">
+
+    <div class="col-12">
+      <div class="p-3 border bg-light text-justify" >
+          <div class="row text-center">
+              <div class="col">
+                  <label class="fw-bold text-dark">Bireysel/Kurumsal</label>
+
+                   <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+              </div>
+              <div class="col">
+                  <label class="fw-bold text-dark">Kurumsal Şirket Adı</label>
+                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+              </div>
+              <div class="col">
+                  <label class="fw-bold text-dark">Statü</label>
+                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+              </div>
+              <div class="col">
+                  <label class="fw-bold text-dark">Araç Fiyat</label>
+                  <input type="text" class="form-control"/>
+              </div>
+
+          </div>
+          </div>
+    </div>
+
+    <div class="col-12">
+      <div class="p-3 border bg-light text-justify">
+          <div class="row">
+              <div class="col">
+                  <label class="fw-bold text-dark">Araç Marka</label>
+                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+              </div>
+              <div class="col">
+                  <label class="fw-bold text-dark">Araç Model</label>
+                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+              </div>
+              <div class="col">
+                  <label class="fw-bold text-dark">Gövde Tipi</label>
+                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col">
+                  <label class="fw-bold text-dark">Yıl</label>
+                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+              </div>
+              <div class="col">
+                  <label class="fw-bold text-dark">Yakıt Tipi</label>
+                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+              </div>
+              <div class="col">
+                  <label class="fw-bold text-dark">Vites Tipi</label>
+                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+              </div>
+          </div>
+           <div class="row">
+              <div class="col">
+                  <label class="fw-bold text-dark">Versiyon</label>
+                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+              </div>
+              <div class="col">
+                  <label class="fw-bold text-dark">Km Bilgisi</label>
+                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+              </div>
+              <div class="col">
+                  <label class="fw-bold text-dark">Renk </label>
+                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+              </div>
+          </div>
+           <div class="row">
+              <div class="col">
+                  <label class="fw-bold text-dark">Donanım</label>
+                  <select class="form-control" multiple asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+              </div>
+              <div class="col">
+                  Boş
+              </div>
+              <div class="col">
+                  Boş
+              </div>
+          </div>
+          </div>
+    </div>
+    <div class="col-6">
+      <div class="p-3 border bg-light">
+          <label class="fw-bold text-dark">Fotoğraf Ekle</label>
+  <input class="form-control" type="file" id="formFileMultiple" multiple>
+          </div>
+    </div>
+    <div class="col-6">
+      <div class="p-3 border bg-light">
+          <label class="fw-bold text-dark">Açıklama</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="p-3 border bg-light">
+          <div class="row">
+              <div class="col">
+          <a class="btn btn-primary car-detail-button">Hemen Al Satış</a>
+          </div>
+          <div class="col">
+          <a class="btn btn-primary car-detail-button">Komisyon</a>
+          </div>
+          <div class="col">
+          <a class="btn btn-primary car-detail-button">Alıcı Bilgileri</a>
+          </div>
+          <div class="col">
+          <a class="btn btn-primary car-detail-button">Araç Tarihçe</a>
+          </div>
+          <div class="col">
+          <a class="btn btn-primary car-detail-button">Hasar Tramer Bilgileri</a>
+          </div>
+          <div class="col">
+          <a class="btn btn-primary car-detail-button">İlan Bilgileri</a>
+          </div>
+              <div class="col">
+          <a class="btn btn-success car-detail-button">Kaydet</a>
+          </div>
+          </div>
+      </div>
+  </div>
 
 
-  <div class="container px-4" style="margin-top:50px;">
-        <div class="row gx-5">
-            <h5>Araç Detayları</h5>
-            <div class="col">
-                <div class="p-3 border bg-light">
-                    <div class="row">
-                        <div class="col">
-                            <label class="fw-bold">Bireysel/Kurumsal</label>
-
-                            <select asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
-                        </div>
-                        <div class="col">
-                            <label class="fw-bold">Kurumsal Şirket Adı</label>
-                            @Html.DropDownList("CompanyNamew", new List<SelectListItem> { new SelectListItem { Text = "İnce Otomativ", Value = "1" }, new SelectListItem { Text = "Şahin Filo", Value = "2" } }, htmlAttributes: new { @class = "form-select" })
-                        </div>
-                        <div class="col">
-                            <label class="fw-bold">Statü</label>
-                            @Html.DropDownList("CarStatus", new List<SelectListItem> { new SelectListItem { Text = "Giriş", Value = "1" }, new SelectListItem { Text = "Hemen Al Satış", Value = "2" } }, htmlAttributes: new { @class = "form-select" })
-                        </div>
-                        <div class="col">
-                            <label class="fw-bold">Araç Fiyat</label>
-                            <input type="text" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <h5>Araç Detayları</h5>
-                <div class="p-3 border bg-light">
-                    <div class="row">
-                        <div class="col">
-                            <label class="fw-bold">Araç Marka</label>
-                            @Html.DropDownList("CarBrand", new List<SelectListItem> { new SelectListItem { Text = "Ford", Value = "1" }, new SelectListItem { Text = "Aston Martin", Value = "2" } }, htmlAttributes: new { @class = "form-select" })
-                        </div>
-                        <div class="col">
-                            <label class="fw-bold">Araç Model</label>
-                            @Html.DropDownList("CarBrand", new List<SelectListItem> { new SelectListItem { Text = "Mustang", Value = "1" }, new SelectListItem { Text = "DB11", Value = "2" } }, htmlAttributes: new { @class = "form-select" })
-                        </div>
-                        <div class="col">
-                            <label class="fw-bold">Gövde Tipi</label>
-                            @Html.DropDownList("CarBrand", new List<SelectListItem> { new SelectListItem { Text = "Sedan", Value = "1" }, new SelectListItem { Text = "Coupe", Value = "2" } }, htmlAttributes: new { @class = "form-select" })
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col">
-                            <label class="fw-bold">Yıl</label>
-                            @Html.DropDownList("CarBrand", new List<SelectListItem> { new SelectListItem { Text = "2020", Value = "1" }, new SelectListItem { Text = "2022", Value = "2" } }, htmlAttributes: new { @class = "form-select" })
-                        </div>
-                        <div class="col">
-                            <label class="fw-bold">Yakıt Tipi</label>
-                            @Html.DropDownList("CarBrand", new List<SelectListItem> { new SelectListItem { Text = "Benzin", Value = "1" }, new SelectListItem { Text = "Dizel", Value = "2" } }, htmlAttributes: new { @class = "form-select" })
-                        </div>
-                        <div class="col">
-                            <label class="fw-bold">Vites Tipi</label>
-                            @Html.DropDownList("CarBrand", new List<SelectListItem> { new SelectListItem { Text = "Otomatik", Value = "1" }, new SelectListItem { Text = "Manuel", Value = "2" } }, htmlAttributes: new { @class = "form-select" })
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col">
-                            <label class="fw-bold">Versiyon</label>
-                            @Html.DropDownList("CarBrand", new List<SelectListItem> { new SelectListItem { Text = "Versiyon 1", Value = "1" }, new SelectListItem { Text = "Versiyon 2", Value = "2" } }, htmlAttributes: new { @class = "form-select" })
-                        </div>
-                        <div class="col">
-                            <label class="fw-bold">Kilometre Bilgisi</label>
-                            @*<input type="text" class="form-control" />*@
-                            @Html.TextBox("CarKilometre", null, htmlAttributes: new { @class = "form-control" })
-                        </div>
-                        <div class="col">
-                            <label class="fw-bold">Renk</label>
-                            @Html.DropDownList("CarBrand", new List<SelectListItem> { new SelectListItem { Text = "Mavi", Value = "1" }, new SelectListItem { Text = "Kırmızı", Value = "2" } }, htmlAttributes: new { @class = "form-select" })
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col">
-                            <label class="fw-bold">Donanım</label>
-                            @*@Html.DropDownList("CarBrand", new List<SelectListItem> { new SelectListItem { Text = "Mavi", Value = "1" }, new SelectListItem { Text = "Kırmızı", Value = "2" } }, htmlAttributes: new { @class = "form-select" })*@
-                            @*@Html.ListBoxFor(x => x.SelectedItem, new List<SelectListItem> { new SelectListItem { Text = "Sunroof", Value = "1" }, new SelectListItem { Text = "Kör Nokta Uyarı Sistemi", Value = "2" }, new SelectListItem { Text = "Merkezi Kilit", Value = "3" }, new SelectListItem { Text = "Şerit Takip Sistemi", Value = "4" }, new SelectListItem { Text = "Elektrikli Camlar", Value = "5" }, new SelectListItem { Text = "Elektrikli Katlanabilen Aynalar", Value = "6" } }, htmlAttributes: new { @class = "form-select" })*@
-                        </div>
-                        <div class="col">
-
-                        </div>
-                        <div class="col">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <h5>Fotoğraf Ekle</h5>
-            <div class="col">
-                <div class="p-3 border bg-light" style="height:100%;">
-                    <div class="row">
-                        <div class="col">
-                            <label class="fw-bold"><i class="fa-solid fa-camera"></i> Fotoğraf Ekle</label>
-                            <br />
-                            <br />
-                            <input class="form-control" type="file" id="formFileMultiple" multiple>
-                            @*@Html.TextBoxFor(model => model.files, "", new { @type = "file", @multiple = "multiple", @class = "form-control" })*@
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="p-3 border bg-light">
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label class="fw-bold">Açıklama</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                @Html.TextAreaFor(m => m.description, new { @class = "form-control" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <h5>Fotoğraf Ekle</h5>
-            <div class="col">
-                <div class="p-3 border bg-light" style="height:100%;">
-                    <div class="row">
-                        <div class="col ">
-                            @Html.ActionLink("İlan Bilgileri", "CarDetailInformation", "Car", htmlAttributes: new { @class = "btn btn-warning car-detail-button", @type = "submit" })
-                        </div>
-                        <div class="col ">
-                            @Html.ActionLink("Hasar Tramer Bilgileri", "CarDetailInformation", "Car", htmlAttributes: new { @class = "btn btn-warning car-detail-button", @type = "submit" })
-                        </div>
-                        <div class="col">
-                            @Html.ActionLink("Araç Tarihçe", "CarDetailInformation", "Car", htmlAttributes: new { @class = "btn btn-warning car-detail-button", @type = "submit" })
-                        </div>
-                        <div class="col">
-                            @Html.ActionLink("Alıcı Bilgileri", "CarDetailInformation", "Car", htmlAttributes: new { @class = "btn btn-warning car-detail-button", @type = "submit" })
-                        </div>
-                        <div class="col">
-                            @Html.ActionLink("Komisyon", "CarDetailInformation", "Car", htmlAttributes: new { @class = "btn btn-warning car-detail-button", @type = "submit" })
-                        </div>
-                        <div class="col">
-                            @Html.ActionLink("Hemen Al Satış", "CarDetailInformation", "Car", htmlAttributes: new { @class = "btn btn-warning car-detail-button", @type = "submit" })
-                        </div>
-                        <div class="col">
-                            @Html.ActionLink("Kaydet", "CarDetailInformation", "Car", htmlAttributes: new { @class = "btn btn-warning car-detail-button", @type = "submit" })
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
+    </form>

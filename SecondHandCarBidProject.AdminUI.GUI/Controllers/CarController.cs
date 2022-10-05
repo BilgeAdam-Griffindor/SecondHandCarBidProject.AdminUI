@@ -17,6 +17,11 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         {
             CarDetailDto carDetailDto = new CarDetailDto();
             //carDetailDto.selectItemList = new List<SelectListItem> { new SelectListItem { Text = "Bireysel", Value = "1" }, new SelectListItem { Text = "Kurumsal", Value = "2" } };
+            carDetailDto.BireyselKurumsalListe = new List<SelectListItem>
+            {
+                new SelectListItem{ Text="Bireysel", Value="0"},
+                new SelectListItem{ Text="Kurumsal", Value="2"},
+            };
 
             return View(carDetailDto);
         }
