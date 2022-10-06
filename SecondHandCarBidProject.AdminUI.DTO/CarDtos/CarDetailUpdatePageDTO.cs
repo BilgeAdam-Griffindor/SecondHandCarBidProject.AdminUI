@@ -5,40 +5,37 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SecondHandCarBidProject.AdminUI.DTO
 {
-    public class CarDetailUpdatePageDTO
-    {
-        public Guid Id { get; set; }
-
-        public decimal Price { get; set; }
-
-        public int Kilometre { get; set; }
-
-        public short CarYear { get; set; }
-
-        public bool IsCorporate { get; set; }
-
-        public string CarDescription { get; set; }
-
-        public short CarBrandId { get; set; }
-
-        public int CarModelId { get; set; }
-
-        public int CorporationId { get; set; }
-
-        public List<CarImageListDTO> CarImages { get; set; }
-
-        public List<IdNameListDTO> BrandList { get; set; }
-        public List<IdNameListDTO> ModelList { get; set; }
-        public List<IdNameListDTO> StatusList { get; set; }
-        public List<IdNameListDTO> CorporationList { get; set; }
-        public List<IdNameListDTO> BodyTypeList { get; set; }
-        public List<IdNameListDTO> FuelTypeList { get; set; }
-        public List<IdNameListDTO> GearTypeList { get; set; }
-        public List<IdNameListDTO> VersionList { get; set; }
-        public List<IdNameListDTO> ColorList { get; set; }
-        public List<IdNameListDTO> OptionalHardwareList { get; set; }
-    }
+    public record CarDetailUpdatePageDTO(
+        Guid Id,
+        decimal Price,
+        int Kilometre,
+        short CarYear,
+        bool IsCorporate,
+        string CarDescription,
+        short CarBrandId,
+        int CarModelId,
+        int StatusId,
+        Guid BodyTypeId,
+        Guid FuelTypeId,
+        Guid GearTypeId,
+        Guid VersionId,
+        Guid ColorId,
+        List<Guid> OptionalHardwareIds,
+        int? CorporationId,
+        List<CarImageListDTO> CarImages,
+        List<IdNameListDTO> BrandList,
+        List<IdNameListDTO> ModelList,
+        List<IdNameListDTO> StatusList,
+        List<IdNameListDTO> CorporationList,
+        List<IdNameListDTO> BodyTypeList,
+        List<IdNameListDTO> FuelTypeList,
+        List<IdNameListDTO> GearTypeList,
+        List<IdNameListDTO> VersionList,
+        List<IdNameListDTO> ColorList,
+        List<IdNameListDTO> OptionalHardwareList
+        );
 }
