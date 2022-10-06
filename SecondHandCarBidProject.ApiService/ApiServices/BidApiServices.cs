@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SecondHandCarBidProject.AdminUI.DTO.BidDtos;
 using SecondHandCarBidProject.ApiService.Dto_s;
 using System;
 using System.Collections.Generic;

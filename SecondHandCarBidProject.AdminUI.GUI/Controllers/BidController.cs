@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SecondHandCarBidProject.AdminUI.DTO.BidDtos;
 using SecondHandCarBidProject.ApiService.ApiServices;
 using SecondHandCarBidProject.ApiService.Dto_s;
 
@@ -24,7 +25,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpPost]
         public async Task<IActionResult> BidAdd(BidAddDTO bidAddDTO)
         {
-            if (String.IsNullOrEmpty(bidAddDTO.CarCode) && String.IsNullOrEmpty(bidAddDTO.CarName))
+            if (String.IsNullOrEmpty(bidAddDTO.BidName))
             {
                 await _bidApiServices.BiddAddAsync(bidAddDTO);
             }
