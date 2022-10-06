@@ -11,17 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BidDtos\" />
-    <Folder Include="AddressDtos\" />
     <Folder Include="CorporationDtos\" />
     <Folder Include="ExpertDtos\" />
     <Folder Include="AuthorizationDtos\" />
-    <Folder Include="FavoriteDtos\" />
     <Folder Include="AdditionalFeeDtos\" />
     <Folder Include="TrafficInsuranceDto\" />
     <Folder Include="StatusDtos\" />
     <Folder Include="NotificationDtos\" />
-    <Folder Include="UserDtos\" />
   </ItemGroup>
 
 </Project>
