@@ -1,9 +1,10 @@
 ﻿namespace SecondHandCarBidProject.AdminUI.DTO
 {
-    public record CarListPageDTO(
+    public record CarBuyListPageDTO(
         List<IdNameListDTO> BrandList,
         List<IdNameListDTO> ModelList,
         List<IdNameListDTO> StatusList,
-        List<CarListTableRowDTO> CarTableRows
+        List<CarBuyListTableRowDTO> TableRows
         );
+
 }

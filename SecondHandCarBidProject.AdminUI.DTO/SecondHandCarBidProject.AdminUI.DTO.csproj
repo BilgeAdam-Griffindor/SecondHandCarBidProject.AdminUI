@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BidDtos\" />
     <Folder Include="AddressDtos\" />
     <Folder Include="CorporationDtos\" />
     <Folder Include="ExpertDtos\" />

@@ -12,7 +12,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         {
             //TODO Lists might be cached to avoid requesting same lists again and again
             //TODO call api and get response as CarListPageDTO
-            CarListPageDTO carListPageDTO = new CarListPageDTO();
+            CarListPageDTO carListPageDTO = new CarListPageDTO(null, null, null, null);
 
             //Convert response to ViewModel
             CarListViewModel carListViewModel = new CarListViewModel();
@@ -62,7 +62,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
             //TODO Lists might be cached and then we just need to get the filtered items
             //TODO call api and get response as CarListPageDTO, this time with queryString as filter
-            CarListPageDTO carListPageDTO = new CarListPageDTO();
+            CarListPageDTO carListPageDTO = new CarListPageDTO(null, null, null, null);
 
             //Convert response to ViewModel
             CarListViewModel carListViewModel = new CarListViewModel();
