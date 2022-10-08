@@ -15,9 +15,9 @@
     <Folder Include="CorporationDtos\" />
     <Folder Include="ExpertDtos\" />
     <Folder Include="FavoriteDtos\" />
+    <Folder Include="AuthorizationDtos\" />
     <Folder Include="AdditionalFeeDtos\" />
     <Folder Include="NotificationDtos\" />
-    <Folder Include="UserDtos\" />
   </ItemGroup>
 
 </Project>

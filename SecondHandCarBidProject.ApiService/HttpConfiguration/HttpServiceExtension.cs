@@ -20,14 +20,11 @@ namespace SecondHandCarBidProject.ApiService.HttpConfiguration
         public static void AddHttpService(this IServiceCollection services, IConfiguration _Configuration)
         {
             
-            services.AddHttpClient<BidApiServices>(opt =>
+           
+            services.AddHttpClient<BaseServices>(opt =>
             {
-                opt.BaseAddress = new Uri(_Configuration.GetSection("ApiURL").Value);
+                opt.BaseAddress = new Uri(_Configuration.GetSection("BaseUrl").Value);
             });
-            //builder.Services.AddHttpClient<BaseServices>(opt =>
-            //{
-            //    opt.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
-            //});
         }
     }
 }
