@@ -6,8 +6,10 @@
 }
 <form>
   <div class="container overflow-hidden" style="margin-top:50px;">
-
-      <h4>Araç Detay Bilgileri</h4>
+      <div class="tooltip">
+      <h4><i class="fa-solid fa-lg fa-circle-info"></i>Araç Detay Bilgileri</h4>
+      <span class="tooltiptext">Bu sayfa admin için gereklidir. Aaraba detayları burada halledilir</span>
+      </div>
   <div class="row gy-8">
 
     <div class="col-12">
@@ -16,7 +18,7 @@
               <div class="col">
                   <label class="fw-bold text-dark">Bireysel/Kurumsal</label>
 
-                   <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                   <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe" ></select>
               </div>
               <div class="col">
                   <label class="fw-bold text-dark">Kurumsal Şirket Adı</label>
@@ -96,7 +98,9 @@
     <div class="col-6">
       <div class="p-3 border bg-light">
           <label class="fw-bold text-dark">Fotoğraf Ekle</label>
-  <input class="form-control" type="file" id="formFileMultiple" multiple>
+  <input class="form-control"  type="file"  multiple>
+  
+
           </div>
     </div>
     <div class="col-6">
