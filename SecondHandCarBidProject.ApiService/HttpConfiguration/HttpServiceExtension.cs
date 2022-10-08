@@ -12,12 +12,12 @@ namespace SecondHandCarBidProject.ApiService.HttpConfiguration
 {
     public static class HttpServiceExtension
     {
-        private static IConfiguration _Configuration;
-        public static void Configure(IConfiguration Configuration)
-        {
-            _Configuration = Configuration;
-        }
-        public static void AddHttpService(this IServiceCollection services)
+        //private static IConfiguration _Configuration;
+        //public static void Configure(IConfiguration Configuration)
+        //{
+        //    _Configuration = Configuration;
+        //}
+        public static void AddHttpService(this IServiceCollection services, IConfiguration _Configuration)
         {
             
            

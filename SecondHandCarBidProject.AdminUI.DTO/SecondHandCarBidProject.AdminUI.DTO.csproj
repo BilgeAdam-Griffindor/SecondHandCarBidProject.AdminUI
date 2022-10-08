@@ -14,10 +14,9 @@
     <Folder Include="AddressDtos\" />
     <Folder Include="CorporationDtos\" />
     <Folder Include="ExpertDtos\" />
+    <Folder Include="FavoriteDtos\" />
     <Folder Include="AuthorizationDtos\" />
     <Folder Include="AdditionalFeeDtos\" />
-    <Folder Include="TrafficInsuranceDto\" />
-    <Folder Include="StatusDtos\" />
     <Folder Include="NotificationDtos\" />
   </ItemGroup>
 
