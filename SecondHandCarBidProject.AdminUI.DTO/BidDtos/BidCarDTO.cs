@@ -1,4 +1,5 @@
-﻿using SecondHandCarBidProject.AdminUI.DTO.UserDtos;
+﻿using SecondHandCarBidProject.AdminUI.DTO.CarDtos;
+using SecondHandCarBidProject.AdminUI.DTO.UserDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;

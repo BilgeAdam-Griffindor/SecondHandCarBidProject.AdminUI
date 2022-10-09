@@ -17,13 +17,12 @@ body {
   margin-bottom: 60px;
 }
 
-.p-3.border.bg-light{
-    text-align:center;
-}
+
 input.form-control{
     color:black !important;
 }
 .p-3.border.bg-light {
+    text-align: center;
     margin-top: 30px;
     background: linear-gradient(189deg, #6e92ec, transparent);
 }
@@ -296,12 +295,7 @@ a.button-delete {
         transform: translateY(2px);
     }
 }
-.btn-primary {
-    background:linear-gradient(33deg, #7773db, #21a4d5);
-}
-.btn-success {
-    background: linear-gradient(200deg, #02ba5a, #03d0ea);
-}
+
 
 .tooltip {
     position: relative;
@@ -326,4 +320,63 @@ a.button-delete {
     /* Show the tooltip text when you mouse over the tooltip container */
     .tooltip:hover .tooltiptext {
         visibility: visible;
+    }
+.fw-bold{
+    font-size:15px;
+    
+}
+
+.table-custom-css {
+    width: 100%;
+    background: rgb(255,255,255,0.5);
+}
+
+a.button-add {
+    align-items: center;
+    appearance: none;
+    background-image: radial-gradient(circle, rgb(29 199 89) 100%, rgba(104,163,241,1) 100%);
+    border-radius: 6px;
+    box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    height: 48px;
+    justify-content: center;
+    line-height: 1;
+    list-style: none;
+    overflow: hidden;
+    padding-left: 16px;
+    padding-right: 16px;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transition: box-shadow .15s,transform .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow,transform;
+    font-size: 18px;
+    color: white;
+    text-decoration: none;
+}
+
+    a.button-add:focus {
+        box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+        color: #ffff;
+    }
+
+    a.button-add:hover {
+        box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+        color: #ffff;
+        text-decoration: none;
+        transform: translateY(-2px);
+    }
+
+    a.button-add:active {
+        box-shadow: #3c4fe0 0 3px 7px inset;
+        color: #ffff;
+        transform: translateY(2px);
     }
