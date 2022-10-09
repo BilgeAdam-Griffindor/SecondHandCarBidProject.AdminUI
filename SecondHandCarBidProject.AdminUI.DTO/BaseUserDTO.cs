@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO
 {
-    public class IdNameListDTO
+    public class BaseUserDTO
     {
-        public object Id { get; set; }
-        public string Name { get; set; }
     }
 }
