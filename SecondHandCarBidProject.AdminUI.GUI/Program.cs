@@ -6,7 +6,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
-
 builder.Services.AddHttpClient<BidApiServices>(opt =>
 {
     opt.BaseAddress = new Uri(builder.Configuration.GetSection("ApiURL").Value);

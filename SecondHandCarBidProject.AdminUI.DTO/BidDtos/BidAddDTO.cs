@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO.BidDtos
 {
-    public record BidAddDTO(string BidName,bool IsCorporate,DateTime BidStartDate,DateTime BidEndDate,bool IsActive,DateTime CreatedTime, Guid CreatedBy)
+    public record BidAddDto(string BidName,bool IsCorporate,int CorporationID,short StatusId,DateTime BidStartDate
+        ,DateTime BidEndDate)
     {
-       
+        //List<CarDto> eklenecek
     }
 }

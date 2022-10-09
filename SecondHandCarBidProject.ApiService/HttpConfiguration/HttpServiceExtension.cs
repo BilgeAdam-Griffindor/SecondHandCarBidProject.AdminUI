@@ -12,19 +12,15 @@ namespace SecondHandCarBidProject.ApiService.HttpConfiguration
 {
     public static class HttpServiceExtension
     {
-        //private static IConfiguration _Configuration;
-        //public static void Configure(IConfiguration Configuration)
-        //{
-        //    _Configuration = Configuration;
-        //}
+       
         public static void AddHttpService(this IServiceCollection services, IConfiguration _Configuration)
         {
-            
+
            
-            services.AddHttpClient<BaseServices>(opt =>
-            {
-                opt.BaseAddress = new Uri(_Configuration.GetSection("BaseUrl").Value);
-            });
+            //services.AddHttpClient<BaseServices>(opt =>
+            //{
+            //    opt.BaseAddress = new Uri(_Configuration.GetSection("BaseUrl").Value);
+            //});
         }
     }
 }

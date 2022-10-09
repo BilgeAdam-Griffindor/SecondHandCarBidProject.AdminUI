@@ -24,6 +24,7 @@
     <link href="~/AdminTemplate/css/icons.css" rel="stylesheet" type="text/css" />
     <!-- Sidebar CSS-->
     <link href="~/AdminTemplate/css/sidebar-menu.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
     <!-- Custom Style-->
     <link href="~/AdminTemplate/css/app-style.css" rel="stylesheet" />
    @* <link href="~/admintemplate/css/bootstrap.min.css" rel="stylesheet" />
@@ -37,7 +38,7 @@
 <body class="bg-theme bg-theme1">
 
     <!-- Start wrapper-->
-    <div id="wrapper">
+    <div id="wrapper" >
 
         <!--Start sidebar-wrapper-->
         <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
@@ -209,9 +210,7 @@
         <!--End footer-->
         <!--start color switcher-->
         <div class="right-sidebar">
-            <div class="switcher-icon">
-                <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
-            </div>
+            
             <div class="right-sidebar-content">
 
                 <p class="mb-0">Gaussion Texture</p>
@@ -265,7 +264,25 @@
 
     <!-- Index js -->
     <script src="~/AdminTemplate/js/index.js"></script>
-
+    <script type="text/javascript">
+        var toggle = document.querySelector("#wrapper");
+        var toggleIcon = document.querySelector(".toggle-menu")
+        eventListeners()
+        function eventListeners() {
+            toggleIcon.addEventListener('click', ToggleClickEventU);
+        }
+        
+        function ToggleClickEventU(){
+            if (toggle.className=="toggled"){
+                toggle.className=""
+            }else{
+                toggle.className = "toggled"
+            }
+        }
+        
+        
+    
+    </script>
 
 </body>
 </html>
