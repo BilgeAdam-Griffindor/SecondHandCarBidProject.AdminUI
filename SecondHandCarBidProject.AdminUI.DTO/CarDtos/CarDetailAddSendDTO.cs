@@ -1,12 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SecondHandCarBidProject.AdminUI.DTO.CarDtos
+﻿namespace SecondHandCarBidProject.AdminUI.DTO
 {
-    internal class CarDetailAddSendDTO
-    {
-    }
+    public record CarDetailAddSendDTO(
+        decimal Price,
+        int Kilometre,
+        short CarYear,
+        bool IsCorporate,
+        string CarDescription,
+        short CarBrandId,
+        int CarModelId,
+        int StatusId,
+        Guid BodyTypeId,
+        Guid FuelTypeId,
+        Guid GearTypeId,
+        Guid VersionId,
+        Guid ColorId,
+        List<Guid> OptionalHardwareIds,
+        int? CorporationId,
+        List<byte[]> CarImages
+        );
 }

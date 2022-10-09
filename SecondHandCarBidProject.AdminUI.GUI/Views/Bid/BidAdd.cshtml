@@ -20,38 +20,38 @@
         }
     </style>
 </head>
-<body >
+<body>
 
-    <div class="container">
+    <div class="container-fluid">
         <form>
-        <div class="mt-2 p-3" style="box-shadow:  6px 15px 30px #575757; background-color:#ffff ">
-                <h2 style="text-align:center; color:#002244;font-weight:bold">İhale Genel Bilgileri</h2>
+            <div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000; background-color:#ffff;border-radius:10px ">
+                <h2 style="text-align:center; color:#002244;font-weight:bold;" class="m-2 p-2 big-title-color">İhale Genel Bilgileri</h2>
                 <div class="row text-center p-2">
             
                     <div class="col-12 col-md-4"> 
-                        <label>İhale Adı</label>
+                        <h4 class="title-color">İhale Adı</h4>
                         <input type="text" class="form-control" id="BidName" ></div>
                     <div class="col-12 col-md-4">
-                        <label>Bireysel/Kurumsal</label>
-                        <select  class="form-control" id="BidName" placeholder="" >
+                        <h4 class="title-color">Bireysel/Kurumsal</h4>
+                        <select class="form-select" id="BidName" placeholder="">
                             <option selected></option>
                             <option >Kurumsal</option>
                             <option >Bireysel</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-4">
-                        <label>Şirket Adı</label>
-                        <select class="form-control" id="BidName" placeholder="">
+                        <h4 class="title-color">Şirket Adı</h4>
+                        <select class="form-select" id="BidName" placeholder="">
                             <option selected></option>
                             <option>A Holding</option>
                             <option>B Holding</option>
                         </select>
                     </div>
                 </div>
-                <div class="row text-center mt-3 p-2">
+                <div class="row text-center mt-3 p-2 mb-2">
                     <div class="col-12 col-md-4">
-                        <label>Statü</label>
-                        <select class="form-control" id="BidName" placeholder="">
+                        <h4 class="title-color">Statü</h4>
+                        <select class="form-select" id="BidName" placeholder="">
                             <option selected></option>
                             <option>Giriş</option>
                             <option>Ön Değerleme verildi</option>
@@ -62,23 +62,24 @@
                         </select>
                     </div>
                     <div class="col-12 col-md-4">
-                        <label>İhale Başlangıç Tarihi</label>
+                        <h4 class="title-color">İhale Başlangıç Tarihi</h4>
                          <input class="form-control" type="datetime-local"id="BidName" >
-                    </div>
+                    </div> 
                     <div class="col-12 col-md-4"> 
-                        <label>İhale Bitiş Tarihi</label>
+                        <h4 class="title-color">İhale Bitiş Tarihi</h4>
                         <input class="form-control" type="datetime-local" id="BidName">
                         </div>
                 </div>
             
             </div>
-        <div class=" p-3" style="margin-top:50px;box-shadow: 6px 15px 30px #575757; background-color:#ffff ">
-            <h2 style="text-align:center; color:#002244;font-weight:bold">İhale Araç Bilgileri</h2>
+            <div class=" p-3" style="margin-top:50px;box-shadow: 6px 20px 40px #000000; background-color:#ffff;border-radius:10px">
+                <h2 class="m-2 big-title-color p-2" style="text-align:center; color:#002244;font-weight:bold">İhale Araç Bilgileri</h2>
             <div class="row text-center p-2">
 
-                <table class="table">
-                    <thead class="thead-dark">
-                        <tr>
+                <table class="table-resposive table-bordered">
+                        <thead class="thead color-gradient" style="color: #ffff;">
+                            <tr>
+                                
                             <th scope="col">Araç Kodu</th>
                             <th scope="col">Araç Marka</th>
                             <th scope="col">Bireysel/Kurumsal</th>
@@ -86,6 +87,8 @@
                             <th scope="col">Kaydeden Kullanıcı</th>
                             <th scope="col">Kaydetme Zamanı</th>
                             <th scope="col">Fiyat</th>
+                            <th scope="col">Güncelle</th>
+                            <th scope="col">Sil</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -97,6 +100,8 @@
                             <td>Mark</td>
                             <td>Otto</td>
                             <td>12312</td>
+                            <td> <a href="#" class=" m-2 p-2 button-gnc">GÜNCELLE</a></td>
+                            <td> <a href="#" class=" m-2 p-2 button-delete">SİL</a></td>
                             
                         </tr>
                         <tr>
@@ -107,6 +112,8 @@
                             <td>Mark</td>
                             <td>Otto</td>
                             <td>123213</td>
+                            <td> <a href="#" class=" m-2 p-2 button-gnc">GÜNCELLE</a></td>
+                            <td> <a href="#" class=" m-2 p-2 button-delete">SİL</a></td>
                                
                         </tr>
                         <tr>
@@ -117,14 +124,16 @@
                             <td>Mark</td>
                             <td>Otto</td>
                             <td>213213</td>
+                            <td> <a href="#" class=" m-2 p-2 button-gnc" >GÜNCELLE</a></td>
+                            <td> <a href="#" class=" m-2 p-2 button-delete" >SİL</a></td>
                                
                         </tr>
                     </tbody>
                 </table>
-                    <div class="row justify-content-end m-2">
+                    <div class="row justify-content-end m-2 mb-2">
                         <div class="col align-self-end">
-                            <input type="submit" value="Araç Ekle" class="btn btn-primary m-2 p-2" />
-                            <input type="submit" value="Kaydet" class="btn btn-success m-2 p-2" />
+                            <button class=" m-2 p-2 button-29">ARAÇ EKLE</button>
+                            <button class=" m-2 p-2 button-29">KAYDET</button>
                         </div>
                     
                 </div>

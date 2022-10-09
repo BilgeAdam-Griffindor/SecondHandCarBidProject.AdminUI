@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SecondHandCarBidProject.AdminUI.DTO.CarDtos
+﻿namespace SecondHandCarBidProject.AdminUI.DTO
 {
-    internal class CarDetailAddPageDTO
-    {
-    }
+    public record CarDetailAddPageDTO(
+        List<IdNameListDTO> BrandList,
+        List<IdNameListDTO> ModelList,
+        List<IdNameListDTO> StatusList,
+        List<IdNameListDTO> CorporationList,
+        List<IdNameListDTO> BodyTypeList,
+        List<IdNameListDTO> FuelTypeList,
+        List<IdNameListDTO> GearTypeList,
+        List<IdNameListDTO> VersionList,
+        List<IdNameListDTO> ColorList,
+        List<IdNameListDTO> OptionalHardwareList
+        );
 }
