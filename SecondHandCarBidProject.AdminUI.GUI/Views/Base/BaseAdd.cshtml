@@ -4,9 +4,11 @@
 @{
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
-
+<div class="tooltip">
+      <h4><i class="fa-solid fa-lg fa-circle-info"></i>Araç Detay Bilgileri</h4>
+      <span class="tooltiptext">Bu sayfa admin için gereklidir. Aaraba detayları burada halledilir</span>
+      </div>
 <div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
-
             <form asp-action="Save" method="get" asp-controller="Base">
 
     <h2 style="text-align:center; color:#002244;font-weight:bold;" class="m-2 p-2 big-title-color">Ekleme Yapılacak Alan Adı</h2>

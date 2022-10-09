@@ -5,21 +5,24 @@
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
 
-<div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000; background-color:black;border-radius:10px ">
-    <h2 style="text-align:center; color:#002244;font-weight:bold;" class="m-2 p-2 big-title-color">Araç Ekleme Alanı</h2>
+<div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
+    <div class="tooltip">
+      <h4><i class="fa-solid fa-lg fa-circle-info"></i> Araç Ekleme</h4>
+      <span class="tooltiptext">Bu sayfa admin için gereklidir. Aaraba detayları burada halledilir</span>
+      </div>
     <div class="row text-center p-2">
 
         <div class="col-12 col-md-4">
-            <h4 class="title-color">Fiyat</h4>
+            <label class="fw-bold text-dark">Fiyat</label>
             <input type="text" class="form-control" id="tabloname">
         </div>
         <div class="col-12 col-md-4">
-            <h4 class="title-color">Kilometre</h4>
+            <label class="fw-bold text-dark" >Kilometre</label>
             <input type="text" class="form-control" id="tabloname">
         </div>
 
         <div class="col-12 col-md-4">
-            <h4 class="title-color">Araç Marka</h4>
+            <label class="fw-bold text-dark" >Araç Marka</label>
             <select class="form-select" id="tabloname1" placeholder="">
                 <option selected></option>
                 <option>###</option>
@@ -29,11 +32,11 @@
     </div>
     <div class="row text-center mt-3 p-2 mb-2">
         <div class="col-12 col-md-4">
-            <h4 class="title-color">Yıl</h4>
+            <label class="fw-bold text-dark" class="title-color">Yıl</label>
             <input type="text" class="form-control" id="tabloname">
         </div>
         <div class="col-12 col-md-4">
-        <h4 class="title-color">Versiyon</h4>
+        <label class="fw-bold text-dark" class="title-color">Versiyon</label>
         <select class="form-select" id="tabloname2" placeholder="">
             <option selected></option>
             <option>adfgtrer3</option>
@@ -41,7 +44,7 @@
         </select>
         </div>
         <div class="col-12 col-md-4">
-            <h4 class="title-color">Araç Model</h4>
+            <label class="fw-bold text-dark" class="title-color">Araç Model</label>
             <select class="form-select" id="tabloname2" placeholder="">
                 <option selected></option>
                 <option>###</option>
@@ -52,15 +55,15 @@
     </div>
     <div class="row text-center mt-3 p-2 mb-2">
         <div class="col-12 col-md-4">
-            <h4 class="title-color">DateTime1</h4>
+            <label class="fw-bold text-dark" class="title-color">DateTime1</label>
             <input class="form-control" type="datetime-local" id="DateTime1">
         </div>
         <div class="col-12 col-md-4">
-            <h4 class="title-color">DateTime2</h4>
+            <label class="fw-bold text-dark" class="title-color">DateTime2</label>
             <input class="form-control" type="datetime-local" id="DateTime2">
         </div>
         <div class="col-12 col-md-4">
-            <h4 class="title-color">Bireysel Araç/Kurumsal Araç</h4>
+            <label class="fw-bold text-dark" class="title-color">Bireysel Araç/Kurumsal Araç</label>
             <select class="form-select" id="tabloname2" placeholder="">
                 <option selected></option>
                 <option>Bireyse</option>
@@ -81,7 +84,7 @@
     </div>
     <div class="row text-center mt-3 p-2 mb-2">
         <div class="col-12 col-md-4">
-            <h4 class="title-color">Gövde Tipi</h4>
+            <label class="fw-bold text-dark" class="title-color">Gövde Tipi</label>
             <select class="form-select" id="tabloname2" placeholder="">
                 <option selected></option>
                 <option>Gövdetipi1</option>
@@ -90,7 +93,7 @@
             </select>
         </div>
         <div class="col-12 col-md-4">
-            <h4 class="title-color">Yakıt Tipi</h4>
+            <label class="fw-bold text-dark" class="title-color">Yakıt Tipi</label>
             <select class="form-select" id="tabloname2" placeholder="">
                 <option selected></option>
                 <option>###</option>
@@ -99,7 +102,7 @@
             </select>
         </div>
         <div class="col-12 col-md-4">
-            <h4 class="title-color">Vites Tipi</h4>
+            <label class="fw-bold text-dark" class="title-color">Vites Tipi</label>
             <select class="form-select" id="tabloname2" placeholder="">
                 <option selected></option>
                 <option>###</option>
@@ -116,43 +119,26 @@
             <label class="fw-bold text-dark">Açıklama</label>
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
         </div>
-
-        <h4 class="title-color">Donanımlar </h4>
+        </div>
+        <div class="col-12 col-md-6">
+             <div class="p-3 border bg-light">
+        <label class="fw-bold text-dark" >Donanımlar </label>
         <select class="form-select" multiple aria-label="multiple select example">
             <option selected>Seçiniz..</option>
             <option value="1">Donanım1</option>
             <option value="2">Donanım2</option>
             <option value="3">Donanım3</option>
         </select>
+         </div>
     </div>
     </div>
 
    
-    <div class="col-6">
+    <div class="col-12 col-md-4">
         <div class="p-3 border bg-light">
             <label class="fw-bold text-dark">Fotoğraf Ekle</label>
             <input class="form-control" type="file" id="formFileMultiple" multiple>
         </div>
-    </div> <div class="col-6">
-        <div class="p-3 border bg-light">
-            <label class="fw-bold text-dark">Fotoğraf Ekle</label>
-            <input class="form-control" type="file" id="formFileMultiple" multiple>
-        </div>
-    </div> <div class="col-6">
-        <div class="p-3 border bg-light">
-            <label class="fw-bold text-dark">Fotoğraf Ekle</label>
-            <input class="form-control" type="file" id="formFileMultiple" multiple>
-        </div>
-    </div> <div class="col-6">
-        <div class="p-3 border bg-light">
-            <label class="fw-bold text-dark">Fotoğraf Ekle</label>
-            <input class="form-control" type="file" id="formFileMultiple" multiple>
-        </div>
-    </div> <div class="col-6">
-        <div class="p-3 border bg-light">
-            <label class="fw-bold text-dark">Fotoğraf Ekle</label>
-            <input class="form-control" type="file" id="formFileMultiple" multiple>
-        </div>
-    </div>
+    </div> 
 
 </div>
