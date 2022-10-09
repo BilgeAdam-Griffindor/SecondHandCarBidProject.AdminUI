@@ -1,5 +1,5 @@
 ﻿@using SecondHandCarBidProject.AdminUI.DTO
-@model CarDetailDto
+@model CarDetailAddDto
 
 @{
     Layout = "~/Views/Shared/AdminLayout.cshtml";
@@ -12,11 +12,11 @@
       </div>
   <div class="row gy-8">
 
-    <div class="col-12">
-      <div class="p-3 border bg-light text-justify" >
-          <div class="row text-center">
-              <div class="col">
-                  <label class="fw-bold text-dark">Bireysel/Kurumsal</label>
+            <div class="col-12">
+                <div class="p-3 border bg-light text-justify">
+                    <div class="row text-center">
+                        <div class="col">
+                            <label class="fw-bold text-dark">Bireysel/Kurumsal</label>
 
                    <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe" ></select>
               </div>
@@ -33,9 +33,9 @@
                   <input type="text" class="form-control"/>
               </div>
 
-          </div>
-          </div>
-    </div>
+                    </div>
+                </div>
+            </div>
 
     <div class="col-12">
       <div class="p-3 border bg-light text-justify">
@@ -138,6 +138,9 @@
   </div>
 
 
+
+                </div>
+            </div>
         </div>
     </div>
-    </form>
+</form>

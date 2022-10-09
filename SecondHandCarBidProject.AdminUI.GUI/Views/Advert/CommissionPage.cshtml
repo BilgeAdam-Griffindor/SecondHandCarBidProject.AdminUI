@@ -1,0 +1,102 @@
+﻿@using SecondHandCarBidProject.AdminUI.DTO
+@model ExampleDTO
+
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<form>
+    <div class="container overflow-hidden" style="margin-top:50px;">
+        <h4>Noter ve Komisyon Bilgileri</h4>
+
+
+        <div class="row text-center p-2">
+            <div class="p-3 border bg-light text-justify">
+                <div class="row text-center p-2">
+                    <label class="fw-bold text-dark">Bireysel Müşteriler İçin Komisyon Tutarı : </label>
+                    <p class="text-lowercase">Kurumsl müşteriler için komisyon ve noter ücreti hesaplanmamaktadır.</p>
+                </div>
+                <br />
+                <br />
+
+@*                <div class="row col-6 ">
+                    <label class="fw-bold text-dark">Bireysel Müşteriler İçin Komisyon Tutarı : </label>
+                    <br />
+                    <div class="form-group col-md-6">
+                        <label for="mintutar">Minimum Tutarı Girin</label>
+                        <input type="datetime" class="form-control" id="mintutar" placeholder="">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="makstutar">Maksimum Tutarı Girin</label>
+                        <input type="datetime" class="form-control" id="makstutar" placeholder="">
+                    </div>
+                    <br />
+                    <div>
+                        <a class="col-md-3 btn btn-secondary car-detail-button">Hesapla</a>
+                    </div>
+                    <br />
+                    <form class="form-inline">
+                        <div class="form-group mb-2">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="tutar" class="sr-only">000,00</label>
+                            <input type="text" class="form-control" id="tutar" placeholder="000,00">
+                        </div>
+                    </form>
+
+
+                </div>
+*@
+                <div class="row text-center p-2">
+                    <label class="fw-bold text-dark">Bireysel Müşteriler İçin Komisyon Tutarı : </label>
+                    <div class="form-group col-md-6">
+                        <label for="mintutar">Minimum Tutarı Girin</label>
+                        <input type="datetime" class="form-control" id="mintutar" placeholder="">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="makstutar">Maksimum Tutarı Girin</label>
+                        <input type="datetime" class="form-control" id="makstutar" placeholder="">
+                    </div>
+                    <div class="input-group mb-3">
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon1">Hesapla</button>
+                        <input type="text" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                    </div>
+@*                    <div class ="form-group col-md-6">
+                        <a class="col-md-3 btn btn-secondary car-detail-button">Hesapla</a>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Tutar : </span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>*@
+
+                </div>
+
+                <div class="row text-center p-2">
+                    <label class="fw-bold text-dark">Bireysel Müşteriler İçin Noter Tutarı : </label>
+                    <div class="form-group col-md-6">
+                        <label for="mintutar">Minimum Tutarı Girin</label>
+                        <input type="datetime" class="form-control" id="mintutar" placeholder="">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="makstutar">Maksimum Tutarı Girin</label>
+                        <input type="datetime" class="form-control" id="makstutar" placeholder="">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="mintutar">Başlangıç Tarihini Girin</label>
+                        <input type="datetime" class="form-control" id="mintutar" placeholder="">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="makstutar">Bitiş Tarihini Girin</label>
+                        <input type="datetime" class="form-control" id="makstutar" placeholder="">
+                    </div>
+                    <div class="input-group mb-3">
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon1">Hesapla</button>
+                        <input type="text" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                    </div>
+
+                </div>
+
+               
+            </div>
+        </div>
+    </div>
+</form>

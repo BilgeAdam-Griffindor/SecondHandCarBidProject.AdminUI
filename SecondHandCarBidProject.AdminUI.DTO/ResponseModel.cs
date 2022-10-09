@@ -1,6 +1,7 @@
-﻿using SecondHandCarBidProject.AdminUI.DTO.Validation;
+﻿using SecondHandCarBidProject.AdminUI.DTO;
+using SecondHandCarBidProject.AdminUI.DTO.Validation;
 
-    namespace SecondHandCarBidProject.AdminUI.DTO
+namespace SecondHandCarBidProject.AdminUI.DTO
 {
     public class ResponseModel<T>
     {

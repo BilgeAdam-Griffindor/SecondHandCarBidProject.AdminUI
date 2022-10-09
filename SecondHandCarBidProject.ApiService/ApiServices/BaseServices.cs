@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SecondHandCarBidProject.AdminUI.DTO;
 using SecondHandCarBidProject.ApiService.Dto_s;
 using System;
 using System.Collections.Generic;
@@ -20,21 +21,24 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             _client = client;
         }
 
-        public async Task<ResponseModel<List<T>>> ListAll<T>(string route)
+        public async Task<ResponseModel<List<T>>> ListAll<T>(string route, string token)
         {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
             var response = await _client.GetFromJsonAsync<ResponseModel<List<T>>>(route);
             return response;
         }
 
-        public async Task<ResponseModel<T>> GetByIdAsync<T>(object id, string route)
+        public async Task<ResponseModel<T>> GetByIdAsync<T>(object id, string route, string token)
         {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
             var response = await _client.GetFromJsonAsync<ResponseModel<T>>(route);
             return response;
 
         }
 
-        public async Task<ResponseModel<T>> SaveAsync<T>(T data, string name)
+        public async Task<ResponseModel<T>> SaveAsync<T>(T data, string name, string token)
         {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
             var response = await _client.PostAsJsonAsync(name, data);
             if (!response.IsSuccessStatusCode)
             {
@@ -44,14 +48,16 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             return responseBody;
         }
 
-        public async Task<bool> UpdateAsync<T>(T data, string name)
+        public async Task<bool> UpdateAsync<T>(T data, string name, string token)
         {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
             var response = await _client.PutAsJsonAsync(name, data);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> RemoveAsync<T>(object id,string route)
+        public async Task<bool> RemoveAsync<T>(object id,string route, string token)
         {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
             var response = await _client.DeleteAsync(route);
             return response.IsSuccessStatusCode;
         }

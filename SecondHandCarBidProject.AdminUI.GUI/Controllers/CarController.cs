@@ -112,7 +112,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public IActionResult CarDetailInformation()
         {
-            CarDetailDto carDetailDto = new CarDetailDto();
+            CarDetailAddDto carDetailDto = new CarDetailAddDto();
             //carDetailDto.selectItemList = new List<SelectListItem> { new SelectListItem { Text = "Bireysel", Value = "1" }, new SelectListItem { Text = "Kurumsal", Value = "2" } };
             carDetailDto.BireyselKurumsalListe = new List<SelectListItem>
             {
@@ -125,6 +125,12 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpPost]
         public IActionResult CarDetailInformation(string deneme)
         {
+            return View();
+        }
+
+        public async Task<IActionResult> CarSave()//CarDTO carDTO
+        {
+
             return View();
         }
     }

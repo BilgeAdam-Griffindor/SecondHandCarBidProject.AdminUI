@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SecondHandCarBidProject.AdminUI.DTO
 {
-    public class CarDetailDto
+    public class CarDetailAddDto
     {
         public List<SelectListItem> BireyselKurumsalListe { get; set; }
         public int BireyselKurumsalId { get; set; }
