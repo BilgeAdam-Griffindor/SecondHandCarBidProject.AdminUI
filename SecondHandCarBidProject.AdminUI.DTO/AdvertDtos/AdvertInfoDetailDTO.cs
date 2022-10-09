@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO.AdvertDtos
 {
-    public record AdvertListDto(Guid Id,Guid CarId,string CarName,string AdvertTitle,string AdvertDescription,DateTime createdDate)
+    public record AdvertInfoDetailDTO()
     {
     }
 }

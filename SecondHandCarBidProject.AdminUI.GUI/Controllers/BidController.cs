@@ -23,7 +23,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> BidAdd(BidAddDTO bidAddDTO)
+        public async Task<IActionResult> BidAdd(BidAddDto bidAddDTO)
         {
             if (String.IsNullOrEmpty(bidAddDTO.BidName))
             {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO.AddressDtos
 {
-    public record AddressInfoSelectDTO(int Id, string AddressName, int TopAddressInfoId, string AddressTypeName, bool IsActive)
+    public record AddressInfoSelectDTO(int Id, string AddressName, string AddressTypeName, bool IsActive,List<OnlyAddressInfoDto> TopAddresses)
     {
     }
 }

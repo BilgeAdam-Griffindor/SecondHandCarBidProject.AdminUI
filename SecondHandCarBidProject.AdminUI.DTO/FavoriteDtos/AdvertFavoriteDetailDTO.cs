@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO.FavoriteDtos
 {
-    public record AdvertFavoriteDetailDTO(Guid BaseUserID,string UserName,List<AdvertListDto> AdverLists)
+    public record AdvertFavoriteDetailDTO(Guid BaseUserID,string UserName,List<AdvertInfoListDto> AdverLists)
     {
     }
 }

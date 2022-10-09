@@ -17,7 +17,7 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
         {
             _client = client;
         }
-        public async Task<bool> BiddAddAsync(BidAddDTO bidAddDto)
+        public async Task<bool> BiddAddAsync(BidAddDto bidAddDto)
         {
             var body = new StringContent(JsonConvert.SerializeObject(bidAddDto));
             body.Headers.ContentType = new MediaTypeHeaderValue("application/json");
