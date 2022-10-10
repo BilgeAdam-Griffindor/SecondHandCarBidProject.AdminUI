@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO.UserDtos
 {
-    public record BaseUserAddDTO(string FirstName,string SurName,string UserName,string Password,string Email)
+    public record BaseUserAddDTO(string FirstName,string SurName,string UserName,string Password,string Email,bool IsApproved)
     {
     }
 }
