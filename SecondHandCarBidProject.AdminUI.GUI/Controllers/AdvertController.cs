@@ -15,7 +15,20 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AdvertAdd(AdvertAddDTO data)
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult AdvertUpdate(int id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AdvertUpdate(AdvertUpdateDTO data)
         {
             return View();
         }

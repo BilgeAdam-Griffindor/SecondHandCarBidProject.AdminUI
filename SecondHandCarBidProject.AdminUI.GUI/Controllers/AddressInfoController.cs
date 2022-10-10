@@ -10,12 +10,26 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             return View();
         }
         [HttpGet]
+       
         public IActionResult AddressInfoAdd()
         {
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddressInfoAdd(AddressInfoAdd data)
+        {
+            return View();
+        }
+
+        [HttpGet] 
+        public IActionResult UpdateAddressInfo(int id)
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdateAddressInfo(AddressInfoAdd data)
         {
             return View();
         }
