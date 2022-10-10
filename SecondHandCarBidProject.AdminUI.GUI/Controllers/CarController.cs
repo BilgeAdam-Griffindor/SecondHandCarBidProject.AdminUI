@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using SecondHandCarBidProject.AdminUI.DTO;
-using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
-
-namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
+﻿namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
     public class CarController : Controller
     {
