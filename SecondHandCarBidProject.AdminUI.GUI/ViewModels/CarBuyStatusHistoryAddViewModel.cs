@@ -2,7 +2,7 @@
 
 namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
 {
-    public class CarBuyHistoryAddViewModel
+    public class CarBuyStatusHistoryAddViewModel
     {
         public Guid CarBuyId { get; set; }
         public int StatusValueId { get; set; }

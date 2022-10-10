@@ -1,14 +1,14 @@
 ﻿namespace SecondHandCarBidProject.AdminUI.DTO
 {
-    public record CarBuyListTableRowDTO(
+    public record CarBuyAdditionalFeeTableRowDTO(
         Guid Id,
         string BrandName,
         string ModelName,
         decimal PreValuationPrice,
         decimal BidPrice,
-        string Status,
-        string CarOwner,
+        string CarOwnerUser,
+        decimal NotaryFee,
+        decimal CommissionFee,
         DateTime CreatedDate
         );
-
 }

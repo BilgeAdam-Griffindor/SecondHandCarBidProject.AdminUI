@@ -1,0 +1,99 @@
+﻿@using SecondHandCarBidProject.AdminUI.DTO
+@model CarBuyAddViewModel
+
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<div class="tooltip">
+    <h4><i class="fa-solid fa-lg fa-circle-info"></i>Satış Ekleme</h4>
+    <span class="tooltiptext">Bu sayfa admin için gereklidir. Satış buradan eklenebilir.</span>
+</div>
+<div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
+    <form asp-action="Add" method="post">
+        <div class="row justify-content-end m-2 mb-2">
+            <div class="col align-self-end">
+                <button class=" m-2 p-2 button-29">KAYDET</button>
+            </div>
+        </div>
+
+        <div class="row text-center p-2">
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Marka Listesi</label>
+                <select class="form-select" asp-for="CarBrandId" asp-items="@Model.BrandList">
+                </select>
+            </div>
+
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Model Listesi</label>
+                <select class="form-select" asp-for="CarModelId" asp-items="@Model.ModelList">
+                </select>
+            </div>
+
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Gövde Tipi</label>
+                <select class="form-select" asp-for="BodyTypeId" asp-items="@Model.BodyTypeList">
+                </select>
+            </div>
+        </div>
+
+        <div class="row text-center p-2">
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Yakıt Tipi</label>
+                <select class="form-select" asp-for="FuelTypeId" asp-items="@Model.FuelTypeList">
+                </select>
+            </div>
+
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Vites Tipi</label>
+                <select class="form-select" asp-for="GearTypeId" asp-items="@Model.GearTypeList">
+                </select>
+            </div>
+
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Versiyon</label>
+                <select class="form-select" asp-for="VersionId" asp-items="@Model.VersionList">
+                </select>
+            </div>
+        </div>
+
+        <div class="row text-center p-2">
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Renk</label>
+                <select class="form-select" asp-for="ColorId" asp-items="@Model.ColorList">
+                </select>
+            </div>
+
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Araç Yılı</label>
+                <select class="form-select" asp-for="CarYear">
+                    @for (int i = DateTime.Now.Year; i > 1950; i--)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Kilometre</label>
+                <input type="text" class="form-control" asp-for="Kilometre">
+            </div>
+        </div>
+
+        <div class="row text-center p-2">
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Opsiyonel Donanım</label>
+                <select class="form-control" multiple asp-for="OptionalHardwareIds" asp-items="@Model.OptionalHardwareList"></select>
+            </div>
+
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Fotoğraf Ekle</label>
+                <input class="form-control" type="file" asp-for="CarImages" accept="image/png, image/jpeg" multiple>
+            </div>
+
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Açıklama</label>
+                <textarea class="form-control" rows="3" asp-for="CarDescription"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
