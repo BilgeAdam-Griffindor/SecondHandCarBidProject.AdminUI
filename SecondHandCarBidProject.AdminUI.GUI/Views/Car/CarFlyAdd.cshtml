@@ -1,0 +1,108 @@
+﻿@using SecondHandCarBidProject.AdminUI.DTO.CarDetailDtos
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model CarListDTO
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+
+}
+
+
+
+<form asp-action="CarFlyAdd" method="post" style="margin-top:10px;">
+    <div class="row gy-8">
+        @foreach (var item in @Model.GetType().GetProperties().ToList())
+        {
+            foreach (var itemdto in item.GetValue(Model).GetType().GetProperties().ToList())
+            {
+                Console.WriteLine(item);
+                if (@itemdto.PropertyType == typeof(string))
+                {
+                    <div class="col-12 ">
+                        <div class="p-3 border bg-light text-justify">
+                            <div class="row text-center">
+                                <div class="col">
+                                    <label class="fw-bold text-dark">@itemdto.Name:</label>
+                                    <input type="text" class="form-control" name="@itemdto.Name" asp-for="@itemdto.Name" value="" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                }
+                if (@itemdto.PropertyType == typeof(DateTime))
+                {
+                    <div class="col-12 ">
+                        <div class="p-3 border bg-light text-justify">
+                            <div class="row text-center">
+                                <div class="col">
+                                    <label class="fw-bold text-dark">@itemdto.Name:</label>
+                                    <input type="datetime-local" class="form-control" asp-for="@itemdto.Name" value="" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                }
+                if (@itemdto.PropertyType == typeof(Boolean))
+                {
+                    <div class="col-12 ">
+                        <div class="p-3 border bg-light text-justify">
+                            <div class="row text-center">
+                                <div class="col">
+                                    <label class="fw-bold text-dark">@itemdto.Name:</label>
+                                    <input type="radio" asp-for="@itemdto.Name" name="@itemdto.Name" value="" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                }
+                if (@itemdto.PropertyType == typeof(int))
+                {
+                    <div class="col-12 ">
+                        <div class="p-3 border bg-light text-justify">
+                            <div class="row text-center">
+                                <div class="col">
+                                    <label class="fw-bold text-dark">@itemdto.Name:</label>
+                                    <select class="dropdown form-control" asp-for="@itemdto.Name" asp-items="@null">
+                                        <option value="@null">Boş</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                }
+                if (itemdto.PropertyType.IsGenericType)
+                {
+
+                    <div class="col-12 ">
+                        <div class="p-3 border bg-light text-justify">
+                            <div class="row text-center">
+                                <div class="col">
+                                    <label class="fw-bold text-dark">@itemdto.Name:</label>
+                                    <select class="form-control" asp-for="@itemdto.Name" asp-items="@null">
+                                        <option value="@null">Boş</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                }
+            }
+        }
+
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-12">
+            <input class="btn btn-success float-right" type="submit" value="Listele" />
+        </div>
+    </div>
+</form>

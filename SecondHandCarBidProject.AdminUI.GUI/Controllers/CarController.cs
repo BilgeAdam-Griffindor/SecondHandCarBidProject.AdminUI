@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SecondHandCarBidProject.AdminUI.DTO;
+using SecondHandCarBidProject.AdminUI.DTO.CarDetailDtos;
 using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
+using static SecondHandCarBidProject.AdminUI.DTO.FlyPageFactory;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
@@ -125,6 +127,70 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpPost]
         public IActionResult CarDetailInformation(string deneme)
         {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult CarFly(int id)
+
+        {
+            //CarListDTO carListDTO = null;
+            //CarPropertyDTO carPropertyDTO = new CarPropertyDTO()
+            //{
+            //    CarId = Guid.NewGuid(),
+            //    CarPropertyValueId = 1,
+            //    CarPropertyValues = null,
+            //    Cars = null,
+            //    CreatedBy = 1,
+            //    ModifiedBy = 1,
+            //    IsActive = true,
+            //    CreatedDate = DateTime.Now,
+            //    ModifiedDate = DateTime.Now,
+            //};
+            //CarPropertyValueDTO carPropertyValue = new CarPropertyValueDTO()
+            //{
+            //    Id = Guid.NewGuid(),
+            //    IsActive = false,
+            //    PropertValue = "Dizel",
+            //    TopPropertyValueId = Guid.NewGuid()
+            //};
+            //if (id == "carpro")
+            //{
+            //    carListDTO = new CarListDTO()
+            //    {
+            //        GetDto = carPropertyDTO
+            //    };
+            //}
+            //else
+            //{
+            //    carListDTO = new CarListDTO()
+            //    {
+            //        GetDto = carPropertyValue
+            //    };
+            //}
+
+            FlyPageFactory flyPageFactory = new FlyPageFactory();
+
+            CarListDTO carListDTO = new CarListDTO();
+            carListDTO.GetDto = flyPageFactory.CreatePage((PageSelectTable)id);
+            return View(carListDTO);
+        }
+        [HttpGet]
+        public IActionResult CarFlyAdd(string id)
+        {
+            CarListDTO carListDTO = null;
+            if (id == "carproadd")
+            {
+                carListDTO = new CarListDTO()
+                {
+                    GetDto = new CarPropertyDTO()
+                };
+            }
+            return View(carListDTO);
+        }
+        [HttpPost]
+        public IActionResult CarFlyAdd(CarListDTO carListDTO)
+        {
+
             return View();
         }
     }

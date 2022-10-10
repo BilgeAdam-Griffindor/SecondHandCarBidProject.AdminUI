@@ -7,21 +7,46 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+    <Compile Remove="AdditionalFeeDtos\**" />
+    <Compile Remove="AddressDtos\**" />
+    <Compile Remove="AuthorizationDtos\**" />
+    <Compile Remove="BidDtos\**" />
+    <Compile Remove="CarDetailDtos - Copy\**" />
+    <Compile Remove="CorporationDtos\**" />
+    <Compile Remove="ExpertDtos\**" />
+    <Compile Remove="FavoriteDtos\**" />
+    <Compile Remove="NotificationDtos\**" />
+    <Compile Remove="StatusDtos\**" />
+    <Compile Remove="TrafficInsuranceDto\**" />
+    <Compile Remove="UserDtos\**" />
+    <EmbeddedResource Remove="AdditionalFeeDtos\**" />
+    <EmbeddedResource Remove="AddressDtos\**" />
+    <EmbeddedResource Remove="AuthorizationDtos\**" />
+    <EmbeddedResource Remove="BidDtos\**" />
+    <EmbeddedResource Remove="CarDetailDtos - Copy\**" />
+    <EmbeddedResource Remove="CorporationDtos\**" />
+    <EmbeddedResource Remove="ExpertDtos\**" />
+    <EmbeddedResource Remove="FavoriteDtos\**" />
+    <EmbeddedResource Remove="NotificationDtos\**" />
+    <EmbeddedResource Remove="StatusDtos\**" />
+    <EmbeddedResource Remove="TrafficInsuranceDto\**" />
+    <EmbeddedResource Remove="UserDtos\**" />
+    <None Remove="AdditionalFeeDtos\**" />
+    <None Remove="AddressDtos\**" />
+    <None Remove="AuthorizationDtos\**" />
+    <None Remove="BidDtos\**" />
+    <None Remove="CarDetailDtos - Copy\**" />
+    <None Remove="CorporationDtos\**" />
+    <None Remove="ExpertDtos\**" />
+    <None Remove="FavoriteDtos\**" />
+    <None Remove="NotificationDtos\**" />
+    <None Remove="StatusDtos\**" />
+    <None Remove="TrafficInsuranceDto\**" />
+    <None Remove="UserDtos\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BidDtos\" />
-    <Folder Include="AddressDtos\" />
-    <Folder Include="CorporationDtos\" />
-    <Folder Include="ExpertDtos\" />
-    <Folder Include="AuthorizationDtos\" />
-    <Folder Include="FavoriteDtos\" />
-    <Folder Include="AdditionalFeeDtos\" />
-    <Folder Include="TrafficInsuranceDto\" />
-    <Folder Include="StatusDtos\" />
-    <Folder Include="NotificationDtos\" />
-    <Folder Include="UserDtos\" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
   </ItemGroup>
 
 </Project>
