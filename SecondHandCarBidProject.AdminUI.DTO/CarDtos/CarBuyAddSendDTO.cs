@@ -6,7 +6,6 @@
         string CarDescription,
         short CarBrandId,
         int CarModelId,
-        int StatusId,
         Guid BodyTypeId,
         Guid FuelTypeId,
         Guid GearTypeId,

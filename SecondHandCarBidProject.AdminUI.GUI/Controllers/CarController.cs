@@ -16,7 +16,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
             //Convert response to ViewModel
             CarListViewModel carListViewModel = new CarListViewModel();
-            carListViewModel.CarTableRows = new List<CarListTableRowDTO>();
+            carListViewModel.TableRows = new List<CarListTableRowDTO>();
 
             //TODO which is better?
             //carListViewModel.CarTableRows = carListPageDTO.CarTableRows; //Method 1
@@ -70,7 +70,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             carListViewModel.ItemPerPage = carListView.ItemPerPage;
 
             //TODO which is better?
-            carListViewModel.CarTableRows = carListPageDTO.CarTableRows; //Method 1
+            carListViewModel.TableRows = carListPageDTO.CarTableRows; //Method 1
             //carListViewModel.CarTableRows = new List<CarListTableRowDTO>(carListPageDTO.CarTableRows); //Method 2
 
             carListViewModel.BrandList = carListPageDTO.BrandList.Select(x => new SelectListItem()

@@ -3,7 +3,7 @@ using SecondHandCarBidProject.AdminUI.DTO;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
 {
-    public class CarListViewModel
+    public class CarBuyListViewModel
     {
         public int? BrandId { get; set; }
         public List<SelectListItem> BrandList { get; set; }
@@ -14,7 +14,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
         public int? StatusId { get; set; }
         public List<SelectListItem> StatusList { get; set; }
 
-        public List<CarListTableRowDTO> TableRows { get; set; }
+        public List<CarBuyListTableRowDTO> TableRows { get; set; }
 
         public int Page { get; set; }
         public int ItemPerPage { get; set; }

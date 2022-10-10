@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
 
+<!--TODO fix style-->
 <form asp-action="Index" method="post" style="margin-top:10px;">
     <div class="row">
         <div class="col-12 col-md-4">
@@ -35,36 +36,59 @@
     </div>
 </form>
 
-<div class="p-3" style="margin-top:10px;box-shadow: 6px 15px 30px #575757; background-color:#ffff ">
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th>Araç Id</th>
-                <th style="padding-left:1rem">Araç Marka</th>
-                <th style="padding-left:1rem">Araç Model</th>
-                <th style="padding-left:1rem">Statü</th>
-                <th style="padding-left:1rem">Kaydeden Kullanıcı</th>
-                <th style="padding-left:1rem">Kaydetme Zamanı</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.CarTableRows)
-            {
+<div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
+    <div class="tooltip">
+        <h4><i class="fa-solid fa-lg fa-circle-info"></i> Araç Listesi</h4>
+        <span class="tooltiptext">Sistemdeki araçlar buradan görülebilir.</span>
+    </div>
+    <a asp-action="Add" class="m-2 p-2 button-add"><i class="fa-solid fa-plus"></i>&nbsp;Ekle</a>
+
+</div>
+<div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
+    <div class="table-responsive">
+        <table class="table-bordered table-custom-css">
+            <thead class="thead color-gradient" style="color: #ffff;">
                 <tr>
-                    <td>@item.CarId</td>
-                    <td style="padding-left:1rem">@item.CarBrandName</td>
-                    <td style="padding-left:1rem">@item.CarModelName</td>
-                    <td style="padding-left:1rem">@item.Status</td>
-                    <td style="padding-left:1rem">@item.UserFullName</td>
-                    <td style="padding-left:1rem">@item.RegisterDate</td>
-                    <td style="padding-left:1rem">
-                        <a asp-action="UpdateCar" asp-route-carId="@item.CarId">Güncelle</a>
-                    </td>
-                    <td style="padding-left:1rem">
-                        <a asp-action="Delete Car" asp-route-carId="@item.CarId">Sil</a>
-                    </td>
+                    <th scope="col">Araç Id</th>
+                    <th scope="col">Araç Marka</th>
+                    <th scope="col">Araç Model</th>
+                    <th scope="col">Durum</th>
+                    <th scope="col">Kaydeden Kullanıcı</th>
+                    <th scope="col">Kaydetme Zamanı</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.TableRows)
+                {
+                    <tr>
+                        <td>@item.CarId</td>
+                        <td>@item.CarBrandName</td>
+                        <td>@item.CarModelName</td>
+                        <td>@item.Status</td>
+                        <td>@item.UserFullName</td>
+                        <td>@item.RegisterDate</td>
+                        <td> <a asp-action="UpdateCar" asp-route-id="@item.CarId" class=" m-2 p-2 button-gnc"><i class="fas fa-edit"></i>&nbsp;GÜNCELLE</a></td>
+                        <td> <a asp-action="DeleteCar" asp-route-carId="@item.CarId" class=" m-2 p-2 button-delete"><i class="far fa-trash-alt"></i>&nbsp;SİL</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="p-2 d-flex justify-content-center align-items-end m-2 ">
+            <nav aria-label="...">
+                <ul class="pagination">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
 </div>
