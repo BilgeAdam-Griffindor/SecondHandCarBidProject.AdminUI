@@ -23,12 +23,24 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> BidAdd(BidAddDto bidAddDTO)
         {
             if (String.IsNullOrEmpty(bidAddDTO.BidName))
             {
                 await _bidApiServices.BiddAddAsync(bidAddDTO);
             }
+            return View();
+        }
+        [HttpGet]
+        public IActionResult BidUpdate(Guid id)
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult BidUpdate(BidUpdateDTO data)
+        {
             return View();
         }
     }
