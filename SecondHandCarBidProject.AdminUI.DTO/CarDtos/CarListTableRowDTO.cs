@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO
 {
-    public class CarListTableRowDTO
-    {
-        public int CarId { get; set; }
-        public string CarBrandName { get; set; }
-        public string CarModelName { get; set; }
-        public string Status { get; set; }
-        public string UserName { get; set; }
-        public DateTime RegisterDate { get; set; }
-    }
+    public record CarListTableRowDTO(
+        Guid CarId,
+        string CarBrandName,
+        string CarModelName,
+        string Status,
+        string UserFullName,
+        DateTime RegisterDate
+        );
 }

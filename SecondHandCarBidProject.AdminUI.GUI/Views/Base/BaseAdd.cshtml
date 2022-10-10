@@ -1,0 +1,74 @@
+﻿@using SecondHandCarBidProject.AdminUI.DTO
+@model ExampleDTO
+
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<div class="tooltip">
+      <h4><i class="fa-solid fa-lg fa-circle-info"></i>Araç Detay Bilgileri</h4>
+      <span class="tooltiptext">Bu sayfa admin için gereklidir. Aaraba detayları burada halledilir</span>
+      </div>
+<div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
+            <form asp-action="Save" method="get" asp-controller="Base">
+
+    <h2 style="text-align:center; color:#002244;font-weight:bold;" class="m-2 p-2 big-title-color">Ekleme Yapılacak Alan Adı</h2>
+    <div class="row text-center p-2">
+           @* <div class="form-group">
+                <label asp-for="..."></label>
+                <input asp-for="..." class="form-control" />
+            </div>*@
+        <div class="col-12 col-md-4 form-group">
+            <label class="fw-bold text-dark">Ekleme Yapılacak Alan Adı</label>
+            <input  type="text" class="form-control" id="tabloname">
+        </div>
+        <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">
+                    Ekleme Yapılacak Alan Adı</label>
+            <input type="text" class="form-control" id="tabloname">
+        </div>
+
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Selected 1</label>
+            <select class="form-select" id="tabloname1" placeholder="">
+                <option selected></option>
+                <option>###</option>
+                <option>###</option>
+            </select>
+        </div>
+    </div>
+        <div class="row text-center mt-3 p-2 mb-2 form-group">
+        <div class="col-12 col-md-4">
+                <label class="fw-bold text-dark">
+                    DateTime1</label>
+            <input class="form-control" type="datetime-local" id="DateTime1">
+        </div>
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">
+                    DateTime2</label>
+            <input class="form-control" type="datetime-local" id="DateTime2">
+        </div>
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">
+                    Selected 2</label>
+            <select class="form-select" id="tabloname2" placeholder="">
+                <option selected></option>
+                <option>###</option>
+                <option>###</option>
+
+            </select>
+        </div>
+    </div>
+        <div class="col-12 col-md-4 form-group">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                <label class="fw-bold text-dark">1.Seçenek</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                <label class="fw-bold text-dark">1.Seçenek</label>
+
+        </div>
+
+    </div>
+    </form>
+</div>

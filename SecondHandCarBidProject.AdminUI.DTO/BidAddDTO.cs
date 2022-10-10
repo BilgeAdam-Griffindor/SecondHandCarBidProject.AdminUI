@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SecondHandCarBidProject.ApiService.Dto_s
+namespace SecondHandCarBidProject.AdminUI.DTO
 {
     public class BidAddDTO
     {

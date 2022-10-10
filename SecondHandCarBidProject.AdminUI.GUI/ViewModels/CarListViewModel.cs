@@ -14,7 +14,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
         public int? StatusId { get; set; }
         public List<SelectListItem> StatusList { get; set; }
 
-        public List<CarListTableRowDTO> CarTableRows { get; set; }
+        public List<CarListTableRowDTO> TableRows { get; set; }
 
         public int Page { get; set; }
         public int ItemPerPage { get; set; }

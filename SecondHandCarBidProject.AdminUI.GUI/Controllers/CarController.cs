@@ -1,11 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using SecondHandCarBidProject.AdminUI.DTO;
-using SecondHandCarBidProject.AdminUI.DTO.CarDetailDtos;
-using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
-using static SecondHandCarBidProject.AdminUI.DTO.FlyPageFactory;
-
-namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
+﻿namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
     public class CarController : Controller
     {
@@ -14,11 +7,11 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         {
             //TODO Lists might be cached to avoid requesting same lists again and again
             //TODO call api and get response as CarListPageDTO
-            CarListPageDTO carListPageDTO = new CarListPageDTO();
+            CarListPageDTO carListPageDTO = new CarListPageDTO(null, null, null, null);
 
             //Convert response to ViewModel
             CarListViewModel carListViewModel = new CarListViewModel();
-            carListViewModel.CarTableRows = new List<CarListTableRowDTO>();
+            carListViewModel.TableRows = new List<CarListTableRowDTO>();
 
             //TODO which is better?
             //carListViewModel.CarTableRows = carListPageDTO.CarTableRows; //Method 1
@@ -64,7 +57,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
             //TODO Lists might be cached and then we just need to get the filtered items
             //TODO call api and get response as CarListPageDTO, this time with queryString as filter
-            CarListPageDTO carListPageDTO = new CarListPageDTO();
+            CarListPageDTO carListPageDTO = new CarListPageDTO(null, null, null, null);
 
             //Convert response to ViewModel
             CarListViewModel carListViewModel = new CarListViewModel();
@@ -72,7 +65,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             carListViewModel.ItemPerPage = carListView.ItemPerPage;
 
             //TODO which is better?
-            carListViewModel.CarTableRows = carListPageDTO.CarTableRows; //Method 1
+            carListViewModel.TableRows = carListPageDTO.CarTableRows; //Method 1
             //carListViewModel.CarTableRows = new List<CarListTableRowDTO>(carListPageDTO.CarTableRows); //Method 2
 
             carListViewModel.BrandList = carListPageDTO.BrandList.Select(x => new SelectListItem()
@@ -114,7 +107,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public IActionResult CarDetailInformation()
         {
-            CarDetailDto carDetailDto = new CarDetailDto();
+            CarDetailAddDto carDetailDto = new CarDetailAddDto();
             //carDetailDto.selectItemList = new List<SelectListItem> { new SelectListItem { Text = "Bireysel", Value = "1" }, new SelectListItem { Text = "Kurumsal", Value = "2" } };
             carDetailDto.BireyselKurumsalListe = new List<SelectListItem>
             {
