@@ -2,8 +2,8 @@
 
 namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
 {
-    public class CarBrandListViewModel
-    {
-        public List<CarBrandListTableRow> TableRows { get; set; }
-    }
+    public record CarBrandListViewModel
+    (
+        List<CarBrandListTableRow> TableRows
+    );
 }

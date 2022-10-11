@@ -2,8 +2,8 @@
 
 namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
 {
-    public class CarBuyStatusHistoryListViewModel
-    {
-        public List<CarBuyStatusHistoryTableRow> TableRows { get; set; }
-    }
+    public record CarBuyStatusHistoryListViewModel
+    (
+        List<CarBuyStatusHistoryTableRow> TableRows
+    );
 }
