@@ -18,5 +18,34 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult TypeAdd()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult TypeUpdate(string id)
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Value()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult ValueAdd()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult ValueUpdate(string id)
+        {
+            return View();
+        }
+
+
     }
 }
