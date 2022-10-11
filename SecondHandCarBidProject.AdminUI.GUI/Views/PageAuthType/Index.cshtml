@@ -1,6 +1,5 @@
 ﻿
-@model List<StatusTypeDto>
-
+@model List<PageAuthTypeDto>
 @{
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
@@ -8,18 +7,18 @@
 
 
 <div class="col-12 col-md-3">
-    <h4 data-bs-toggle="tooltip" data-bs-placement="top" title="Statü tip bilgileri burada hallediliyor"><i class="fa-solid fa-circle-info"></i>&nbsp;Statü Tip Bilgileri</h4>
+    <h4 data-bs-toggle="tooltip" data-bs-placement="top" title="Sayfa Yetki Bilgileri burada yapılıyor"><i class="fa-solid fa-circle-info"></i>&nbsp;Sayfa Yetki Bilgileri</h4>
     </div>
 
 
 <div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
     <div class="row text-center p-2">
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-3">
     <a href="#" class="m-2 p-2 button-add"><i class="fa-solid fa-plus"></i>&nbsp;Ekle</a>
     </div>
     <div class="col-12 col-md-4">
         
-        <input type="text" class=" m-2 p-2 form-control search-input-custom" placeholder="Statü Tipi Ara"/>
+        <input type="text" class=" m-2 p-2 form-control" placeholder="Statü Tipi Ara"/>
     </div>
     <div class="col-12 col-md-4">
         
