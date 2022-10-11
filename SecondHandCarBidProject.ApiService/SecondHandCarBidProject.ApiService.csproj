@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SecondHandCarBidProject.AdminUI.DTO\SecondHandCarBidProject.AdminUI.DTO.csproj" />
+    <ProjectReference Include="..\SercondHandCarBidProject.Logging\SercondHandCarBidProject.Logging.csproj" />
   </ItemGroup>
 
 </Project>
