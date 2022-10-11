@@ -6,6 +6,6 @@
         Guid BaseUserId,
         Guid BidId,
         string Explanation,
-        Guid CreatedBy
+        Guid ModifiedBy
         );
 }

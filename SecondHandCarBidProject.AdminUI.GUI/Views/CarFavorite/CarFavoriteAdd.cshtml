@@ -1,0 +1,31 @@
+﻿@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<div class="tooltip">
+    <h4><i class="fa-solid fa-lg fa-circle-info"></i>Satış Durum Ekleme</h4>
+    <span class="tooltiptext">Bu sayfa admin için gereklidir. Satışlara durum buradan eklenebilir.</span>
+</div>
+<div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
+    <form asp-action="CarPropertyAdd" method="post">
+        <div class="row justify-content-end m-2 mb-2">
+            <div class="col align-self-end">
+                <button class=" m-2 p-2 button-29">KAYDET</button>
+            </div>
+        </div>
+
+        <div class="row text-center p-2">
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Araba Listesi</label>
+                <!--TODO FIX-->
+                @*<select class="form-select" asp-for="" asp-items="">
+                </select>*@
+            </div>
+
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Kullanıcı Listesi</label>
+                @*<select class="form-select" asp-for="" asp-items="">
+                </select>*@
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,93 @@
+﻿@using SecondHandCarBidProject.AdminUI.DTO
+@using SecondHandCarBidProject.AdminUI.GUI.ViewModels
+@model ExpertInfoAddViewModels
+
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
+
+    <h4 data-bs-toggle="tooltip" data-bs-placement="top" title="Bu Sayfada Ekspertizler ve Bilgileri Listelenir" style="
+        text-align: center">
+        <i class="fa-solid fa-circle-info"></i>&nbsp;Ekspertix Bilgi Ekranı
+    </h4>
+
+    <div class="col-12 col-md-4 form-group ">
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table-bordered table-custom-css">
+            <thead class="thead color-gradient" style="color: #ffff;">
+                <tr>
+
+                    <th scope="col">Merkez Adı</th>
+                    <th scope="col">Adres Bilgisi</th>
+                    <th scope="col">Ekspert'in Adresi</th>
+                    <th scope="col">Boylam</th>
+                    <th scope="col">Enlem</th>
+                    <th scope="col">Resim</th>
+                    <th scope="col">Kayıt Tarihi</th>
+                    <th scope="col">Düzenlenme Tarihi</th>
+                    <th scope="col">Kayıt Yapan Kişi</th>
+                    <th scope="col">Düzenleme Yapan Kişi</th>
+                    <th scope="col">Güncelle</th>
+                    <th scope="col">Sil</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Otto</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>12312</td>
+                    <td> <a href="UpdateExpertInfo" class=" m-2 p-2 button-gnc"><i class="fas fa-edit"></i>&nbsp;GÜNCELLE</a></td>
+                    <td> <a href="#" class=" m-2 p-2 button-delete"><i class="far fa-trash-alt"></i>&nbsp;SİL</a></td>
+
+                </tr>
+                <tr>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>12312</td>
+                    <td>123213</td>
+                    <td> <a href="#UpdateExpertInfo" class=" m-2 p-2 button-gnc"><i class="fas fa-edit"></i>&nbsp;GÜNCELLE</a></td>
+                    <td> <a href="#" class=" m-2 p-2 button-delete"><i class="far fa-trash-alt"></i>&nbsp;SİL</a></td>
+
+                </tr>
+                <tr>
+                    <td>Mark</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>213213</td>
+                    <td> <a href="UpdateExpertInfo" class=" m-2 p-2 button-gnc"><i class="fas fa-edit"></i>&nbsp;GÜNCELLE</a></td>
+                    <td> <a href="#" class=" m-2 p-2 button-delete"><i class="far fa-trash-alt"></i>&nbsp;SİL</a></td>
+
+                </tr>
+            </tbody>
+        </table>
+        <a href="AddExpertInfo" class=" m-2 p-2 button-add"><i class="fas fa-plus"></i>&nbsp;EKLE</a>
+
+    </div>
+</div>

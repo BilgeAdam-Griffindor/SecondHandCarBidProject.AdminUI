@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO.CorporationDtos
 {
-    public record CorporationTypeAddDTO(
-        string CorporationTypeName,
-        byte IsActive)
+    public record CorporationTypeAddDTO(string CorporationTypeName, byte IsActive)
     {
-    }
+}
 }

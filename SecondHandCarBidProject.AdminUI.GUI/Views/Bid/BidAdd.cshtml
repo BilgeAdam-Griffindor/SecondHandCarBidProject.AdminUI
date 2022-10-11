@@ -24,8 +24,9 @@
 
     <div class="container-fluid">
         <form>
-            <div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000; background-color:#ffff;border-radius:10px ">
-                <h2 style="text-align:center; color:#002244;font-weight:bold;" class="m-2 p-2 big-title-color">İhale Genel Bilgileri</h2>
+            @Html.AntiForgeryToken();
+            <div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000; border-radius:10px ">
+                <h2 style="text-align:center; color:#002244;font-weight:bold;" class="m-2 p-2 big-title-color">İhale Ekle</h2>
                 <div class="row text-center p-2">
 
                     <div class="col-12 col-md-4">
@@ -70,14 +71,36 @@
                         <h4 class="title-color">İhale Bitiş Tarihi</h4>
                         <input class="form-control" type="datetime-local" id="BidName">
                     </div>
+                </div> 
+                <div class="row text-center mt-3 p-2 mb-2">
+                    <div class="col-12 col-md-4">
+                        <h4 class="title-color">İhale Başlangıç Fiyatı</h4>
+                        <input class="form-control" type="number" id="BidName">
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <h4 class="title-color">Minumum Satış Fiyatı</h4>
+                        <input class="form-control" type="number" id="BidName">
+                    </div>
+                     <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark pb-2" style="display:block">İhale Durumu</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                    <label class="fw-bold text-dark">Aktif</label>
                 </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                    <label class="fw-bold text-dark">Pasif</label>
+                </div>
+            </div>
+                </div>
+
 
             </div>
             <div class=" p-3" style="margin-top:50px;box-shadow: 6px 20px 40px #000000; background-color:#ffff;border-radius:10px">
                 <h2 class="m-2 big-title-color p-2" style="text-align:center; color:#002244;font-weight:bold">İhale Araç Bilgileri</h2>
                 <div class="row text-center p-2">
-                    <div class="table-responsive">
-                        <table class=" table-bordered table-custom-css">
+                    <div class=" table-responsive ">
+                        <table class="table-bordered table-custom-css">
                             <thead class="thead color-gradient" style="color: #ffff;">
                                 <tr>
 
@@ -88,8 +111,7 @@
                                     <th scope="col">Kaydeden Kullanıcı</th>
                                     <th scope="col">Kaydetme Zamanı</th>
                                     <th scope="col">Fiyat</th>
-                                    <th scope="col">Güncelle</th>
-                                    <th scope="col">Sil</th>
+                                    <th scope="col">Çıkar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -97,12 +119,11 @@
                                     <td>Mark</td>
                                     <td>Otto</td>
                                     <td>Mark</td>
-                                    <td>Otto</td>
+                                    <td>Mark</td>
                                     <td>Mark</td>
                                     <td>Otto</td>
                                     <td>12312</td>
-                                    <td> <a href="#" class=" m-2 p-2 button-gnc">GÜNCELLE</a></td>
-                                    <td> <a href="#" class=" m-2 p-2 button-delete">SİL</a></td>
+                                    <td> <a href="#" class=" m-2 p-2 button-delete">ÇIKAR</a></td>
 
                                 </tr>
                                 <tr>
@@ -113,8 +134,7 @@
                                     <td>Mark</td>
                                     <td>Otto</td>
                                     <td>123213</td>
-                                    <td> <a href="#" class=" m-2 p-2 button-gnc">GÜNCELLE</a></td>
-                                    <td> <a href="#" class=" m-2 p-2 button-delete">SİL</a></td>
+                                    <td> <a href="#" class=" m-2 p-2 button-delete">ÇIKAR</a></td>
 
                                 </tr>
                                 <tr>
@@ -125,8 +145,7 @@
                                     <td>Mark</td>
                                     <td>Otto</td>
                                     <td>213213</td>
-                                    <td> <a href="#" class=" m-2 p-2 button-gnc">GÜNCELLE</a></td>
-                                    <td> <a href="#" class=" m-2 p-2 button-delete">SİL</a></td>
+                                    <td> <a href="#" class=" m-2 p-2 button-delete">ÇIKAR</a></td>
 
                                 </tr>
                             </tbody>
@@ -134,16 +153,14 @@
                         </div>
                         <div class="row justify-content-end m-2 mb-2">
                             <div class="col align-self-end">
-                                <button class=" m-2 p-2 button-29">ARAÇ EKLE</button>
+                                <button class=" m-2 p-2 button-29" style="background:#6F68E0 !important">ARAÇ EKLE</button>
                                 <button class=" m-2 p-2 button-29">KAYDET</button>
                             </div>
 
-                        </div>
-
-                    
+                         </div>
+                     </div>
                 </div>
 
-            </div>
         </form>
     </div>
 

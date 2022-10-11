@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SecondHandCarBidProject.AdminUI.DTO.AdvertDtos;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
@@ -8,7 +9,29 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult AdvertAdd()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AdvertAdd(AdvertAddDTO data)
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult AdvertUpdate(int id)
+        {
+            return View();
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AdvertUpdate(AdvertUpdateDTO data)
+        {
+            return View();
+        }
         public IActionResult AdvertInformation()
         {
             return View();
