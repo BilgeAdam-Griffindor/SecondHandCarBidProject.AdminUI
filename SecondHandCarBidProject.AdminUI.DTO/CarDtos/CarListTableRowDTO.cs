@@ -8,10 +8,11 @@ namespace SecondHandCarBidProject.AdminUI.DTO
 {
     public record CarListTableRowDTO(
         Guid CarId,
-        string CarBrandName,
-        string CarModelName,
+        string BrandName,
+        string ModelName,
+        string IndividualOrCorporate,
         string Status,
-        string UserFullName,
+        string Username,
         DateTime RegisterDate
         );
 }
