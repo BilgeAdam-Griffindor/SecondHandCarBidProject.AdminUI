@@ -10,18 +10,15 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            CarBuyStatusHistoryListViewModel model = new CarBuyStatusHistoryListViewModel();
-            model.TableRows = new List<CarBuyStatusHistoryTableRow>();
+            CarBuyStatusHistoryListViewModel model = new CarBuyStatusHistoryListViewModel(new List<CarBuyStatusHistoryTableRow>());
 
             return View(model);
         }
 
-        [HttpGet] 
+        [HttpGet]
         public IActionResult Add()
         {
-            CarBuyStatusHistoryAddViewModel viewData = new CarBuyStatusHistoryAddViewModel();
-            viewData.CarBuyList = new List<SelectListItem>();
-            viewData.StatusValueList = new List<SelectListItem>();
+            CarBuyStatusHistoryAddViewModel viewData = new CarBuyStatusHistoryAddViewModel(Guid.Empty, 0, "", new List<SelectListItem>(), new List<SelectListItem>());
 
 
             return View(viewData);

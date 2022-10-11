@@ -10,8 +10,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            CarBuyAdditionalFeeListViewModel model = new CarBuyAdditionalFeeListViewModel();
-            model.TableRows = new List<CarBuyAdditionalFeeTableRowDTO>();
+            CarBuyAdditionalFeeListViewModel model = new CarBuyAdditionalFeeListViewModel(new List<CarBuyAdditionalFeeTableRowDTO>());
 
             return View(model);
         }
@@ -19,10 +18,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            CarBuyAdditionalFeeAddViewModel viewData = new CarBuyAdditionalFeeAddViewModel();
-            viewData.CarBuyList = new List<SelectListItem>();
-            viewData.NotaryFeeList = new List<SelectListItem>();
-            viewData.CommissionFeeList = new List<SelectListItem>();
+            CarBuyAdditionalFeeAddViewModel viewData = new CarBuyAdditionalFeeAddViewModel(Guid.Empty, Guid.Empty, Guid.Empty, new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>());
 
             return View(viewData);
         }
