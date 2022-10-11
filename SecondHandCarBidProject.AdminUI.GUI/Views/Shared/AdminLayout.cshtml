@@ -50,115 +50,252 @@
             </div>
             <ul class="sidebar-menu do-nicescrol">
                 <li class="sidebar-header">MAIN NAVIGATION</li>
-                <li>
-                    <a href="index.html">
-                        <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
-                    </a>
-                </li>
 
                 <li>
-                    <a href="icons.html">
-                        <i class="zmdi zmdi-invert-colors"></i> <span>UI Icons</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="forms.html">
-                        <i class="zmdi zmdi-format-list-bulleted"></i> <span>Forms</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="tables.html">
-                        <i class="zmdi zmdi-grid"></i> <span>Tables</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="calendar.html">
-                        <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
-                        <small class="badge float-right badge-light">New</small>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="profile.html">
+                    <a href="/Car/CarDetailInformation">
                         <i class="zmdi zmdi-face"></i> <span>Profile</span>
                     </a>
-                </li>
+@*                    @Html.ActionLink("Profile","CarDetailInformation","Car", null, new { @class = "zmdi zmdi-face page-scroll" })
+*@                </li>
 
                 <li>
-                    <a@* class="nav-link"*@ href="LogIn.cshtml" target="_blank">
+                    <a class="nav-link" href="/AdminAuthentication/LogIn" target="_self">
                         <i class="zmdi zmdi-lock"></i> <span>Login</span>
                     </a>
-                </li>
+                 </li>
 
                 <li>
-                    <a href="register.html" target="_blank">
+                    <a href="register.html" target="_self">
                         <i class="zmdi zmdi-account-circle"></i> <span>Registration</span>
                     </a>
                 </li>
+                              <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-account-circle"></i> <span>Eylem Yetkilendirme Tipi İşlemleri</span>
+                    </a>
+                </li>
                 <li>
-                    <a href="register.html" target="_blank">
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-pin"></i> <span>Adres Bilgileri İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-pin"></i> <span>Adres Tipleri İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-favorite"></i> <span>Favori İlan İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-assignment"></i> <span>İlan Bilgi İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
                         <i class="zmdi zmdi-accounts-alt"></i> <span>Kullanıcı İşlemleri</span>
                     </a>
                 </li>
                 <li>
-                    <a href="register.html" target="_blank">
-                        <i class="zmdi zmdi-case"></i> <span>İhale İşlemleri</span>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-case"></i> <span>İhale İşlemleri </span>
                     </a>
                 </li>
                 <li>
-                    <a href="register.html" target="_blank">
-                        <i class="zmdi zmdi-wrench"></i> <span>Tramer İşlemleri</span>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-case"></i> <span>İhale Ek Ücret İşlemleri </span>
                     </a>
                 </li>
-
                 <li>
-                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-case"></i> <span>Araç-İhale İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-case"></i> <span>İhale-Şirket İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-case"></i> <span>İhale Teklif İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-case"></i> <span>İhale Sonuç İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-case"></i> <span>İhale Statü Geçmişi İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
                         <i class="zmdi zmdi-car"></i> <span>Araç İşlemleri</span>
-                        </a>
-
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="#">Araç Marka İşlemleri</a>
-                        <a class="dropdown-item" href="#">Araç Model İşlemleri</a>
-                        </div>
-                </li>
-                <li>
-                    <a href="register.html" target="_blank">
-                        <i class="zmdi zmdi-pin"></i> <span>Adres İşlemleri</span>
                     </a>
                 </li>
                 <li>
-                    <a href="register.html" target="_blank">
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-car"></i> <span>Araç Marka İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-car"></i> <span>Araç Satın Alma İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-car"></i> <span>Araç Satın Alma Ek Ücret İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-car"></i> <span>Araç Satın Alma Geçmişi İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-car"></i> <span>Araç-Araç Özellik İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-car"></i> <span>Araç-Şirket İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-favorite"></i> <span>Favori Araç İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-car"></i> <span>Araç Fotoğraf İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-car"></i> <span>Araç Model İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-car"></i> <span>Araç Özellik İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-car"></i> <span>Satılan Araç İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-car"></i> <span>Araç Statü Geçmişi İşlemleri</span>
+                    </a>
+                </li>               
+                 <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-money-box"></i> <span>Komisyon Ücret İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/CorporatePackageType/Index" target="_self">
+                        <i class="zmdi zmdi-archive"></i> <span>Şirket Paket Tipleri İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Corporation/Index" target="_self">
                         <i class="zmdi zmdi-archive"></i> <span>Şirket İşlemleri</span>
                     </a>
                 </li>
                 <li>
-                    <a href="register.html" target="_blank">
-                        <i class="zmdi zmdi-alert-circle"></i> <span>Experiz İşlemleri</span>
+                    <a href="/CorporationType/Index" target="_self">
+                        <i class="zmdi zmdi-archive"></i> <span>Şirket Tip İşlemleri</span>
                     </a>
                 </li>
                 <li>
-                    <a href="register.html" target="_blank">
-                        <i class="zmdi zmdi-money-box"></i> <span>Noter ve Komisyon İşlemleri</span>
+                    <a href="/CorporationUser/Index" target="_self">
+                        <i class="zmdi zmdi-accounts-alt"></i> <span>Şirket-Kullanıcı İşlemleri</span>
                     </a>
                 </li>
                 <li>
-                    <a href="register.html" target="_blank">
+                    <a href="/ExpertInfo/Index" target="_self">
+                        <i class="zmdi zmdi-circle"></i> <span>Ekspertiz Bilgi İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/FavoriteUserSearches/Index" target="_self">
+                        <i class="zmdi zmdi-favorite"></i> <span>Favori Kullanıcı Arama İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/NotaryFee/Index" target="_self">
+                        <i class="zmdi zmdi-money-box"></i> <span>Noter Ücret İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/NotificationMessage/Index" target="_self">
                         <i class="zmdi zmdi-smartphone-iphone"></i> <span>Bildirim Mesajı İşlemleri</span>
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="zmdi zmdi-car"></i> <span>Statü Bilgileri</span>
+                    <a href="/NotificationMessageUser/Index" target="_self">
+                        <i class="zmdi zmdi-smartphone-iphone"></i> <span>Bildirim Mesajı-Kullanıcı İşlemleri</span>
                     </a>
-
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="#">Statu Tip İşlemleri</a>
-                        <a class="dropdown-item" href="#">Statü Değer İşlemleri</a>
-                    </div>
                 </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-account-circle"></i> <span>Sayfa Yetkilendirme Tip İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-account-circle"></i> <span>Rol Bazlı Eylem Yetkilendirme İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-account-circle"></i> <span>Rol Tip İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-format-align-justify"></i> <span>Statü Tip İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-format-align-justify"></i> <span>Statü Değer İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-wrench"></i> <span>Tramer İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-wrench"></i> <span>Araç Parça Tramer İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-wrench"></i> <span>Tramer-Araç Parça Tramer İşlemleri</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="register.html" target="_self">
+                        <i class="zmdi zmdi-long-arrow-up"></i> <span>Kullanıcı Otomatik Teklif İşlemleri</span>
+                    </a>
+                </li>
+
+
 
                 <li class="sidebar-header">LABELS</li>
                 <li><a href="javaScript:void();"><i class="zmdi zmdi-coffee text-danger"></i> <span>Important</span></a></li>
@@ -263,7 +400,7 @@
         <footer class="footer">
             <div class="container">
                 <div class="text-center">
-                    Copyright © 2018 Dashtreme Admin
+                    Copyright © 2022 Griffindor
                 </div>
             </div>
         </footer>
@@ -346,4 +483,5 @@
 
 </body>
 </html>
+
 

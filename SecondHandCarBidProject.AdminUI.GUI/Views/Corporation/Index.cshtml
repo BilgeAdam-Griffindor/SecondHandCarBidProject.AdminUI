@@ -1,0 +1,89 @@
+﻿@using SecondHandCarBidProject.AdminUI.DTO
+@using SecondHandCarBidProject.AdminUI.GUI.ViewModels
+@model CorporationAddViewModels
+
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
+
+    <h4 data-bs-toggle="tooltip" data-bs-placement="top" title="Statü tip bilgileri burada hallediliyor" style="
+        text-align: center">
+        <i class="fa-solid fa-circle-info"></i>&nbsp;Şirket Listeleme Ekranı
+    </h4>
+
+    <div class="col-12 col-md-4 form-group ">
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+    <div class="table-responsive">
+        <table class="table-bordered table-custom-css">
+            <thead class="thead color-gradient" style="color: #ffff;">
+                <tr>
+
+                    <th scope="col">Şirket Adı</th>
+                    <th scope="col">Adres Bilgisi</th>
+                    <th scope="col">Telefon Numarası</th>
+                    <th scope="col">Şirket Tipi</th>
+                    <th scope="col">Şirket Paket Tipi</th>
+                    <th scope="col">Kayıt Tarihi</th>
+                    <th scope="col">Düzenlenme Tarihi</th>
+                    <th scope="col">Kayıt Yapan Kişi</th>
+                    <th scope="col">Düzenleme Yapan Kişi</th>
+                    <th scope="col">Güncelle</th>
+                    <th scope="col">Sil</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>12312</td>
+                    <td> <a href="UpdateCorporation" class=" m-2 p-2 button-gnc"><i class="fas fa-edit"></i>&nbsp;GÜNCELLE</a></td>
+                    <td> <a href="#" class=" m-2 p-2 button-delete"><i class="far fa-trash-alt"></i>&nbsp;SİL</a></td>
+
+                </tr>
+                <tr>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Otto</td>
+                    <td>Otto</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>123213</td>
+                    <td> <a href="UpdateCorporation" class=" m-2 p-2 button-gnc"><i class="fas fa-edit"></i>&nbsp;GÜNCELLE</a></td>
+                    <td> <a href="#" class=" m-2 p-2 button-delete"><i class="far fa-trash-alt"></i>&nbsp;SİL</a></td>
+
+                </tr>
+                <tr>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Otto</td>
+                    <td>Otto</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>213213</td>
+                    <td> <a href="UpdateCorporation" class=" m-2 p-2 button-gnc"><i class="fas fa-edit"></i>&nbsp;GÜNCELLE</a></td>
+                    <td> <a href="#" class=" m-2 p-2 button-delete"><i class="far fa-trash-alt"></i>&nbsp;SİL</a></td>
+
+                </tr>
+            </tbody>
+        </table>
+        <a href="AddCorporation" class=" m-2 p-2 button-add"><i class="fas fa-plus"></i>&nbsp;EKLE</a>
+
+    </div>
+</div>
