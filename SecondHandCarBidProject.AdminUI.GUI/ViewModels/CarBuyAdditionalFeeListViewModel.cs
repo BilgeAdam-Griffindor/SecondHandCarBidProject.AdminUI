@@ -2,8 +2,8 @@
 
 namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
 {
-    public class CarBuyAdditionalFeeListViewModel
-    {
-        public List<CarBuyAdditionalFeeTableRowDTO> TableRows { get; set; }
-    }
+    public record CarBuyAdditionalFeeListViewModel
+    (
+        List<CarBuyAdditionalFeeTableRowDTO> TableRows
+    );
 }
