@@ -1,0 +1,45 @@
+﻿@using SecondHandCarBidProject.AdminUI.DTO
+@using SecondHandCarBidProject.AdminUI.GUI.ViewModels
+@model FavoriteUserSearchesAddViewModels
+
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="tooltip">
+    <h4><i class="fa-solid fa-lg fa-circle-info"></i>Kullanıcı Favori Aramaları Ekleme Ekranı</h4>
+    <span class="tooltiptext">Kullanıcıların Favori Aramaları Bu Sayfada Eklenir.</span>
+</div>
+<div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
+
+    <h3 style="text-align:center; color:#002244;font-weight:bold;" class="m-2 p-2 big-title-color">Kullanıcı Favori Aramaları Ekleme Ekranı</h3>
+    <div class="row text-center p-2">
+
+        <div class="col-12 col-md-4 form-group">
+            <label class="fw-bold text-dark">
+                Aranan Kelime
+            </label>
+            <input type="text" class="form-control" id="tabloname">
+        </div>
+        <div class="col-12 col-md-4 form-group">
+            <label class="fw-bold text-dark">Arayan Kullanıcı</label>
+            <select class="form-select" id="tabloname1" placeholder="">
+                <option selected></option>
+                <option>###</option>
+                <option>###</option>
+            </select>
+        </div>
+        <div class="col-12 col-md-4">
+            <label class="fw-bold text-dark">
+                Arama Tarihi
+            </label>
+            <input class="form-control" type="datetime-local" id="DateTime1">
+        </div>
+
+        </div>
+        <div class="row justify-content-end m-2 mb-2">
+            <div class="col align-self-end">
+                <button class=" m-2 p-2 button-29">KAYDET</button>
+            </div>
+        </div>
+</div>
