@@ -6,7 +6,6 @@
         Guid BaseUserId,
         Guid BidId,
         string Explanation,
-        Guid CreatedBy,
         List<IdNameListDTO> BaseUserList,
         List<IdNameListDTO> BidList
         );
