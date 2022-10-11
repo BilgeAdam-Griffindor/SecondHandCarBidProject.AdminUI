@@ -9,8 +9,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            CarBrandListViewModel model = new CarBrandListViewModel();
-            model.TableRows = new List<CarBrandListTableRow>();
+            CarBrandListViewModel model = new CarBrandListViewModel(new List<CarBrandListTableRow>());
 
             return View(model);
         }
@@ -30,7 +29,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public IActionResult Update(short id)
         {
-            CarBrandUpdateViewModel viewData = new CarBrandUpdateViewModel();
+            CarBrandUpdateViewModel viewData = new CarBrandUpdateViewModel(0, "");
             return View(viewData);
         }
 

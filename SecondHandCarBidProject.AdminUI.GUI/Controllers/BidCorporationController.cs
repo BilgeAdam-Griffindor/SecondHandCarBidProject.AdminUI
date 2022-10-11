@@ -10,8 +10,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            BidCorporationListViewModel model = new BidCorporationListViewModel();
-            model.TableRows = new List<BidCorporationListTableRowsDTO>();
+            BidCorporationListViewModel model = new BidCorporationListViewModel(new List<BidCorporationListTableRowsDTO>());
 
             return View(model);
         }
@@ -19,9 +18,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            BidCorporationAddViewModel viewData = new BidCorporationAddViewModel();
-            viewData.CorporationList = new List<SelectListItem>();
-            viewData.BidList = new List<SelectListItem>();
+            BidCorporationAddViewModel viewData = new BidCorporationAddViewModel(Guid.Empty, 0, new List<SelectListItem>(), new List<SelectListItem>());
 
             return View(viewData);
         }

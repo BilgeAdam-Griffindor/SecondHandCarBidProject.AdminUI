@@ -63,11 +63,11 @@
                 {
                     <tr>
                         <td>@item.CarId</td>
-                        <td>@item.CarBrandName</td>
-                        <td>@item.CarModelName</td>
-                        <td>@item.PersonelOrCorporate</td>
+                        <td>@item.BrandName</td>
+                        <td>@item.ModelName</td>
+                        <td>@item.IndividualOrCorporate</td>
                         <td>@item.Status</td>
-                        <td>@item.UserFullName</td>
+                        <td>@item.Username</td>
                         <td>@item.RegisterDate</td>
                         <td> <a asp-action="UpdateCar" asp-route-id="@item.CarId" class=" m-2 p-2 button-gnc"><i class="fas fa-edit"></i>&nbsp;GÜNCELLE</a></td>
                         <td> <a asp-action="DeleteCar" asp-route-carId="@item.CarId" class=" m-2 p-2 button-delete"><i class="far fa-trash-alt"></i>&nbsp;SİL</a></td>

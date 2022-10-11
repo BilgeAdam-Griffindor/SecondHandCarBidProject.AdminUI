@@ -10,8 +10,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            CarBuyListViewModel model = new CarBuyListViewModel();
-            model.TableRows = new List<CarBuyListTableRowDTO>();
+            CarBuyListViewModel model = new CarBuyListViewModel(0, new List<SelectListItem>(), 0, new List<SelectListItem>(), 0, new List<SelectListItem>(), new List<CarBuyListTableRowDTO>(), 0, 0);
 
             return View(model);
         }
@@ -19,15 +18,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            CarBuyAddViewModel viewData = new CarBuyAddViewModel();
-            viewData.FuelTypeList = new List<SelectListItem>();
-            viewData.ColorList = new List<SelectListItem>();
-            viewData.BrandList = new List<SelectListItem>();
-            viewData.ModelList = new List<SelectListItem>();
-            viewData.OptionalHardwareList = new List<SelectListItem>();
-            viewData.VersionList = new List<SelectListItem>();
-            viewData.BodyTypeList = new List<SelectListItem>();
-            viewData.GearTypeList = new List<SelectListItem>();
+            CarBuyAddViewModel viewData = new CarBuyAddViewModel(0, 0, "", 0, 0, Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, new List<Guid>(), "", new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>());
 
             return View(viewData);
         }
@@ -41,15 +32,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public IActionResult Update(Guid id)
         {
-            CarBuyUpdateViewModel viewData = new CarBuyUpdateViewModel();
-            viewData.FuelTypeList = new List<SelectListItem>();
-            viewData.ColorList = new List<SelectListItem>();
-            viewData.BrandList = new List<SelectListItem>();
-            viewData.ModelList = new List<SelectListItem>();
-            viewData.OptionalHardwareList = new List<SelectListItem>();
-            viewData.VersionList = new List<SelectListItem>();
-            viewData.BodyTypeList = new List<SelectListItem>();
-            viewData.GearTypeList = new List<SelectListItem>();
+            CarBuyUpdateViewModel viewData = new CarBuyUpdateViewModel(Guid.Empty, Guid.Empty, "", 0, 0, 0, 0, "", 0, 0, 0, Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, new List<Guid>(), "", new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>());
 
             return View(viewData);
         }

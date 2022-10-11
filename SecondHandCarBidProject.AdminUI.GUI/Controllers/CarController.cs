@@ -15,29 +15,25 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             CarListPageDTO carListPageDTO = new CarListPageDTO(null, null, null, null);
 
             //Convert response to ViewModel
-            CarListViewModel carListViewModel = new CarListViewModel();
-            carListViewModel.TableRows = new List<CarListTableRowDTO>();
+            CarListViewModel carListViewModel = new CarListViewModel(0 , new List<SelectListItem>(), 0, new List<SelectListItem>(), 0, new List<SelectListItem>(), new List<CarListTableRowDTO>(), 0, 0);
 
             //TODO which is better?
             //carListViewModel.CarTableRows = carListPageDTO.CarTableRows; //Method 1
             //carListViewModel.CarTableRows = new List<CarListTableRowDTO>(carListPageDTO.CarTableRows); //Method 2
 
             //TODO Add try catch for EACH list
-            carListViewModel.BrandList = new List<SelectListItem>();
             //carListViewModel.BrandList = carListPageDTO.BrandList.Select(x => new SelectListItem()
             //{
             //    Text = x.Name,
             //    Value = x.Id.ToString()
             //}).ToList();
 
-            carListViewModel.ModelList = new List<SelectListItem>();
             //carListViewModel.ModelList = carListPageDTO.ModelList.Select(x => new SelectListItem()
             //{
             //    Text = x.Name,
             //    Value = x.Id.ToString()
             //}).ToList();
 
-            carListViewModel.StatusList = new List<SelectListItem>();
             //carListViewModel.StatusList = carListPageDTO.StatusList.Select(x => new SelectListItem()
             //{
             //    Text = x.Name,
@@ -65,31 +61,29 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             CarListPageDTO carListPageDTO = new CarListPageDTO(null, null, null, null);
 
             //Convert response to ViewModel
-            CarListViewModel carListViewModel = new CarListViewModel();
-            carListViewModel.Page = carListView.Page;
-            carListViewModel.ItemPerPage = carListView.ItemPerPage;
+            CarListViewModel carListViewModel = new CarListViewModel(0, new List<SelectListItem>(), 0, new List<SelectListItem>(), 0, new List<SelectListItem>(), new List<CarListTableRowDTO>(), carListView.Page, carListView.ItemPerPage);
 
             //TODO which is better?
-            carListViewModel.TableRows = carListPageDTO.CarTableRows; //Method 1
+            //carListViewModel.TableRows = carListPageDTO.CarTableRows; //Method 1
             //carListViewModel.CarTableRows = new List<CarListTableRowDTO>(carListPageDTO.CarTableRows); //Method 2
 
-            carListViewModel.BrandList = carListPageDTO.BrandList.Select(x => new SelectListItem()
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            }).ToList();
+            //carListViewModel.BrandList = carListPageDTO.BrandList.Select(x => new SelectListItem()
+            //{
+            //    Text = x.Name,
+            //    Value = x.Id.ToString()
+            //}).ToList();
 
-            carListViewModel.ModelList = carListPageDTO.ModelList.Select(x => new SelectListItem()
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            }).ToList();
+            //carListViewModel.ModelList = carListPageDTO.ModelList.Select(x => new SelectListItem()
+            //{
+            //    Text = x.Name,
+            //    Value = x.Id.ToString()
+            //}).ToList();
 
-            carListViewModel.StatusList = carListPageDTO.StatusList.Select(x => new SelectListItem()
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            }).ToList();
+            //carListViewModel.StatusList = carListPageDTO.StatusList.Select(x => new SelectListItem()
+            //{
+            //    Text = x.Name,
+            //    Value = x.Id.ToString()
+            //}).ToList();
 
             return View(carListViewModel);
         }
