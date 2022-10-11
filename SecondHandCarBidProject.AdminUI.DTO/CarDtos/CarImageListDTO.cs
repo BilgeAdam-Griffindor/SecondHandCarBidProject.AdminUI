@@ -2,5 +2,6 @@
 {
     public record CarImageListDTO(
         Guid Id, 
-        byte[] Image);
+        byte[] Image
+        );
 }

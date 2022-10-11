@@ -2,11 +2,12 @@
 {
     public record CarBuyListTableRowDTO(
         Guid Id,
-        Guid CarId,
         string BrandName,
         string ModelName,
+        decimal PreValuationPrice,
+        decimal BidPrice,
         string Status,
-        string OwnerUser,
+        string CarOwner,
         DateTime CreatedDate
         );
 

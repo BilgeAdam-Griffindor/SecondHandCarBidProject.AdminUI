@@ -4,6 +4,7 @@
         Guid Id,
         string BidName,
         string StatusName,
-        string Explanation
+        string Explanation,
+        DateTime CreatedDate
         );
 }

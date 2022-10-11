@@ -1,0 +1,39 @@
+﻿@using SecondHandCarBidProject.AdminUI.DTO
+@model BidStatusHistoryAddViewModel
+
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<div class="tooltip">
+    <h4><i class="fa-solid fa-lg fa-circle-info"></i>İhale Durum Geçmişi Ekleme</h4>
+    <span class="tooltiptext">Bu sayfa admin için gereklidir. İhalelere durum geçmişi buradan eklenebilir.</span>
+</div>
+<div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
+    <form asp-action="Add" method="post">
+        <div class="row justify-content-end m-2 mb-2">
+            <div class="col align-self-end">
+                <button class=" m-2 p-2 button-29">KAYDET</button>
+            </div>
+        </div>
+
+        <div class="row text-center p-2">
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">İhale Listesi</label>
+                <select class="form-select" asp-for="BidId" asp-items="@Model.BidList">
+                </select>
+            </div>
+
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Durum</label>
+                <select class="form-select" asp-for="StatusValueId" asp-items="@Model.StatusValueList">
+                </select>
+            </div>
+        </div>
+        <div class="row text-center p-2">
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Açıklama</label>
+                <textarea class="form-control" rows="3" asp-for="Explanation"></textarea>
+            </div>
+        </div>
+    </form>
+</div>

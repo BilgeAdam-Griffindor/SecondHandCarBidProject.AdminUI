@@ -1,0 +1,57 @@
+﻿@model BidOfferListViewModel
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
+    <div class="tooltip">
+        <h4><i class="fa-solid fa-lg fa-circle-info"></i> İhale Teklif Listesi</h4>
+        <span class="tooltiptext">İhalelere verilen teklifler bu sayfada görülebilir.</span>
+    </div>
+    <a asp-action="Add" class="m-2 p-2 button-add"><i class="fa-solid fa-plus"></i>&nbsp;Ekle</a>
+
+</div>
+<div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
+    <div class="table-responsive">
+        <table class="table-bordered table-custom-css">
+            <thead class="thead color-gradient" style="color: #ffff;">
+                <tr>
+                    <th scope="col">Teklif Veren</th>
+                    <th scope="col">İhale Adı</th>
+                    <th scope="col">Teklif Miktarı</th>
+                    <th scope="col">Açıklama</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.TableRows)
+                {
+                    <tr>
+                        <td>@item.BaseUserName</td>
+                        <td>@item.BidName</td>
+                        <td>@item.OfferAmount</td>
+                        <td>@item.Explanation</td>
+                        <td> <a asp-action="Update" asp-route-id="@item.Id" class=" m-2 p-2 button-gnc"><i class="fas fa-edit"></i>&nbsp;GÜNCELLE</a></td>
+                        <td> <a asp-action="Delete" asp-route-id="@item.Id" class=" m-2 p-2 button-delete"><i class="far fa-trash-alt"></i>&nbsp;SİL</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="p-2 d-flex justify-content-center align-items-end m-2 ">
+            <nav aria-label="...">
+                <ul class="pagination">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

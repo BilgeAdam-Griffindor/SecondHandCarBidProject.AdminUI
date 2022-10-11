@@ -21,8 +21,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
         public Guid GearTypeId { get; set; }
         public Guid VersionId { get; set; }
         public Guid ColorId { get; set; }
-        public List<Guid> OptionalHardwareIds { get; set; }
-        public List<CarImageListDTO> CarImages { get; set; }
+        public List<Guid> OptionalHardwareIds { get; set; } //TODO may need to adjust
+        public string CarImages { get; set; } //TODO correct?
         public List<SelectListItem> BrandList { get; set; }
         public List<SelectListItem> ModelList { get; set; }
         public List<SelectListItem> StatusList { get; set; }
