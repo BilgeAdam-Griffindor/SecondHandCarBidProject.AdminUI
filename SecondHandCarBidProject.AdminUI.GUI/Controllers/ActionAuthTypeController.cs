@@ -16,11 +16,12 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
         public IActionResult Index()
         {
-            LogModel logModel = new LogModel();
-            logModel.Exception = "asdasdasd";
-            logModel.CreatedDate = DateTime.Now;
-            logModel.LogType = "NullExpection";
-            logger.FactoryMethod(LoggerFactoryMethod.LoggerType.MongoDatabaseLogger,logModel);
+            //Log Deneme
+            //LogModel logModel = new LogModel();
+            //logModel.Exception = "asdasdasd";
+            //logModel.CreatedDate = DateTime.Now;
+            //logModel.LogType = "NullExpection";
+            //logger.FactoryMethod(LoggerFactoryMethod.LoggerType.MongoDatabaseLogger,logModel);
             return View();
         }
         [HttpGet]
