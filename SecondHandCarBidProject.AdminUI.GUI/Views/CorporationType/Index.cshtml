@@ -12,12 +12,17 @@
         <i class="fa-solid fa-circle-info"></i>&nbsp;Şirket Tipi Listeleme Ekranı
     </h4>
 
-    <div class="col-12 col-md-4 form-group ">
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+    <div class="row">
+        <div class="col-12 col-md-4"><a href="AddCorporationType" class=" m-2 p-2 button-add"><i class="fas fa-plus"></i>&nbsp;EKLE</a></div>
+        <div class="col-12 col-md-4 mt-3">
+
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
     </div>
+    <div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px; background:white">
     <div class="table-responsive">
         <table class="table-bordered table-custom-css">
             <thead class="thead color-gradient" style="color: #ffff;">
@@ -49,7 +54,23 @@
                 </tr>
             </tbody>
         </table>
-        <a href="AddCorporationType" class=" m-2 p-2 button-add"><i class="fas fa-plus"></i>&nbsp;EKLE</a>
-
+            <div class="p-2 d-flex justify-content-center align-items-end m-2 ">
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
 </div>
