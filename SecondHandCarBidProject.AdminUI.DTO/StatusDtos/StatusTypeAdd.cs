@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO.StatusDtos
 {
-    public record StatusValueDto(int Id,string StatusName,int StatusTypeId,string StatusTypeName,bool IsActive)
+    public record StatusTypeAddDto(string StatusTypeName, bool IsActive)
     {
-        
     }
 }
