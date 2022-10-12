@@ -6,7 +6,7 @@ using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
-    public class CarPropertValueController : Controller
+    public class CarPropertyValueController : Controller
     {
         public IActionResult Index()
         {
@@ -14,26 +14,26 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             return View(carPropertyValueList);
         }
         [HttpGet]
-        public IActionResult CarPropertValueAdd()
+        public IActionResult CarPropertyValueAdd()
         {
             CarPropertyValueAddViewModel carPropertyValueAdd = new CarPropertyValueAddViewModel("", Guid.Empty, new List<SelectListItem>());
             return View(carPropertyValueAdd);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CarPropertValueAdd(CarPropertyValueAddViewModel data)
+        public IActionResult CarPropertyValueAdd(CarPropertyValueAddViewModel data)
         {
             return View();
         }
 
         [HttpGet]
-        public IActionResult CarPropertValueUpdate(int id)
+        public IActionResult CarPropertyValueUpdate(int id)
         {
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CarPropertValueUpdate(RolePageActionAuthAddDto data)
+        public IActionResult CarPropertyValueUpdate(RolePageActionAuthAddDto data)
         {
             return View();
         }

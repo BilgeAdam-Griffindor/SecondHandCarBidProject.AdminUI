@@ -18,12 +18,14 @@
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Araba Listesi</label>
                 <select class="form-select" asp-for="CarId" asp-items="Model.CarList">
+                    <option value="">--Seçiniz--</option>
                 </select>
             </div>
 
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Kullanıcı Listesi</label>
                 <select class="form-select" asp-for="BaseUserId" asp-items="Model.BaseUserList">
+                    <option value="">--Seçiniz--</option>
                 </select>
             </div>
         </div>
