@@ -1,5 +1,54 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model TrafficInsuranceTrafficInsuranceCarComponentAddDto
+
 @{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
+<div class="col-12 col-md-6">
+    <h4 data-bs-toggle="tooltip" data-bs-placement="top" title="Tramer Parça ve Durum ekleme burada halledilir"><i class="fa-solid fa-circle-info"></i>&nbsp;Tramer Parça ve Durum Ekleme</h4>
+</div>
+<div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
+    <form asp-action="Save" method="get" asp-controller="Base">
+
+        <div class="row text-center p-2">
+             <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Tramer Id</label>
+                <select class="form-select" id="tabloname1" placeholder="">
+                    <option selected></option>
+                    <option>True</option>
+                    <option>False</option>
+                </select>
+            </div>
+             <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Tramer Araç Parçası</label>
+                <select class="form-select" id="tabloname1" placeholder="">
+                    <option selected></option>
+                    <option>True</option>
+                    <option>False</option>
+                </select>
+            </div>
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Statu Değeri</label>
+                <select class="form-select" id="tabloname1" placeholder="">
+                    <option selected></option>
+                    <option>True</option>
+                    <option>False</option>
+                </select>
+            </div>
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Durum</label>
+                <select class="form-select" id="tabloname1" placeholder="">
+                    <option selected></option>
+                    <option>True</option>
+                    <option>False</option>
+                </select>
+            </div>
+
+
+        </div>
+        <div class="row justify-content-end m-2 mb-2">
+            <div class="col align-self-end">
+                <button class=" m-2 p-2 button-29">KAYDET</button>
+            </div>
+        </div>
+    </form>
+</div>
