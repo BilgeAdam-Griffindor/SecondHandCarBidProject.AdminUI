@@ -11,16 +11,29 @@
 <div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
     <form asp-action="Save" method="get" asp-controller="Base">
         @Html.AntiForgeryToken();
-        <h2 style="text-align:center; color:#002244;font-weight:bold;" class="m-2 p-2 big-title-color">Adres İsmi</h2>
+        <h2 style="text-align:center; color:#002244;font-weight:bold;" class="m-2 p-2 big-title-color">İlan Ekle</h2>
         <div class="row text-center p-2  justify-content-md-center">
             <div class="col-12 col-md-4 form-group">
-                <label class="fw-bold text-dark">Address</label>
-                <input type="text" class="form-control" id="tabloname">
-            </div>
+                <label class="fw-bold text-dark">İhaleler</label>
+                <select class="form-select" id="BidId" placeholder="">
+                    <option selected></option>
+                    <option>###</option>
+                    <option>###</option>
+                </select>
+            </div> 
             <div class="col-12 col-md-4 form-group">
-                <label class="fw-bold text-dark">Top Adres İsmi</label>
-                <select class="form-select" id="tabloname1" placeholder="Adres Giriniz">
-                    <option value="">--Seçiniz--</option>
+                <label class="fw-bold text-dark">Komisyonlar</label>
+                <select class="form-select" id="CommisionId" placeholder="">
+                    <option selected></option>
+                    <option>###</option>
+                    <option>###</option>
+                </select>
+            </div> <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Noter Ücretleri</label>
+                <select class="form-select" id="NotaryFeeId" placeholder="">
+                    <option selected></option>
+                    <option>###</option>
+                    <option>###</option>
                 </select>
             </div>
             <div class="col-12 col-md-4 form-group">
@@ -32,14 +45,15 @@
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
                     <label class="fw-bold text-dark">Pasif</label>
-
                 </div>
             </div>
         </div>
+
+
         <div class="row row  justify-content-md-center m-2 mb-2">
             <div class="col-3">
                 <button class=" m-2 p-2 button-29" style="width:100%">KAYDET</button>
             </div>
         </div>
     </form>
-</div> s
+</div>

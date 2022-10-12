@@ -1,4 +1,5 @@
-﻿using SecondHandCarBidProject.AdminUI.DTO.CarDtos;
+﻿using SecondHandCarBidProject.AdminUI.DTO.AdditionalFeeDtos;
+using SecondHandCarBidProject.AdminUI.DTO.CarDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace SecondHandCarBidProject.AdminUI.DTO.BidDtos
 {
     public record BidDetailDTO(string BidName,bool IsCorporate,DateTime StartDate, DateTime EndDate,bool IsApproved,
         Guid ApprovedAdmin,string AdminName,DateTime VerificationDate,DateTime CreatedDate,
-        List<CarDetailDto>Cars,BidAdditionFeeDTO BidAdditionFeeDTO,List<BidStatusHistoryListTableRowsDTO> StatusHistoryList
+        List<CarDetailDto>Cars,BidAdditionalFeeDTO BidAdditionFeeDTO,List<BidStatusHistoryListTableRowsDTO> StatusHistoryList
         ,List<BidOfferListTableRowsDTO> BidOffers
         )
     {
