@@ -161,7 +161,7 @@ a.button-gnc {
     color: #fff;
     cursor: pointer;
     display: inline-flex;
-    height: 48px;
+    height: 40px;
     justify-content: center;
     line-height: 1;
     list-style: none;
@@ -177,7 +177,7 @@ a.button-gnc {
     touch-action: manipulation;
     white-space: nowrap;
     will-change: box-shadow,transform;
-    font-size: 18px;
+    font-size: 14px;
     color: white;
     text-decoration:none;
 }
@@ -212,7 +212,7 @@ a.button-delete {
     color: #fff;
     cursor: pointer;
     display: inline-flex;
-    height: 48px;
+    height: 40px;
     justify-content: center;
     line-height: 1;
     list-style: none;
@@ -228,7 +228,7 @@ a.button-delete {
     touch-action: manipulation;
     white-space: nowrap;
     will-change: box-shadow,transform;
-    font-size: 18px;
+    font-size: 14px;
     color: white;
     text-decoration: none;
 }

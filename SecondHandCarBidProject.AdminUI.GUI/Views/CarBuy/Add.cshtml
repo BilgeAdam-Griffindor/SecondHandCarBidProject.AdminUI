@@ -19,19 +19,22 @@
         <div class="row text-center p-2">
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Marka Listesi</label>
-                <select class="form-select" asp-for="CarBrandId" asp-items="@Model.BrandList" placeholder="Seçiniz">
+                <select class="form-select" asp-for="CarBrandId" asp-items="@Model.BrandList">
+                    <option value="">--Seçiniz--</option>
                 </select>
             </div>
 
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Model Listesi</label>
-                <select class="form-select" asp-for="CarModelId" asp-items="@Model.ModelList" placeholder="Seçiniz">
+                <select class="form-select" asp-for="CarModelId" asp-items="@Model.ModelList">
+                    <option value="">--Seçiniz--</option>
                 </select>
             </div>
 
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Gövde Tipi</label>
-                <select class="form-select" asp-for="BodyTypeId" asp-items="@Model.BodyTypeList" placeholder="Seçiniz">
+                <select class="form-select" asp-for="BodyTypeId" asp-items="@Model.BodyTypeList">
+                    <option value="">--Seçiniz--</option>
                 </select>
             </div>
         </div>
@@ -39,19 +42,22 @@
         <div class="row text-center p-2">
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Yakıt Tipi</label>
-                <select class="form-select" asp-for="FuelTypeId" asp-items="@Model.FuelTypeList" placeholder="Seçiniz">
+                <select class="form-select" asp-for="FuelTypeId" asp-items="@Model.FuelTypeList">
+                    <option value="">--Seçiniz--</option>
                 </select>
             </div>
 
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Vites Tipi</label>
-                <select class="form-select" asp-for="GearTypeId" asp-items="@Model.GearTypeList" placeholder="Seçiniz">
+                <select class="form-select" asp-for="GearTypeId" asp-items="@Model.GearTypeList">
+                    <option value="">--Seçiniz--</option>
                 </select>
             </div>
 
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Versiyon</label>
-                <select class="form-select" asp-for="VersionId" asp-items="@Model.VersionList" placeholder="Seçiniz">
+                <select class="form-select" asp-for="VersionId" asp-items="@Model.VersionList">
+                    <option value="">--Seçiniz--</option>
                 </select>
             </div>
         </div>
@@ -59,7 +65,8 @@
         <div class="row text-center p-2">
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Renk</label>
-                <select class="form-select" asp-for="ColorId" asp-items="@Model.ColorList" placeholder="Seçiniz">
+                <select class="form-select" asp-for="ColorId" asp-items="@Model.ColorList">
+                    <option value="">--Seçiniz--</option>
                 </select>
             </div>
 
@@ -75,14 +82,16 @@
 
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Kilometre</label>
-                <input type="text" class="form-control" asp-for="Kilometre">
+                <input type="number" class="form-control" asp-for="Kilometre">
             </div>
         </div>
 
         <div class="row text-center p-2">
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Opsiyonel Donanım</label>
-                <select class="form-control" multiple asp-for="OptionalHardwareIds" asp-items="@Model.OptionalHardwareList" placeholder="Seçiniz"></select>
+                <select class="form-control" multiple asp-for="OptionalHardwareIds" asp-items="@Model.OptionalHardwareList">
+                    <option value="">--Seçiniz--</option>
+                </select>
             </div>
 
             <div class="col-12 col-md-4 form-group">

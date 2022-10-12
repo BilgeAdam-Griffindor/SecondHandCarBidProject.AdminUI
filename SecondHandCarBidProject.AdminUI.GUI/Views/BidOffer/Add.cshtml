@@ -19,20 +19,22 @@
         <div class="row text-center p-2">
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">İhale Listesi</label>
-                <select class="form-select" asp-for="BidId" asp-items="@Model.BidList" placeholder="Seçiniz">
+                <select class="form-select" asp-for="BidId" asp-items="@Model.BidList">
+                    <option value="">--Seçiniz--</option>
                 </select>
             </div>
 
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Teklif Verecek Kullanıcı</label>
-                <select class="form-select" asp-for="BaseUserId" asp-items="@Model.BaseUserList" placeholder="Seçiniz">
+                <select class="form-select" asp-for="BaseUserId" asp-items="@Model.BaseUserList">
+                    <option value="">--Seçiniz--</option>
                 </select>
             </div>
         </div>
         <div class="row text-center p-2">
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Teklif Miktarı</label>
-                <input type="text" class="form-control" asp-for="OfferAmount">
+                <input type="number" class="form-control" asp-for="OfferAmount" placeholder="Teklif Fiyatı Giriniz">
             </div>
 
             <div class="col-12 col-md-4 form-group">

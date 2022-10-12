@@ -18,12 +18,13 @@
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Araba Parça Listesi</label>
                 <select class="form-select" asp-for="TopPropertyValueId" asp-items="Model.TopPropertValueList">
+                    <option value="">--Seçiniz--</option>
                 </select>
             </div>
 
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Parça Adı</label>
-                <input class="form-control" asp-for="PropertyValue"></input>
+                <input class="form-control" asp-for="PropertyValue" placeholder="Parça Giriniz"></input>
             </div>
         </div>
     </form>
