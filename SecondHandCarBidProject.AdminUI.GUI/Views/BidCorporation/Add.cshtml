@@ -18,13 +18,13 @@
         <div class="row text-center p-2">
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">İhale Listesi</label>
-                <select class="form-select" asp-for="BidId" asp-items="@Model.BidList">
+                <select class="form-select" asp-for="BidId" asp-items="@Model.BidList" placeholder="Seçiniz">
                 </select>
             </div>
 
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Şirket Listesi</label>
-                <select class="form-select" asp-for="CorporationId" asp-items="@Model.CorporationList" placeholder="">
+                <select class="form-select" asp-for="CorporationId" asp-items="@Model.CorporationList" placeholder="" placeholder="Seçiniz">
                 </select>
             </div>
         </div>

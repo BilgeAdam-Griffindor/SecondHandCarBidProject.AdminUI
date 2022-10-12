@@ -254,7 +254,7 @@ a.button-delete {
 
 
 .tooltip {
-    position: relative;
+    position: relative !important;
     display: contents !important;
     border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
 }
@@ -284,7 +284,7 @@ a.button-delete {
 
 .table-custom-css {
     width: 100%;
-    background: rgb(255,255,255,0.5);
+    background:white;
 }
 
 a.button-add {
@@ -322,7 +322,7 @@ a.button-add {
     a.button-add:focus {
         box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
         color: #ffff;
-    }
+    }tooltip
 
     a.button-add:hover {
         box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
@@ -336,3 +336,12 @@ a.button-add {
         color: #ffff;
         transform: translateY(2px);
     }
+
+.form-control::-webkit-input-placeholder {
+    color: black !important;
+    font-size:16px;
+}
+
+.search-input-custom{
+    height:48px;
+}

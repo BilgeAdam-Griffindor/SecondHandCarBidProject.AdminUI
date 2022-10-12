@@ -10,13 +10,9 @@
         short CarBrandId,
         int CarModelId,
         int StatusId,
-        Guid BodyTypeId,
-        Guid FuelTypeId,
-        Guid GearTypeId,
-        Guid VersionId,
-        Guid ColorId,
-        List<Guid> OptionalHardwareIds,
+        List<Guid> SelectedCarProperties,
+        List<byte[]> CarImages,
         int? CorporationId,
-        List<byte[]> CarImages
+        Guid ModifiedBy
         );
 }

@@ -9,21 +9,21 @@
     <div class="row">
         <div class="col-12 col-md-4">
             <label for="brand">Araç Marka:</label>
-            <select class="form-control" asp-for="BrandId" asp-items="@Model.BrandList">
+            <select class="form-control" asp-for="BrandId" asp-items="@Model.BrandList" placeholder="Seçiniz">
                 <option value="@null">Boş</option>
             </select>
         </div>
 
         <div class="col-12 col-md-4">
             <label for="model">Araç Model:</label>
-            <select class="form-control" asp-for="ModelId" asp-items="@Model.ModelList">
+            <select class="form-control" asp-for="ModelId" asp-items="@Model.ModelList" placeholder="Seçiniz">
                 <option value="@null">Boş</option>
             </select>
         </div>
 
         <div class="col-12 col-md-4">
             <label for="status">Araç Statü:</label>
-            <select class="form-control" asp-for="StatusId" asp-items="@Model.StatusList">
+            <select class="form-control" asp-for="StatusId" asp-items="@Model.StatusList" placeholder="Seçiniz">
                 <option value="@null">Boş</option>
             </select>
         </div>
@@ -52,6 +52,7 @@
                     <th scope="col">Araç Id</th>
                     <th scope="col">Araç Marka</th>
                     <th scope="col">Araç Model</th>
+                    <th scope="col">Bireysel/Kurumsal</th>
                     <th scope="col">Durum</th>
                     <th scope="col">Kaydeden Kullanıcı</th>
                     <th scope="col">Kaydetme Zamanı</th>
@@ -62,10 +63,11 @@
                 {
                     <tr>
                         <td>@item.CarId</td>
-                        <td>@item.CarBrandName</td>
-                        <td>@item.CarModelName</td>
+                        <td>@item.BrandName</td>
+                        <td>@item.ModelName</td>
+                        <td>@item.IndividualOrCorporate</td>
                         <td>@item.Status</td>
-                        <td>@item.UserFullName</td>
+                        <td>@item.Username</td>
                         <td>@item.RegisterDate</td>
                         <td> <a asp-action="UpdateCar" asp-route-id="@item.CarId" class=" m-2 p-2 button-gnc"><i class="fas fa-edit"></i>&nbsp;GÜNCELLE</a></td>
                         <td> <a asp-action="DeleteCar" asp-route-carId="@item.CarId" class=" m-2 p-2 button-delete"><i class="far fa-trash-alt"></i>&nbsp;SİL</a></td>

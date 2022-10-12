@@ -2,8 +2,8 @@
 
 namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
 {
-    public class BidOfferListViewModel
-    {
-        public List<BidOfferListTableRowsDTO> TableRows { get; set; }
-    }
+    public record BidOfferListViewModel
+    (
+        List<BidOfferListTableRowsDTO> TableRows
+    );
 }
