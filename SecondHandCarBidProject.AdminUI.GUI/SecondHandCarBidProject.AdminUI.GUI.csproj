@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <Folder Include="ApiServices\" />
+    <Folder Include="Views\Shared\Components\AdminUIFilterComponent\" />
   </ItemGroup>
 
 </Project>

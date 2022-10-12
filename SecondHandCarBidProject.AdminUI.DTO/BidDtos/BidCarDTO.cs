@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO.BidDtos
 {
-    public record BidCarDTO(BidSelectDTO bid,List<CarDetailDto> CarsInBid, decimal BidStartPrice,decimal MinumumPrice,
-        DateTime CreatedDate,DateTime ModifiedDate,Guid CreatedById, BaseUserSelectDTO baseUser
+    public record BidCarDTO(Guid BidId,string BidTitle, Guid carId, decimal BidStartPrice,decimal MinumumPrice,
+        DateTime CreatedDate,DateTime ModifiedDate,bool IsActive
         )
     {
-        //ModifiedBy ?
     }
 }

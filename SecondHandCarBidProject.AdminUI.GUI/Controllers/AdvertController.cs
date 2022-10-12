@@ -25,6 +25,11 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult AdvertFavorites()
+        {
+            return View();
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]

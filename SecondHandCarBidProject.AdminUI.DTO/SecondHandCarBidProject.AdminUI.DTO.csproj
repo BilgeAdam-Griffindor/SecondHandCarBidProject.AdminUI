@@ -13,7 +13,6 @@
   <ItemGroup>
     <Folder Include="CorporationDtos\" />
     <Folder Include="ExpertDtos\" />
-    <Folder Include="BidDtos\" />
     <Folder Include="AddressDtos\" />
     <Folder Include="AuthorizationDtos\" />
     <Folder Include="FavoriteDtos\" />

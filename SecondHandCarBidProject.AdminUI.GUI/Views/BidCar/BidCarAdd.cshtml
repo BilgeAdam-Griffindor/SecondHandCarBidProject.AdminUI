@@ -11,14 +11,26 @@
 <div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
     <form asp-action="Save" method="get" asp-controller="Base">
         @Html.AntiForgeryToken();
-        <h2 style="text-align:center; color:#002244;font-weight:bold;" class="m-2 p-2 big-title-color">Adres İsmi</h2>
+        <h2 style="text-align:center; color:#002244;font-weight:bold;" class="m-2 p-2 big-title-color">İlan Ekle</h2>
         <div class="row text-center p-2  justify-content-md-center">
             <div class="col-12 col-md-4 form-group">
-                <label class="fw-bold text-dark">Address</label>
-                <input type="text" class="form-control" id="tabloname">
+                <label class="fw-bold text-dark">İhale Başlangıç Fiyatı</label>
+                <input type="number" class="form-control" id="tabloname">
             </div>
             <div class="col-12 col-md-4 form-group">
-                <label class="fw-bold text-dark">Top Adres İsmi</label>
+                <label class="fw-bold text-dark">Minumum Satış Fiyatı</label>
+                <input type="number" class="form-control" id="tabloname">
+            </div> 
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">İhale</label>
+                <select class="form-select" id="tabloname1" placeholder="">
+                    <option selected></option>
+                    <option>###</option>
+                    <option>###</option>
+                </select>
+            </div>
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Arabalar</label>
                 <select class="form-select" id="tabloname1" placeholder="">
                     <option selected></option>
                     <option>###</option>
@@ -34,14 +46,19 @@
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
                     <label class="fw-bold text-dark">Pasif</label>
-
                 </div>
             </div>
         </div>
+        <div class="col-12  form-group">
+            <label class="fw-bold text-dark">Açıklama</label>
+            <textarea type="text" class="form-control" id="tabloname"></textarea>
+        </div>
+
+
         <div class="row row  justify-content-md-center m-2 mb-2">
             <div class="col-3">
                 <button class=" m-2 p-2 button-29" style="width:100%">KAYDET</button>
             </div>
         </div>
     </form>
-</div> s
+</div>
