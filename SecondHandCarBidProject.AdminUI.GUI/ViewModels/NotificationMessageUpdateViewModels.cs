@@ -1,11 +1,7 @@
 ﻿namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
 {
-    public class NotificationMessageUpdateViewModels
+    public record NotificationMessageUpdateViewModels(int Id, string Content, byte IsActive, DateTime? ModifiedDate, Guid? ModifiedBy)
     {
-        public int Id { get; set; }
-        public string Content { get; set; }
-        public byte IsActive { get; set; }
-        public DateTime? ModifiedDate { get; set; }
-        public Guid? ModifiedBy { get; set; }
+
     }
 }
