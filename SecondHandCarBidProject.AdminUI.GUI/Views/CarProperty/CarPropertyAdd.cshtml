@@ -1,4 +1,5 @@
-﻿@{
+﻿@model CarPropertyAddViewModel
+@{
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
 <div class="tooltip">
@@ -16,15 +17,14 @@
         <div class="row text-center p-2">
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Araba Listesi</label>
-                <!--TODO FIX-->
-                @*<select class="form-select" asp-for="" asp-items="">
-                </select>*@
+                <select class="form-select" asp-for="CarId" asp-items="Model.CarList">
+                </select>
             </div>
 
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Araba Parçası</label>
-                @*<select class="form-select" asp-for="" asp-items="">
-                </select>*@
+                <select class="form-select" asp-for="CarPropertyValueId" asp-items="Model.CarPropertyValueList">
+                </select>
             </div>
         </div>
     </form>
