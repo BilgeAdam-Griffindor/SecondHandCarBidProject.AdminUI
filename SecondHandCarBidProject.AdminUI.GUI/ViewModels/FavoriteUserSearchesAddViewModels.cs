@@ -1,10 +1,6 @@
 ﻿namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
 {
-    public class FavoriteUserSearchesAddViewModels
+    public record FavoriteUserSearchesAddViewModels(string SearchText, Guid BaseUserId, byte IsActive, DateTime CreatedDate)
     {
-        public string SearchText { get; set; }
-        public Guid BaseUserId { get; set; }
-        public byte IsActive { get; set; }
-        public DateTime CreatedDate { get; set; }
     }
 }

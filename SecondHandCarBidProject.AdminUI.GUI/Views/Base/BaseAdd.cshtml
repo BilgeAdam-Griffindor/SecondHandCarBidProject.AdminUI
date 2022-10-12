@@ -4,10 +4,9 @@
 @{
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
-<div class="tooltip">
-      <h4><i class="fa-solid fa-lg fa-circle-info"></i>Araç Detay Bilgileri</h4>
-      <span class="tooltiptext">Bu sayfa admin için gereklidir. Aaraba detayları burada halledilir</span>
-      </div>
+<div class="col-12 col-md-3">
+    <h4 data-bs-toggle="tooltip" data-bs-placement="top" title="Araba detayları burada halledilir"><i class="fa-solid fa-circle-info"></i>&nbsp;Araç Detay Bilgileri</h4>
+    </div>
 <div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
             <form asp-action="Save" method="get" asp-controller="Base">
 
@@ -19,20 +18,18 @@
             </div>*@
         <div class="col-12 col-md-4 form-group">
             <label class="fw-bold text-dark">Ekleme Yapılacak Alan Adı</label>
-            <input  type="text" class="form-control" id="tabloname">
+            <input  type="text" class="form-control" id="tabloname" placeholder="Giriniz">
         </div>
         <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">
                     Ekleme Yapılacak Alan Adı</label>
-            <input type="text" class="form-control" id="tabloname">
+                <input type="text" class="form-control" id="tabloname" placeholder="Giriniz">
         </div>
 
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Selected 1</label>
             <select class="form-select" id="tabloname1" placeholder="">
-                <option selected></option>
-                <option>###</option>
-                <option>###</option>
+                    <option value="">--Seçiniz--</option>
             </select>
             </div>
     </div>
@@ -51,9 +48,7 @@
                 <label class="fw-bold text-dark">
                     Selected 2</label>
             <select class="form-select" id="tabloname2" placeholder="">
-                <option selected></option>
-                <option>###</option>
-                <option>###</option>
+               <option value="">--Seçiniz--</option>
 
             </select>
         </div>

@@ -9,6 +9,6 @@ namespace SecondHandCarBidProject.AdminUI.DTO.StatusDtos
 {
     public record StatusValueAddDto(string StatusName, int StatusTypeId, bool IsActive)
     {
-        public List<SelectListItem> StatusTypeList { get; set; }
+        public List<SelectListItem> StatusTypeItemList { get; set; }
     }
 }

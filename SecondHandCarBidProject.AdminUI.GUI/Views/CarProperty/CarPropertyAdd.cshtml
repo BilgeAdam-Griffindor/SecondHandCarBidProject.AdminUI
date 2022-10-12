@@ -3,8 +3,8 @@
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
 <div class="tooltip">
-    <h4><i class="fa-solid fa-lg fa-circle-info"></i>Satış Durum Ekleme</h4>
-    <span class="tooltiptext">Bu sayfa admin için gereklidir. Satışlara durum buradan eklenebilir.</span>
+    <h4><i class="fa-solid fa-lg fa-circle-info"></i>Araç Özelliği Ekleme</h4>
+    <span class="tooltiptext">Bu sayfa admin için gereklidir. Araç Özelliği buradan eklenebilir.</span>
 </div>
 <div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
     <form asp-action="CarPropertyAdd" method="post">
@@ -18,12 +18,14 @@
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Araba Listesi</label>
                 <select class="form-select" asp-for="CarId" asp-items="Model.CarList">
+                    <option value="">--Seçiniz--</option>
                 </select>
             </div>
 
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Araba Parçası</label>
                 <select class="form-select" asp-for="CarPropertyValueId" asp-items="Model.CarPropertyValueList">
+                    <option value="">--Seçiniz--</option>
                 </select>
             </div>
         </div>

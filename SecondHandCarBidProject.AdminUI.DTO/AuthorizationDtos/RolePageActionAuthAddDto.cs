@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,13 @@ namespace SecondHandCarBidProject.AdminUI.DTO.AuthorizationDtos
         DateTime CreatedDate,
         DateTime ModifiedDate)
     {
-        
+        public List<SelectListItem> PageAuthTypeItemList
+        {
+            get; set;
+        }
+        public List<SelectListItem> ActionAuthTypeItemList
+        {
+            get; set;
+        }
     }
 }

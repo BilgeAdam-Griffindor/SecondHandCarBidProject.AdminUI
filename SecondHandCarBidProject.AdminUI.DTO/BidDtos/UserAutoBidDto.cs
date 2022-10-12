@@ -6,7 +6,19 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO.BidDtos
 {
-    public record UserAutoBidDto(Guid Id,decimal MaximumOffer,decimal IncrementAmount,Guid BaseUserId,Guid BidId,bool IsActive,DateTime CreatedDate, DateTime ModifiedDate, Guid CreatedBy, Guid ModifiedBy,List<UserAutoBidDto> UserAutoBidList)
+    public record UserAutoBidDto(
+        Guid Id,
+        decimal MaximumOffer,
+        decimal IncrementAmount,
+        Guid BaseUserId,
+        string BaseUserName,
+        Guid BidId,
+        string BidName,
+        bool IsActive,
+        DateTime CreatedDate,
+        DateTime ModifiedDate,
+        Guid CreatedBy,
+        Guid ModifiedBy)
     {
     }
 }

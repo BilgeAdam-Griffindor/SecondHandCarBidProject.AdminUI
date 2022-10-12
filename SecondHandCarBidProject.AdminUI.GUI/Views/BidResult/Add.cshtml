@@ -19,7 +19,8 @@
         <div class="row text-center p-2">
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Teklif Listesi</label>
-                <select class="form-select" asp-for="BidOfferId" asp-items="@Model.BidOfferList" placeholder="Seçiniz">
+                <select class="form-select" asp-for="BidOfferId" asp-items="@Model.BidOfferList">
+                    <option value="">--Seçiniz--</option>
                 </select>
             </div>
 

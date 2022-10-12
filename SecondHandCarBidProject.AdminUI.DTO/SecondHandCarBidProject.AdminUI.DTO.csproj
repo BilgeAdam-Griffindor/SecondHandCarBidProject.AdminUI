@@ -14,10 +14,8 @@
     <Folder Include="CorporationDtos\" />
     <Folder Include="ExpertDtos\" />
     <Folder Include="AddressDtos\" />
-    <Folder Include="AuthorizationDtos\" />
     <Folder Include="FavoriteDtos\" />
     <Folder Include="NotificationDtos\" />
-    <Folder Include="StatusDtos\" />
   </ItemGroup>
 
 </Project>
