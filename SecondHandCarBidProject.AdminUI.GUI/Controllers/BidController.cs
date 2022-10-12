@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SecondHandCarBidProject.AdminUI.DTO.BidDtos;
 using SecondHandCarBidProject.ApiService.ApiServices;
-using SecondHandCarBidProject.ApiService.Dto_s;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {

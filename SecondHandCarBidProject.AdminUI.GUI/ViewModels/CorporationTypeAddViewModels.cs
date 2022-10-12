@@ -1,8 +1,7 @@
 ﻿namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
 {
-    public class CorporationTypeAddViewModels
+    public record CorporationTypeAddViewModels(string CorporationTypeName, byte IsActive)
     {
-        public string CorporationTypeName { get; set; }
-        public byte IsActive { get; set; }
+
     }
 }
