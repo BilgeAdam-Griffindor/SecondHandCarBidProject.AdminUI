@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SecondHandCarBidProject.AdminUI.DTO.AuthorizationDtos;
+using SecondHandCarBidProject.AdminUI.DTO.CarDtos;
+using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
@@ -7,16 +10,18 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            CarSoldToListViewModel carSoldToList = new CarSoldToListViewModel(new List<CarSoldToTableRowDTO>());
+            return View(carSoldToList);
         }
         [HttpGet]
         public IActionResult CarSoldToAdd()
         {
-            return View();
+            CarSoldToAddViewModel carSoldToAdd = new CarSoldToAddViewModel(Guid.Empty, Guid.Empty, 0, new List<SelectListItem>(), new List<SelectListItem>());
+            return View(carSoldToAdd);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CarSoldToAdd(RolePageActionAuthAddDto data)
+        public IActionResult CarSoldToAdd(CarSoldToAddViewModel data)
         {
             return View();
         }

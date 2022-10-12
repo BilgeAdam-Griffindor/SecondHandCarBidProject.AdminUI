@@ -1,4 +1,5 @@
-﻿@{
+﻿@model CarSoldToAddViewModel
+@{
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
 <div class="tooltip">
@@ -6,7 +7,7 @@
     <span class="tooltiptext">Bu sayfa admin için gereklidir. Satışlara durum buradan eklenebilir.</span>
 </div>
 <div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
-    <form asp-action="CarPropertyAdd" method="post">
+    <form asp-action="CarSoldToAdd" method="post">
         <div class="row justify-content-end m-2 mb-2">
             <div class="col align-self-end">
                 <button class=" m-2 p-2 button-29">KAYDET</button>
@@ -16,24 +17,19 @@
         <div class="row text-center p-2">
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Araba Listesi</label>
-                <!--TODO FIX-->
-                @*<select class="form-select" asp-for="" asp-items="">
-                </select>*@
+                <select class="form-select" asp-for="CarId" asp-items="Model.CarList">
+                </select>
             </div>
 
-        </div>
-        <div class="row text-center p-2">
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Kullanıcı Listesi</label>
-                @*<select class="form-select" asp-for="" asp-items="">
-                </select>*@
+                <select class="form-select" asp-for="SoldToBaseUserId" asp-items="Model.BaseUserList">
+                </select>
             </div>
 
-        </div>
-        <div class="row text-center p-2">
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Fiyat</label>
-                @*<input class="form-control" type="file" asp-for=""></input>*@
+                <input class="form-control" type="number" asp-for="Price"></input>
             </div>
         </div>
     </form>

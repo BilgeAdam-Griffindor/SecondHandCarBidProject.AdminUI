@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SecondHandCarBidProject.AdminUI.DTO.AdditionalFeeDtos;
 using SecondHandCarBidProject.AdminUI.DTO.AuthorizationDtos;
+using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
@@ -7,16 +9,18 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            CommissionFeeListViewModel commissionFeeList = new CommissionFeeListViewModel(new List<CommissionFeeTableRowDTO>());
+            return View(commissionFeeList);
         }
         [HttpGet]
         public IActionResult CommissionFeeAdd()
         {
-            return View();
+            CommissionFeeAddViewModel commissionFeeAdd = new CommissionFeeAddViewModel(0, 0, 0, DateTime.Now, DateTime.Now);
+            return View(commissionFeeAdd);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CommissionFeeAdd(RolePageActionAuthAddDto data)
+        public IActionResult CommissionFeeAdd(CommissionFeeAddViewModel data)
         {
             return View();
         }
