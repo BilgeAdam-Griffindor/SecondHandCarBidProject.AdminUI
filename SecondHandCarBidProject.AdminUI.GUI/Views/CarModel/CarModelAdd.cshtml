@@ -18,12 +18,13 @@
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Araba Marka Listesi</label>
                 <select class="form-select" asp-for="CarBrandId" asp-items="Model.CarBrandList">
+                    <option value="">--Seçiniz--</option>
                 </select>
             </div>
 
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Araba Modeli</label>
-                <input class="form-control" asp-for="ModelName"></input>
+                <input class="form-control" asp-for="ModelName" placeholder="Model Giriniz"></input>
             </div>
         </div>
     </form>

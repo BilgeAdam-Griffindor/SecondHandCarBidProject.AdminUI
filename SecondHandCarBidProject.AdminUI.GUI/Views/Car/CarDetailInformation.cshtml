@@ -18,129 +18,129 @@
                         <div class="col">
                             <label class="fw-bold text-dark">Bireysel/Kurumsal</label>
 
-                   <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe" ></select>
-              </div>
-              <div class="col">
-                  <label class="fw-bold text-dark">Kurumsal Şirket Adı</label>
-                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
-              </div>
-              <div class="col">
-                  <label class="fw-bold text-dark">Statü</label>
-                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
-              </div>
-              <div class="col">
-                  <label class="fw-bold text-dark">Araç Fiyat</label>
-                  <input type="text" class="form-control"/>
-              </div>
+                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                        </div>
+                        <div class="col">
+                            <label class="fw-bold text-dark">Kurumsal Şirket Adı</label>
+                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                        </div>
+                        <div class="col">
+                            <label class="fw-bold text-dark">Statü</label>
+                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                        </div>
+                        <div class="col">
+                            <label class="fw-bold text-dark">Araç Fiyat</label>
+                            <input type="number" class="form-control" />
+                        </div>
 
                     </div>
                 </div>
             </div>
 
-    <div class="col-12">
-      <div class="p-3 border bg-light text-justify">
-          <div class="row">
-              <div class="col">
-                  <label class="fw-bold text-dark">Araç Marka</label>
-                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
-              </div>
-              <div class="col">
-                  <label class="fw-bold text-dark">Araç Model</label>
-                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
-              </div>
-              <div class="col">
-                  <label class="fw-bold text-dark">Gövde Tipi</label>
-                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col">
-                  <label class="fw-bold text-dark">Yıl</label>
-                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
-              </div>
-              <div class="col">
-                  <label class="fw-bold text-dark">Yakıt Tipi</label>
-                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
-              </div>
-              <div class="col">
-                  <label class="fw-bold text-dark">Vites Tipi</label>
-                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
-              </div>
-          </div>
-           <div class="row">
-              <div class="col">
-                  <label class="fw-bold text-dark">Versiyon</label>
-                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
-              </div>
-              <div class="col">
-                  <label class="fw-bold text-dark">Km Bilgisi</label>
-                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
-              </div>
-              <div class="col">
-                  <label class="fw-bold text-dark">Renk </label>
-                  <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
-              </div>
-          </div>
-           <div class="row">
-              <div class="col">
-                  <label class="fw-bold text-dark">Donanım</label>
-                  <select class="form-control" multiple asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
-              </div>
-              <div class="col">
-                  Boş
-              </div>
-              <div class="col">
-                  Boş
-              </div>
-          </div>
-          </div>
-    </div>
-    <div class="col-6">
-      <div class="p-3 border bg-light">
-          <label class="fw-bold text-dark">Fotoğraf Ekle</label>
-  <input class="form-control"  type="file"  multiple>
-  
-
-          </div>
-    </div>
-    <div class="col-6">
-      <div class="p-3 border bg-light">
-          <label class="fw-bold text-dark">Açıklama</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-      </div>
-    </div>
-    <div class="col-12">
-      <div class="p-3 border bg-light">
-          <div class="row">
-              <div class="col">
-          <a class="btn btn-primary car-detail-button" >Hemen Al Satış</a>
-          </div>
-          <div class="col">
-          <a class="btn btn-primary car-detail-button">Komisyon</a>
-          </div>
-          <div class="col">
-          <a class="btn btn-primary car-detail-button">Alıcı Bilgileri</a>
-          </div>
-          <div class="col">
-          <a class="btn btn-primary car-detail-button">Araç Tarihçe</a>
-          </div>
-          <div class="col">
-          <a class="btn btn-primary car-detail-button">Hasar Tramer Bilgileri</a>
-          </div>
-          <div class="col">
-          <a class="btn btn-primary car-detail-button">İlan Bilgileri</a>
-          </div>
-              <div class="col">
-          <a class="btn btn-success car-detail-button">Kaydet</a>
-          </div>
-          </div>
-      </div>
-  </div>
-
+            <div class="col-12">
+                <div class="p-3 border bg-light text-justify">
+                    <div class="row">
+                        <div class="col">
+                            <label class="fw-bold text-dark">Araç Marka</label>
+                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                        </div>
+                        <div class="col">
+                            <label class="fw-bold text-dark">Araç Model</label>
+                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                        </div>
+                        <div class="col">
+                            <label class="fw-bold text-dark">Gövde Tipi</label>
+                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="fw-bold text-dark">Yıl</label>
+                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                        </div>
+                        <div class="col">
+                            <label class="fw-bold text-dark">Yakıt Tipi</label>
+                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                        </div>
+                        <div class="col">
+                            <label class="fw-bold text-dark">Vites Tipi</label>
+                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="fw-bold text-dark">Versiyon</label>
+                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                        </div>
+                        <div class="col">
+                            <label class="fw-bold text-dark">Km Bilgisi</label>
+                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                        </div>
+                        <div class="col">
+                            <label class="fw-bold text-dark">Renk </label>
+                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="fw-bold text-dark">Donanım</label>
+                            <select class="form-control" multiple asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                        </div>
+                        <div class="col">
+                            Boş
+                        </div>
+                        <div class="col">
+                            Boş
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="p-3 border bg-light">
+                    <label class="fw-bold text-dark">Fotoğraf Ekle</label>
+                    <input class="form-control" type="file" multiple>
 
 
                 </div>
             </div>
+            <div class="col-6">
+                <div class="p-3 border bg-light">
+                    <label class="fw-bold text-dark">Açıklama</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="p-3 border bg-light">
+                    <div class="row">
+                        <div class="col">
+                            <a class="btn btn-primary car-detail-button">Hemen Al Satış</a>
+                        </div>
+                        <div class="col">
+                            <a class="btn btn-primary car-detail-button">Komisyon</a>
+                        </div>
+                        <div class="col">
+                            <a class="btn btn-primary car-detail-button">Alıcı Bilgileri</a>
+                        </div>
+                        <div class="col">
+                            <a class="btn btn-primary car-detail-button">Araç Tarihçe</a>
+                        </div>
+                        <div class="col">
+                            <a class="btn btn-primary car-detail-button">Hasar Tramer Bilgileri</a>
+                        </div>
+                        <div class="col">
+                            <a class="btn btn-primary car-detail-button">İlan Bilgileri</a>
+                        </div>
+                        <div class="col">
+                            <a class="btn btn-success car-detail-button">Kaydet</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
+    </div>
+    </div>
     </div>
 </form>
