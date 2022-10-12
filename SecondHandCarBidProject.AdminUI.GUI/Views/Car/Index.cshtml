@@ -9,21 +9,21 @@
     <div class="row">
         <div class="col-12 col-md-4">
             <label for="brand">Araç Marka:</label>
-            <select class="form-control" asp-for="BrandId" asp-items="@Model.BrandList">
+            <select class="form-control" asp-for="BrandId" asp-items="@Model.BrandList" placeholder="Seçiniz">
                 <option value="@null">Boş</option>
             </select>
         </div>
 
         <div class="col-12 col-md-4">
             <label for="model">Araç Model:</label>
-            <select class="form-control" asp-for="ModelId" asp-items="@Model.ModelList">
+            <select class="form-control" asp-for="ModelId" asp-items="@Model.ModelList" placeholder="Seçiniz">
                 <option value="@null">Boş</option>
             </select>
         </div>
 
         <div class="col-12 col-md-4">
             <label for="status">Araç Statü:</label>
-            <select class="form-control" asp-for="StatusId" asp-items="@Model.StatusList">
+            <select class="form-control" asp-for="StatusId" asp-items="@Model.StatusList" placeholder="Seçiniz">
                 <option value="@null">Boş</option>
             </select>
         </div>

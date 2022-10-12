@@ -4,6 +4,7 @@
 @{
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
+
 <div class="tooltip">
     <h4><i class="fa-solid fa-lg fa-circle-info"></i>Satış Durum Ekleme</h4>
     <span class="tooltiptext">Bu sayfa admin için gereklidir. Satışlara durum buradan eklenebilir.</span>
@@ -19,13 +20,13 @@
         <div class="row text-center p-2">
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Satış Listesi</label>
-                <select class="form-select" asp-for="CarBuyId" asp-items="@Model.CarBuyList">
+                <select class="form-select" asp-for="CarBuyId" asp-items="@Model.CarBuyList" placeholder="Seçiniz">
                 </select>
             </div>
 
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Durum</label>
-                <select class="form-select" asp-for="StatusValueId" asp-items="@Model.StatusValueList">
+                <select class="form-select" asp-for="StatusValueId" asp-items="@Model.StatusValueList" placeholder="Seçiniz">
                 </select>
             </div>
         </div>
