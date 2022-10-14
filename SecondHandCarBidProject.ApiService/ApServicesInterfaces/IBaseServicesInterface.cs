@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.ApiService.ApServicesInterfaces
 {
-    public interface IBaseServicesInterface<T>
+    public interface IBaseServicesInterface
     {
         //public Task<ResponseModel<T>> LoginAsync<T, TData>(TData postData);
         public Task<ResponseModel<T>> LoginAsync<T, TData>(string loginUrl, TData postData);
