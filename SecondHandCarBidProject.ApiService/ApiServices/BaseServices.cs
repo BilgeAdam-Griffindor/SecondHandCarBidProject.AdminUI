@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.ApiService.ApiServices
 {
-    public class BaseServices<T> : IBaseServicesInterface<T>
+    public class BaseServices : IBaseServicesInterface
     {
         HttpClient _client;
         public BaseServices(HttpClient client)
@@ -97,7 +97,7 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             }
         }
 
-        public async Task<ResponseModel<T>> SaveAsync<T>(T data, string name, string token)
+        public async Task<ResponseModel<T>> SaveAsync<T>(T data, string route, string token)
         {
             ResponseModel<T> response = new ResponseModel<T>();
 
@@ -110,7 +110,7 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             else
             {
                 _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
-                var _response = await _client.PostAsJsonAsync(name, data);
+                var _response = await _client.PostAsJsonAsync(route, data);
                 if (!_response.IsSuccessStatusCode)
                 {
                     return null;
@@ -120,7 +120,7 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             }
         }
 
-        public async Task<ResponseModel<T>> UpdateAsync<T>(T data, string name, string token)
+        public async Task<ResponseModel<T>> UpdateAsync<T>(T data, string route, string token)
         {
             ResponseModel<T> responseModel = new ResponseModel<T>();
             if (String.IsNullOrEmpty(token))
@@ -132,7 +132,7 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             else
             {
                 _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
-                var _response = await _client.PutAsJsonAsync(name, data);
+                var _response = await _client.PutAsJsonAsync(route, data);
                 responseModel.IsSuccess = _response.IsSuccessStatusCode;
                 return responseModel;
             }
