@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SecondHandCarBidProject.AdminUI.DAL\SecondHandCarBidProject.AdminUI.DAL.csproj" />
     <ProjectReference Include="..\SecondHandCarBidProject.AdminUI.Validator\SecondHandCarBidProject.AdminUI.Validator.csproj" />
     <ProjectReference Include="..\SecondHandCarBidProject.ApiService\SecondHandCarBidProject.ApiService.csproj" />
     <ProjectReference Include="..\SercondHandCarBidProject.Logging\SercondHandCarBidProject.Logging.csproj" />

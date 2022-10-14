@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using SecondHandCarBidProject.AdminUI.DAL;
 using SecondHandCarBidProject.AdminUI.DTO.AuthorizationDtos;
 using SecondHandCarBidProject.ApiService.ApServicesInterfaces;
 
@@ -10,10 +11,12 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
     {
         private IValidator<PageAuthTypeAdd> _validator;
         private IBaseServices _baseServices;
-        public PageAuthTypeController(IValidator<PageAuthTypeAdd> validator, IBaseServices baseServices)
+        private BaseDAL _baseDAL;
+        public PageAuthTypeController(IValidator<PageAuthTypeAdd> validator, IBaseServices baseServices, BaseDAL baseDAL)
         {
             _validator = validator;
             _baseServices = baseServices;
+            _baseDAL = baseDAL;
         }
         
         [HttpGet]
@@ -32,16 +35,15 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             ValidationResult result =  await _validator.ValidateAsync(pageAuthTypeAdd);
             if (result.IsValid)
             {
-                //var data = 
-                //if (data.Result.IsSuccess)
-                //{
-                //    return View();
-                //}
-                //else
-                //{
-                //    return View();
-                //}
-                return View();
+                var data = _baseDAL.SaveAsync<PageAuthTypeAdd, bool>(pageAuthTypeAdd, null, null);
+                if (data.Result.IsSuccess)
+                {
+                    return View();
+                }
+                else
+                {
+                    return View();
+                }
             }
             else
             {

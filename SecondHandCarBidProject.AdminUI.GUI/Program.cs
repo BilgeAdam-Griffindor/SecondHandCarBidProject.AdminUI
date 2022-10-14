@@ -1,4 +1,5 @@
 using FluentValidation;
+using SecondHandCarBidProject.AdminUI.DAL;
 using SecondHandCarBidProject.AdminUI.Validator.Extension;
 using SecondHandCarBidProject.AdminUI.Validator.PageAuthType;
 using SecondHandCarBidProject.ApiService.ApiServices;
@@ -18,7 +19,7 @@ builder.Services.AddHttpClient<BidApiServices>(opt =>
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddHttpService(builder.Configuration);
 builder.Services.AddValidatorsFromAssemblyContaining<PageAuthTypeAddValidator>();
-
+builder.Services.AddScoped<BaseDAL>();
 var app = builder.Build(); 
 
 
