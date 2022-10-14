@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SecondHandCarBidProject.AdminUI.DTO;
+using SecondHandCarBidProject.AdminUI.DTO.Validation;
 using SecondHandCarBidProject.ApiService.ApiServices;
 using System;
 using System.Collections.Generic;
@@ -31,8 +32,7 @@ namespace SecondHandCarBidProject.AdminUI.DAL
             var response = await baseServices.ListAll<T>(route, token);
             return response;
         }
-
-
+      
         public async Task<ResponseModel<T>> GetByIdAsync<T>(object id, string route, string token)
         {
             var response = await baseServices.GetByIdAsync<T>(id, route, token);
@@ -43,7 +43,6 @@ namespace SecondHandCarBidProject.AdminUI.DAL
         {
             var response = await baseServices.GetByFilterAsync<T>(route, token, queryString);
 
-            return response;
         }
 
         public async Task<ResponseModel<TResponse>> SaveAsync<TData, TResponse>(TData data, string name, string token)
