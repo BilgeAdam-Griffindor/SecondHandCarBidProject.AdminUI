@@ -42,7 +42,7 @@ namespace SecondHandCarBidProject.AdminUI.DAL
         public async Task<ResponseModel<T>> GetByFilterAsync<T>(string route, string token, string queryString = "")
         {
             var response = await baseServices.GetByFilterAsync<T>(route, token, queryString);
-
+            return response;
         }
 
         public async Task<ResponseModel<TResponse>> SaveAsync<TData, TResponse>(TData data, string name, string token)
