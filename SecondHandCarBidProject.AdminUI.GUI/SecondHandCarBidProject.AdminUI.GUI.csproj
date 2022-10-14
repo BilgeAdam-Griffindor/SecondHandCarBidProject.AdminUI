@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.2.2" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.9" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.9" />
@@ -15,6 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SecondHandCarBidProject.AdminUI.DAL\SecondHandCarBidProject.AdminUI.DAL.csproj" />
+    <ProjectReference Include="..\SecondHandCarBidProject.AdminUI.Validator\SecondHandCarBidProject.AdminUI.Validator.csproj" />
     <ProjectReference Include="..\SecondHandCarBidProject.ApiService\SecondHandCarBidProject.ApiService.csproj" />
     <ProjectReference Include="..\SercondHandCarBidProject.Logging\SercondHandCarBidProject.Logging.csproj" />
   </ItemGroup>
