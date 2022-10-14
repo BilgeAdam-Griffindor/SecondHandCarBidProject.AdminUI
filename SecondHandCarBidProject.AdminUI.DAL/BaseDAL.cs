@@ -45,15 +45,15 @@ namespace SecondHandCarBidProject.AdminUI.DAL
             return response;
         }
 
-        public async Task<ResponseModel<TResponse>> SaveAsync<TData, TResponse>(TData data, string name, string token)
+        public async Task<ResponseModel<TResponse>> SaveAsync<TData, TResponse>(TData data, string route, string token)
         {
-            var response = await baseServices.SaveAsync<TData, TResponse>(data, name, token);
+            var response = await baseServices.SaveAsync<TData, TResponse>(data, route, token);
             return response;
         }
 
-        public async Task<ResponseModel<TResponse>> UpdateAsync<TData, TResponse>(TData data, string name, string token)
+        public async Task<ResponseModel<TResponse>> UpdateAsync<TData, TResponse>(TData data, string route, string token)
         {
-            var response = await baseServices.UpdateAsync<TData, TResponse>(data, name, token);
+            var response = await baseServices.UpdateAsync<TData, TResponse>(data, route, token);
             return response;
         }
 
