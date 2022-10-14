@@ -24,7 +24,7 @@ namespace SecondHandCarBidProject.ApiService.HttpConfiguration
             services.Configure<MongoSettings>(_Configuration.GetSection("MongoSettings")); 
             services.AddScoped<IMongoLog, MongoLog>();
             services.AddScoped<ILoggerFactoryMethod, LoggerFactoryMethod>();
-
+            
             services.AddHttpClient<BaseServices>(opt =>
             {
                 opt.BaseAddress = new Uri(_Configuration.GetSection("BaseUrl").Value);

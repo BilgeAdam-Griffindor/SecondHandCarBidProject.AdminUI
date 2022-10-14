@@ -1,3 +1,6 @@
+using FluentValidation;
+using SecondHandCarBidProject.AdminUI.Validator.Extension;
+using SecondHandCarBidProject.AdminUI.Validator.PageAuthType;
 using SecondHandCarBidProject.ApiService.ApiServices;
 using SecondHandCarBidProject.ApiService.HttpConfiguration;
 using SercondHandCarBidProject.Logging.MongoContext.Abstract;
@@ -14,6 +17,8 @@ builder.Services.AddHttpClient<BidApiServices>(opt =>
 // Add services to the container.
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddHttpService(builder.Configuration);
+builder.Services.AddValidatorsFromAssemblyContaining<PageAuthTypeAddValidator>();
+
 var app = builder.Build(); 
 
 

@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecondHandCarBidProject.Api
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecondHandCarBidProject.AdminUI.DTO", "SecondHandCarBidProject.AdminUI.DTO\SecondHandCarBidProject.AdminUI.DTO.csproj", "{381884AF-25E1-4545-82B1-AF2A34824045}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SercondHandCarBidProject.Logging", "SercondHandCarBidProject.Logging\SercondHandCarBidProject.Logging.csproj", "{E329E2C5-0282-4875-96B3-683A8EEA9A05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SercondHandCarBidProject.Logging", "SercondHandCarBidProject.Logging\SercondHandCarBidProject.Logging.csproj", "{E329E2C5-0282-4875-96B3-683A8EEA9A05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecondHandCarBidProject.AdminUI.DAL", "SecondHandCarBidProject.AdminUI.DAL\SecondHandCarBidProject.AdminUI.DAL.csproj", "{B854B040-DC02-4262-B119-AEA68F2710EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecondHandCarBidProject.AdminUI.DAL", "SecondHandCarBidProject.AdminUI.DAL\SecondHandCarBidProject.AdminUI.DAL.csproj", "{B854B040-DC02-4262-B119-AEA68F2710EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecondHandCarBidProject.AdminUI.Validator", "SecondHandCarBidProject.AdminUI.Validator\SecondHandCarBidProject.AdminUI.Validator.csproj", "{A31DBB68-BEF9-4D29-9CD3-B5E42CEBDCFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{B854B040-DC02-4262-B119-AEA68F2710EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B854B040-DC02-4262-B119-AEA68F2710EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B854B040-DC02-4262-B119-AEA68F2710EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A31DBB68-BEF9-4D29-9CD3-B5E42CEBDCFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A31DBB68-BEF9-4D29-9CD3-B5E42CEBDCFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A31DBB68-BEF9-4D29-9CD3-B5E42CEBDCFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A31DBB68-BEF9-4D29-9CD3-B5E42CEBDCFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
