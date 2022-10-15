@@ -6,15 +6,9 @@
         string CarDescription,
         short CarBrandId,
         int CarModelId,
-        Guid BodyTypeId,
-        Guid FuelTypeId,
-        Guid GearTypeId,
-        Guid VersionId,
-        Guid ColorId,
-        List<Guid> OptionalHardwareIds,
+        List<Guid> SelectedCarProperties,
         List<byte[]> CarImages,
         Guid CreatedBy
-        //TODO Send tramer info
         );
 
 }
