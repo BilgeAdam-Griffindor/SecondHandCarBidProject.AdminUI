@@ -141,8 +141,11 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             }
         }
 
-        public async Task<ResponseModel<T>> RemoveAsync<T>(object id, string route, string token)
+        public async Task<ResponseModel<T>> RemoveByFilterAsync<T>(string filterQueryString, string route, string token)
         {
+            if (!string.IsNullOrEmpty(filterQueryString))
+                route += "?" + filterQueryString;
+
             ResponseModel<T> responseModel = new ResponseModel<T>();
             if (String.IsNullOrEmpty(token))
             {
@@ -154,8 +157,13 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             {
                 _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
                 var _response = await _client.DeleteAsync(route);
-                responseModel.IsSuccess = _response.IsSuccessStatusCode;
-                return responseModel;
+                if (!_response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+                return JsonConvert.DeserializeObject<ResponseModel<T>>(await _response.Content.ReadAsStringAsync());
+
+
             }
         }
 
