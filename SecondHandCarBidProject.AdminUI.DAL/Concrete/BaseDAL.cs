@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO;
 using SecondHandCarBidProject.AdminUI.DTO.Validation;
 using SecondHandCarBidProject.ApiService.ApiServices;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DAL.Concrete
 {
-    public class BaseDAL
+    public class BaseDAL:IBaseDAL
     {
         BaseServices baseServices;
         public BaseDAL(BaseServices _baseServices)
