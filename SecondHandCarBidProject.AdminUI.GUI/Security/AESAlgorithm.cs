@@ -4,8 +4,6 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Security
 {
     public static class AESAlgorithm
     {
-        //https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.aes?view=net-6.0
-        //TODO repeated values in the key. Might be better to change to a different one.
         private static readonly byte[] aes_key = new byte[] { 101, 115, 114, 97, 97, 108, 105, 99, 97, 110, 114, 101, 99, 97, 105, 101, 114, 101, 110, 101, 109, 114, 101, 103, 114, 121, 102, 105, 110, 100, 111, 114 };
         private static readonly byte[] aes_IV = new byte[] { 138, 249, 93, 4, 116, 193, 133, 130, 23, 137, 21, 115, 187, 87, 185, 85 };
 
