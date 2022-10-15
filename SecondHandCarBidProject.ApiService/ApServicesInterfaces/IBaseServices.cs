@@ -11,11 +11,9 @@ namespace SecondHandCarBidProject.ApiService.ApServicesInterfaces
 {
     public interface IBaseServices
     {
-        //public Task<ResponseModel<T>> LoginAsync<T, TData>(TData postData);
         public Task<ResponseModel<T>> LoginAsync<T, TData>(string loginUrl, TData postData);
         public Task<ResponseModel<List<T>>> ListAll<T>(string route, string token);
         public Task<ResponseModel<T>> GetByIdAsync<T>(object id, string route, string token);
-        //public Task<ResponseModel<T>> GetByFilterAsync<T>(string route, string token, string queryString = "", int page = 1, int perPage = 100);
         public Task<ResponseModel<T>> GetByFilterAsync<T>(string route, string token, string filterQueryString = "");
         public Task<ResponseModel<TResponse>> SaveAsync<TData, TResponse>(TData data, string name, string token);
         public Task<ResponseModel<TResponse>> UpdateAsync<TData, TResponse>(TData data, string name, string token);
