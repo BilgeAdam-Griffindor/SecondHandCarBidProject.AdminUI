@@ -17,7 +17,7 @@ namespace SecondHandCarBidProject.ApiService.ApServicesInterfaces
         public Task<ResponseModel<T>> GetByFilterAsync<T>(string route, string token, string filterQueryString = "");
         public Task<ResponseModel<TResponse>> SaveAsync<TData, TResponse>(TData data, string route, string token);
         public Task<ResponseModel<TResponse>> UpdateAsync<TData, TResponse>(TData data, string route, string token);
-        public Task<ResponseModel<T>> RemoveAsync<T>(object id, string route, string token);
+        public Task<ResponseModel<T>> RemoveByFilterAsync<T>(string filterQueryString, string route, string token);
 
     }
 }
