@@ -4,6 +4,6 @@
         Guid CarBuyId,
         int StatusValueId,
         string Explanation,
-        Guid CreateBy
+        Guid CreatedBy
         );
 }

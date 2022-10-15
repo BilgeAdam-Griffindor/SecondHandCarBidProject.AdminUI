@@ -18,11 +18,13 @@ namespace SecondHandCarBidProject.AdminUI.DAL.Concrete
         {
             baseServices = _baseServices;
         }
-        public async Task<ResponseModel<T>> LoginAsync<T, TData>(string loginUrl, TData postData)
+
+        public async Task<ResponseModel<TResponse>> LoginAsync<TResponse, TData>(string loginUrl,TData postData)
         {
             var body = new StringContent(JsonConvert.SerializeObject(postData));
             body.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var response = await baseServices.LoginAsync<T, TData>(loginUrl, postData);
+
+            var response = await baseServices.LoginAsync<TResponse, TData>(loginUrl,postData);
             return response;
         }
         public async Task<ResponseModel<List<T>>> ListAll<T>(string route, string token)
@@ -37,24 +39,21 @@ namespace SecondHandCarBidProject.AdminUI.DAL.Concrete
             return response;
 
         }
-
-        public async Task<ResponseModel<T>> GetByFilterAsync<T>(string route, string token, string filterQueryString = "")
+        public async Task<ResponseModel<T>> GetByFilterAsync<T>(string route, string token, string queryString = "")
         {
-            var _response = await baseServices.GetByFilterAsync<T>(route, token, filterQueryString = "");
-
-            return _response;
-
-        }
-
-        public async Task<ResponseModel<T>> SaveAsync<T>(T data, string route, string token)
-        {
-            var response = await baseServices.SaveAsync(data, route, token);
+            var response = await baseServices.GetByFilterAsync<T>(route, token, queryString);
             return response;
         }
 
-        public async Task<ResponseModel<T>> UpdateAsync<T>(T data, string route, string token)
+        public async Task<ResponseModel<TResponse>> SaveAsync<TData, TResponse>(TData data, string route, string token)
         {
-            var response = await baseServices.UpdateAsync(data, route, token);
+            var response = await baseServices.SaveAsync<TData, TResponse>(data, route, token);
+            return response;
+        }
+
+        public async Task<ResponseModel<TResponse>> UpdateAsync<TData, TResponse>(TData data, string route, string token)
+        {
+            var response = await baseServices.UpdateAsync<TData, TResponse>(data, route, token);
             return response;
         }
 

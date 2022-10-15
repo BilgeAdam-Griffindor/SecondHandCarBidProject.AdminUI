@@ -31,6 +31,5 @@ namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
         List<SelectListItem> VersionList,
         List<SelectListItem> ColorList,
         List<SelectListItem> OptionalHardwareList
-        //TODO Tramer info and in other car classes
     );
 }

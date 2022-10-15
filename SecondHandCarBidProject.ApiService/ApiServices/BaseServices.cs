@@ -97,9 +97,9 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             }
         }
 
-        public async Task<ResponseModel<T>> SaveAsync<T>(T data, string route, string token)
+        public async Task<ResponseModel<TResponse>> SaveAsync<TData,TResponse>(TData data, string route, string token)
         {
-            ResponseModel<T> response = new ResponseModel<T>();
+            ResponseModel<TResponse> response = new ResponseModel<TResponse>();
 
             if (String.IsNullOrEmpty(token))
             {
@@ -113,16 +113,18 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
                 var _response = await _client.PostAsJsonAsync(route, data);
                 if (!_response.IsSuccessStatusCode)
                 {
-                    return null;
+                    response.IsSuccess = false;
+                    response.statusCode = (StatusCode)_response.StatusCode;
+                    return response;
                 }
-                response = await _response.Content.ReadFromJsonAsync<ResponseModel<T>>();
+                response = await _response.Content.ReadFromJsonAsync<ResponseModel<TResponse>>();
                 return response;
             }
         }
 
-        public async Task<ResponseModel<T>> UpdateAsync<T>(T data, string route, string token)
+        public async Task<ResponseModel<TResponse>> UpdateAsync<TData, TResponse>(TData data, string route, string token)
         {
-            ResponseModel<T> responseModel = new ResponseModel<T>();
+            ResponseModel<TResponse> responseModel = new ResponseModel<TResponse>();
             if (String.IsNullOrEmpty(token))
             {
                 responseModel.IsSuccess = false;
