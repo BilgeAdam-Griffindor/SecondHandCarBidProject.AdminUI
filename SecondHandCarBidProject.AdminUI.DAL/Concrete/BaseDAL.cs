@@ -9,7 +9,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SecondHandCarBidProject.AdminUI.DAL
+namespace SecondHandCarBidProject.AdminUI.DAL.Concrete
 {
     public class BaseDAL
     {
@@ -30,7 +30,7 @@ namespace SecondHandCarBidProject.AdminUI.DAL
             var response = await baseServices.ListAll<T>(route, token);
             return response;
         }
-      
+
         public async Task<ResponseModel<T>> GetByIdAsync<T>(object id, string route, string token)
         {
             var response = await baseServices.GetByIdAsync<T>(id, route, token);
@@ -42,13 +42,13 @@ namespace SecondHandCarBidProject.AdminUI.DAL
         {
             var _response = await baseServices.GetByFilterAsync<T>(route, token, filterQueryString = "");
 
-                return _response;
+            return _response;
 
         }
 
         public async Task<ResponseModel<T>> SaveAsync<T>(T data, string route, string token)
         {
-            var response = await baseServices.SaveAsync<T>(data, route, token);
+            var response = await baseServices.SaveAsync(data, route, token);
             return response;
         }
 

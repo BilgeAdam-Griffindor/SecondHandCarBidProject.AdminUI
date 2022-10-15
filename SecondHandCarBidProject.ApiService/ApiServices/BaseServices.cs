@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.ApiService.ApiServices
 {
-    public class BaseServices : IBaseServicesInterface
+    public class BaseServices : IBaseServices
     {
         HttpClient _client;
         public BaseServices(HttpClient client)
