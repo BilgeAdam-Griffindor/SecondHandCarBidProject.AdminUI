@@ -9,10 +9,15 @@ using System.Threading.Tasks;
 
 namespace SercondHandCarBidProject.Logging.Concrete
 {
-    public class LoggerFactoryMethod: ILoggerFactoryMethod
+    public class LoggerFactoryMethod<T>: ILoggerFactoryMethod<T> where T:class, ILogEntity
     {
-        IMongoLog mongolog;
-        public LoggerFactoryMethod(IMongoLog _mongoLog)
+        IMongoLog<T> mongolog;
+        public LoggerFactoryMethod()
+        {
+
+        }
+       
+        public LoggerFactoryMethod(IMongoLog<T> _mongoLog)
         {
             mongolog = _mongoLog;
         }
@@ -21,18 +26,19 @@ namespace SercondHandCarBidProject.Logging.Concrete
             MongoDatabaseLogger = 1,
             FileLogger = 2,
         }
-        public async Task FactoryMethod(LoggerType logType, LogModel data)
+        public async Task FactoryMethod(LoggerType logType, T data)
         {
-            ILoggerExtension log = null;
+            ILoggerExtension<T> log = null;
             switch (logType)
             {
                 case LoggerType.MongoDatabaseLogger:
-                    log = new MongoDatabaseLog(mongolog);
+                    log = new MongoDatabaseLog<T>(mongolog);
                     break;
                 case LoggerType.FileLogger:
-                    log = new FileLogger();
+                    log = new FileLogger<T>();
                     break;
                 default:
+                    log = new FileLogger<T>();
                     break;
             }
             await log.DataLog(data);

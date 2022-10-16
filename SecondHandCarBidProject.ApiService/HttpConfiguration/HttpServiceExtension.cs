@@ -12,6 +12,7 @@ using SercondHandCarBidProject.Logging.MongoContext;
 using SercondHandCarBidProject.Logging.MongoContext.Concrete;
 using SercondHandCarBidProject.Logging.Abstract;
 using SercondHandCarBidProject.Logging.Concrete;
+using SercondHandCarBidProject.Logging.LogModels;
 
 namespace SecondHandCarBidProject.ApiService.HttpConfiguration
 {
@@ -21,9 +22,10 @@ namespace SecondHandCarBidProject.ApiService.HttpConfiguration
         public static void AddHttpService(this IServiceCollection services, IConfiguration _Configuration)
         {
 
-            services.Configure<MongoSettings>(_Configuration.GetSection("MongoSettings")); 
-            services.AddScoped<IMongoLog, MongoLog>();
-            services.AddScoped<ILoggerFactoryMethod, LoggerFactoryMethod>();
+            services.Configure<MongoSettings>(_Configuration.GetSection("MongoSettings"));
+
+            services.AddSingleton<IMongoLog<MongoLogModel>, MongoLog<MongoLogModel>>();
+            services.AddScoped(typeof(ILoggerFactoryMethod<>), typeof(LoggerFactoryMethod<>));
 
             //services.AddHttpClient<BaseServices>(opt =>
             //{
