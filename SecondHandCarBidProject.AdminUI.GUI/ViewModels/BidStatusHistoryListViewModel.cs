@@ -4,6 +4,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
 {
     public record BidStatusHistoryListViewModel
     (
-        List<BidStatusHistoryListTableRowsDTO> TableRows
+        List<BidStatusHistoryListTableRowsDTO> TableRows,
+        int maxPages
     );
 }

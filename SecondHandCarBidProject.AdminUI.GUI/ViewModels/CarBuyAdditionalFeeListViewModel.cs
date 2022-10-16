@@ -4,6 +4,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
 {
     public record CarBuyAdditionalFeeListViewModel
     (
-        List<CarBuyAdditionalFeeTableRowDTO> TableRows
+        List<CarBuyAdditionalFeeTableRowDTO> TableRows,
+        int maxPages
     );
 }

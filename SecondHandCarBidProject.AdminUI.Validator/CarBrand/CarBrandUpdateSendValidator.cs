@@ -3,7 +3,7 @@ using SecondHandCarBidProject.AdminUI.DTO;
 
 namespace SecondHandCarBidProject.AdminUI.Validator.CarBrand
 {
-    public class CarBrandUpdateSendValidator : AbstractValidator<CarBrandUpdateDTO>
+    public class CarBrandUpdateSendValidator : AbstractValidator<CarBrandUpdateSendDTO>
     {
         public CarBrandUpdateSendValidator()
         {

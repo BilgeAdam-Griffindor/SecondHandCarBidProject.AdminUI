@@ -22,6 +22,7 @@
                 <select class="form-select" asp-for="BidId" asp-items="@Model.BidList">
                     <option value="">--Seçiniz--</option>
                 </select>
+                <span asp-validation-for="BidId" class="text-danger"></span>
             </div>
 
             <div class="col-12 col-md-4 form-group">
@@ -29,17 +30,20 @@
                 <select class="form-select" asp-for="BaseUserId" asp-items="@Model.BaseUserList">
                     <option value="">--Seçiniz--</option>
                 </select>
+                <span asp-validation-for="BaseUserId" class="text-danger"></span>
             </div>
         </div>
         <div class="row text-center p-2">
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Teklif Miktarı</label>
                 <input type="number" class="form-control" asp-for="OfferAmount" placeholder="Teklif Fiyatı Giriniz">
+                <span asp-validation-for="OfferAmount" class="text-danger"></span>
             </div>
 
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Açıklama</label>
                 <textarea class="form-control" rows="3" asp-for="Explanation"></textarea>
+                <span asp-validation-for="Explanation" class="text-danger"></span>
             </div>
         </div>
     </form>
