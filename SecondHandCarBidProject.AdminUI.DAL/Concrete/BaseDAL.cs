@@ -58,9 +58,9 @@ namespace SecondHandCarBidProject.AdminUI.DAL.Concrete
             return response;
         }
 
-        public async Task<ResponseModel<T>> RemoveAsync<T>(object id, string route, string token)
+        public async Task<ResponseModel<T>> RemoveByFilterAsync<T>(string filterQueryString, string route, string token)
         {
-            var response = await baseServices.RemoveAsync<T>(id, route, token);
+            var response = await baseServices.RemoveByFilterAsync<T>(filterQueryString, route, token);
             return response;
         }
 
