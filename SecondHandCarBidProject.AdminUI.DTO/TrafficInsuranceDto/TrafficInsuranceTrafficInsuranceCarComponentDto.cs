@@ -11,12 +11,7 @@ namespace SecondHandCarBidProject.AdminUI.DTO.TrafficInsuranceDto
         Int16 TrafficInsuranceCarComponentId,
         string TrafficInsuranceCarComponentName,
         int StatusValueId,
-        string StatusValueName,
-        bool IsActive,
-        DateTime CreatedDate,
-        DateTime ModifiedDate,
-        Guid CreatedBy,
-        Guid ModifiedBy)
+        string StatusValueName)
     {
     }
 }

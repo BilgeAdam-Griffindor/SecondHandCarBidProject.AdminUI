@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO.TrafficInsuranceDto
 {
-    public record TrafficInsuranceCarComponentListDto(Int16 Id, string ComponentName,bool IsActive)
+    public record TrafficInsuranceCarComponentListDto(Int16 Id, string ComponentName)
     {
     }
 }
