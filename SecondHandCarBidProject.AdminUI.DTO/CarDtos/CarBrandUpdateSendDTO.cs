@@ -1,8 +1,8 @@
 ﻿namespace SecondHandCarBidProject.AdminUI.DTO
 {
-    public record CarBrandAddDTO(
+    public record CarBrandUpdateSendDTO(
+        short Id,
         string BrandName,
-        Guid CreatedBy
+        Guid ModifiedBy
         );
-
 }

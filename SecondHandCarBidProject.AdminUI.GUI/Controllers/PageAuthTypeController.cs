@@ -2,6 +2,7 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using SecondHandCarBidProject.AdminUI.DAL;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO.AuthorizationDtos;
 using SecondHandCarBidProject.ApiService.ApServicesInterfaces;
 
@@ -11,8 +12,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
     {
         private IValidator<PageAuthTypeAdd> _validator;
         
-        private BaseDAL _baseDAL;
-        public PageAuthTypeController(IValidator<PageAuthTypeAdd> validator,  BaseDAL baseDAL)
+        private IBaseDAL _baseDAL;
+        public PageAuthTypeController(IValidator<PageAuthTypeAdd> validator,  IBaseDAL baseDAL)
         {
             _validator = validator;           
             _baseDAL = baseDAL;

@@ -21,6 +21,7 @@
                 <select class="form-select" asp-for="BidId" asp-items="@Model.BidList">
                     <option value="">--Seçiniz--</option>
                 </select>
+                <span asp-validation-for="BidId" class="text-danger"></span>
             </div>
 
             <div class="col-12 col-md-4 form-group">
@@ -28,6 +29,7 @@
                 <select class="form-select" asp-for="CorporationId" asp-items="@Model.CorporationList">
                     <option value="">--Seçiniz--</option>
                 </select>
+                <span asp-validation-for="CorporationId" class="text-danger"></span>
             </div>
         </div>
     </form>
