@@ -155,10 +155,12 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
+            string queryString = "carbuyStatusHistoryId=" + id;
+
             //BaseApi
             try
             {
-                ResponseModel<bool> response = await _baseDAL.RemoveAsync<bool>(id, "CarBuyStatusHistory/Delete", HttpContext.Session.GetString("userToken"));
+                ResponseModel<bool> response = await _baseDAL.RemoveByFilterAsync<bool>(queryString, "CarBuyStatusHistory/Delete", HttpContext.Session.GetString("userToken"));
 
                 if (response.Data)
                 {

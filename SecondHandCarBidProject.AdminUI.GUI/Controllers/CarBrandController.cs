@@ -86,7 +86,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 //BaseApi
                 try
                 {
-                    ResponseModel<bool> response = await _baseDAL.SaveAsync<CarBrandAddDTO, bool>(addDTO, "BidCorporation/Add", HttpContext.Session.GetString("userToken"));
+                    ResponseModel<bool> response = await _baseDAL.SaveAsync<CarBrandAddDTO, bool>(addDTO, "CarBrand/Add", HttpContext.Session.GetString("userToken"));
 
                     if (response.Data)
                     {
@@ -204,10 +204,12 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
+            string queryString = "brandId=" + id;
+
             //BaseApi
             try
             {
-                ResponseModel<bool> response = await _baseDAL.RemoveAsync<bool>("id=" + id, "CarBrand/Delete", HttpContext.Session.GetString("userToken"));
+                ResponseModel<bool> response = await _baseDAL.RemoveByFilterAsync<bool>(queryString, "CarBrand/Delete", HttpContext.Session.GetString("userToken"));
 
                 if (response.Data)
                 {

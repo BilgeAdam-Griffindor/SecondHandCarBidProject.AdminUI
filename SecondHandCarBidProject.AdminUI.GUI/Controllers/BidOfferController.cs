@@ -252,10 +252,11 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             string queryString = "bidOfferId=" + id;
+
             //BaseApi
             try
             {
-                ResponseModel<bool> response = await _baseDAL.RemoveAsync<bool>(queryString, "BidOffer/Delete", HttpContext.Session.GetString("userToken"));
+                ResponseModel<bool> response = await _baseDAL.RemoveByFilterAsync<bool>(queryString, "BidOffer/Delete", HttpContext.Session.GetString("userToken"));
 
                 if (response.Data)
                 {
