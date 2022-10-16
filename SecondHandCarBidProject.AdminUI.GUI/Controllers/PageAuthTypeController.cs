@@ -12,8 +12,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
     {
         private IValidator<PageAuthTypeAdd> _validator;
         private IValidator<PageAuthTypeUpdate> _validator2;
-        private BaseDAL _baseDAL;
-        public PageAuthTypeController(IValidator<PageAuthTypeAdd> validator,  BaseDAL baseDAL, IValidator<PageAuthTypeUpdate> validator2)
+        private IBaseDAL _baseDAL;
+        public PageAuthTypeController(IValidator<PageAuthTypeAdd> validator, IBaseDAL baseDAL, IValidator<PageAuthTypeUpdate> validator2)
         {
             _validator = validator;           
             _baseDAL = baseDAL;

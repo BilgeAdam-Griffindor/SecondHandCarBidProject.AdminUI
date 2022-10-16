@@ -3,6 +3,7 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SecondHandCarBidProject.AdminUI.DAL;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO.AuthorizationDtos;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
@@ -11,8 +12,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
     {
         //RolePageActionAuthAddValidator
         private IValidator<RolePageActionAuthAddDto> _validator;
-        private BaseDAL _baseDAL;
-        public RolePageActionAuthController(BaseDAL baseDAL, IValidator<RolePageActionAuthAddDto> validator)
+        private IBaseDAL _baseDAL;
+        public RolePageActionAuthController(IBaseDAL baseDAL, IValidator<RolePageActionAuthAddDto> validator)
         {
             _baseDAL = baseDAL;
             _validator = validator;

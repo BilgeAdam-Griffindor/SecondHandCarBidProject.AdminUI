@@ -2,16 +2,17 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using SecondHandCarBidProject.AdminUI.DAL;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO.AuthorizationDtos;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
     public class RoleTypeController : Controller
     {
-        private BaseDAL _baseDAL;
+        private IBaseDAL _baseDAL;
         private IValidator<RoleTypeAddDto> _validator;
         private IValidator<RoleTypeUpdateDto> _validator2;
-        public RoleTypeController(BaseDAL baseDAL, IValidator<RoleTypeAddDto> validator, IValidator<RoleTypeUpdateDto> validator2)
+        public RoleTypeController(IBaseDAL baseDAL, IValidator<RoleTypeAddDto> validator, IValidator<RoleTypeUpdateDto> validator2)
         {
             _baseDAL = baseDAL;
             _validator = validator;
