@@ -10,14 +10,24 @@ using System.Threading.Tasks;
 
 namespace SercondHandCarBidProject.Logging.Concrete
 {
-    public class FileLogger:ILoggerExtension
+
+    /// <summary>
+    /// This class add log data to .txt file
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class FileLogger<T>:ILoggerExtension<T> where T : class, ILogEntity
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         public FileLogger()
         {
             LogConfig logConfig = new LogConfig();
         }
-        public Task DataLog(LogModel data)
+        /// <summary>
+        /// This method takes one paremater. also converting data as a json and adding to .txt file
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public Task DataLog(T data)
         {
             string message = null;
             try
