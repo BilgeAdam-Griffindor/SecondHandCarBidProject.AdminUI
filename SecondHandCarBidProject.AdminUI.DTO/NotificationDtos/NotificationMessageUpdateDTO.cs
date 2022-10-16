@@ -9,7 +9,7 @@ namespace SecondHandCarBidProject.AdminUI.DTO.NotificationDtos
     public record NotificationMessageUpdateDTO(
         int Id,
         string Content,
-        byte IsActive,
+        bool IsActive,
         DateTime? ModifiedDate,
         Guid? ModifiedBy
     )
