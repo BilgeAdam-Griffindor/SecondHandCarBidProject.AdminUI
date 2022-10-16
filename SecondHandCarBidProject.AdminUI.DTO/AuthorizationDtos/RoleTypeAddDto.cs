@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO.AuthorizationDtos
 {
-    public record RoleTypeAddDto(string RoleName, bool IsActive)
+    public record RoleTypeAddDto(string RoleName)
     {
     }
 }
