@@ -8,8 +8,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
         Guid Id,
         Guid CarId,
         string UserFullName,
-        decimal PreValuationPrice,
-        decimal BidPrice,
+        decimal? PreValuationPrice,
+        decimal? BidPrice,
         int Kilometre,
         short CarYear,
         string CarDescription,
@@ -21,8 +21,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
         Guid GearTypeId,
         Guid VersionId,
         Guid ColorId,
-        List<Guid> OptionalHardwareIds, //TODO may need to adjust
-        string CarImages, //TODO correct?
+        List<Guid> OptionalHardwareIds,
+        List<IFormFile> CarImages,
         List<SelectListItem> BrandList,
         List<SelectListItem> ModelList,
         List<SelectListItem> StatusList,

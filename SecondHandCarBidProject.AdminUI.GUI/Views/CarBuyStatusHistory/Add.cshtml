@@ -23,6 +23,7 @@
                 <select class="form-select" asp-for="CarBuyId" asp-items="@Model.CarBuyList">
                     <option value="">--Seçiniz--</option>
                 </select>
+                <span asp-validation-for="CarBuyId" class="text-danger"></span>
             </div>
 
             <div class="col-12 col-md-4 form-group">
@@ -30,12 +31,14 @@
                 <select class="form-select" asp-for="StatusValueId" asp-items="@Model.StatusValueList">
                     <option value="">--Seçiniz--</option>
                 </select>
+                <span asp-validation-for="StatusValueId" class="text-danger"></span>
             </div>
         </div>
         <div class="row text-center p-2">
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Açıklama</label>
                 <textarea class="form-control" rows="3" asp-for="Explanation"></textarea>
+                <span asp-validation-for="Explanation" class="text-danger"></span>
             </div>
         </div>
     </form>

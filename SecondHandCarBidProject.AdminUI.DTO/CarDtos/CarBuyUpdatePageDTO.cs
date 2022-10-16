@@ -20,7 +20,6 @@
         List<Guid> OptionalHardwareIds,
         List<CarImageListDTO> CarImages,
         List<IdNameListDTO> StatusList
-        //TODO Pull tramer info
         );
 
 }

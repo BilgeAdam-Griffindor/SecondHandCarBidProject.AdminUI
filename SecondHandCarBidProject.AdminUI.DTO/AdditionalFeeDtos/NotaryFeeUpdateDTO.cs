@@ -11,7 +11,7 @@ namespace SecondHandCarBidProject.AdminUI.DTO.AdditionalFeeDtos
         decimal FeeAmount,
         DateTime StartDate,
         DateTime EndDate,
-        byte IsActive,
+        bool IsActive,
         DateTime CreatedDate,
         DateTime? ModifiedDate,
         Guid CreatedBy,

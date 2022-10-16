@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO.AuthorizationDtos
 {
-    public record PageAuthTypeAdd(string AuthorizationName,
-        bool IsActive)
+    public record PageAuthTypeAdd(string AuthorizationName)
     {
     }
 }

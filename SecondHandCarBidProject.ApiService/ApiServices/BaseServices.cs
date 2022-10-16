@@ -1,5 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using SecondHandCarBidProject.AdminUI.DTO;
+using SecondHandCarBidProject.AdminUI.DTO.Validation;
+using SecondHandCarBidProject.ApiService.ApServicesInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,81 +15,156 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.ApiService.ApiServices
 {
-    public class BaseServices
+    public class BaseServices : IBaseServices
     {
         HttpClient _client;
         public BaseServices(HttpClient client)
         {
             _client = client;
         }
-        public async Task<ResponseModel<T>> LoginAsync<T, TData>(TData postData)
+        public async Task<ResponseModel<TResponse>> LoginAsync<TResponse, TData>(string loginUrl, TData postData)
         {
             var body = new StringContent(JsonConvert.SerializeObject(postData));
             body.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            var response = await _client.PostAsync("Login/Authenticate", body);
+            var response = await _client.PostAsync(loginUrl, body);
 
             if (!response.IsSuccessStatusCode)
             {
                 return null;
             }
 
-            return JsonConvert.DeserializeObject<ResponseModel<T>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseModel<TResponse>>(await response.Content.ReadAsStringAsync());
         }
+
         public async Task<ResponseModel<List<T>>> ListAll<T>(string route, string token)
         {
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
-            var response = await _client.GetFromJsonAsync<ResponseModel<List<T>>>(route);
+            ResponseModel<List<T>> response = new ResponseModel<List<T>>();
+
+            if (String.IsNullOrEmpty(token))
+            {
+                response.IsSuccess = false;
+                response.statusCode = StatusCode.Unauthorized;
+            }
+            else
+            {
+                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
+                response = await _client.GetFromJsonAsync<ResponseModel<List<T>>>(route);
+                response.IsSuccess = true;
+            }
             return response;
         }
 
         public async Task<ResponseModel<T>> GetByIdAsync<T>(object id, string route, string token)
         {
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
-            var response = await _client.GetFromJsonAsync<ResponseModel<T>>(route);
+            ResponseModel<T> response = new ResponseModel<T>();
+            if (String.IsNullOrEmpty(token))
+            {
+                response.IsSuccess = false;
+                response.statusCode = StatusCode.Unauthorized;
+            }
+            else
+            {
+                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
+                response = await _client.GetFromJsonAsync<ResponseModel<T>>(route);
+                response.IsSuccess = true;
+            }
             return response;
 
         }
-        public async Task<ResponseModel<T>> GetByFilterAsync<T>(string route, string token, string queryString = "", int page = 1, int perPage = 100)
+
+        public async Task<ResponseModel<T>> GetByFilterAsync<T>(string route, string token, string filterQueryString = "")
         {
-            string pageQueryString = "page=" + page + "&perPage=" + perPage;
-            var fullQuery = queryString == "" ? pageQueryString : queryString + "&" + pageQueryString;
+            if (!string.IsNullOrEmpty(filterQueryString))
+                route += "?" + filterQueryString;
 
-            var response = await _client.GetAsync(route + "?" + fullQuery);
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
+            ResponseModel<T> response = new ResponseModel<T>();
 
-            if (!response.IsSuccessStatusCode)
+            if (String.IsNullOrEmpty(token))
             {
-                return null;
+                response.IsSuccess = false;
+                response.statusCode = StatusCode.Unauthorized;
+                return response;
             }
-
-            return JsonConvert.DeserializeObject<ResponseModel<T>>(await response.Content.ReadAsStringAsync());
-        }
-
-        public async Task<ResponseModel<T>> SaveAsync<T>(T data, string name, string token)
-        {
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
-            var response = await _client.PostAsJsonAsync(name, data);
-            if (!response.IsSuccessStatusCode)
+            else
             {
-                return null;
+                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
+                var _response = await _client.GetAsync(route);
+                if (!_response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+                return JsonConvert.DeserializeObject<ResponseModel<T>>(await _response.Content.ReadAsStringAsync());
             }
-            var responseBody = await response.Content.ReadFromJsonAsync<ResponseModel<T>>();
-            return responseBody;
         }
 
-        public async Task<bool> UpdateAsync<T>(T data, string name, string token)
+        public async Task<ResponseModel<TResponse>> SaveAsync<TData,TResponse>(TData data, string route, string token)
         {
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
-            var response = await _client.PutAsJsonAsync(name, data);
-            return response.IsSuccessStatusCode;
+            ResponseModel<TResponse> response = new ResponseModel<TResponse>();
+
+            if (String.IsNullOrEmpty(token))
+            {
+                response.IsSuccess = false;
+                response.statusCode = StatusCode.Unauthorized;
+                return response;
+            }
+            else
+            {
+                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
+                var _response = await _client.PostAsJsonAsync(route, data);
+                if (!_response.IsSuccessStatusCode)
+                {
+                    response.IsSuccess = false;
+                    response.statusCode = (StatusCode)_response.StatusCode;
+                    return response;
+                }
+                response = await _response.Content.ReadFromJsonAsync<ResponseModel<TResponse>>();
+                return response;
+            }
         }
 
-        public async Task<bool> RemoveAsync<T>(object id,string route, string token)
+        public async Task<ResponseModel<TResponse>> UpdateAsync<TData, TResponse>(TData data, string route, string token)
         {
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
-            var response = await _client.DeleteAsync(route);
-            return response.IsSuccessStatusCode;
+            ResponseModel<TResponse> responseModel = new ResponseModel<TResponse>();
+            if (String.IsNullOrEmpty(token))
+            {
+                responseModel.IsSuccess = false;
+                responseModel.statusCode = StatusCode.Unauthorized;
+                return responseModel;
+            }
+            else
+            {
+                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
+                var _response = await _client.PutAsJsonAsync(route, data);
+                responseModel.IsSuccess = _response.IsSuccessStatusCode;
+                return responseModel;
+            }
+        }
+
+        public async Task<ResponseModel<T>> RemoveByFilterAsync<T>(string filterQueryString, string route, string token)
+        {
+            if (!string.IsNullOrEmpty(filterQueryString))
+                route += "?" + filterQueryString;
+
+            ResponseModel<T> responseModel = new ResponseModel<T>();
+            if (String.IsNullOrEmpty(token))
+            {
+                responseModel.IsSuccess = false;
+                responseModel.statusCode = StatusCode.Unauthorized;
+                return responseModel;
+            }
+            else
+            {
+                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
+                var _response = await _client.DeleteAsync(route);
+                if (!_response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+                return JsonConvert.DeserializeObject<ResponseModel<T>>(await _response.Content.ReadAsStringAsync());
+
+
+            }
         }
 
 

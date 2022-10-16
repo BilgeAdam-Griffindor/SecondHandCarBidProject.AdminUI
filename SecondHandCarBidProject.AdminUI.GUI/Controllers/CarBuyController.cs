@@ -18,7 +18,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            CarBuyAddViewModel viewData = new CarBuyAddViewModel(0, 0, "", 0, 0, Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, new List<Guid>(), "", new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>());
+            CarBuyAddViewModel viewData = new CarBuyAddViewModel(0, 0, "", 0, 0, Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, new List<Guid>(), new List<IFormFile>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>());
 
             return View(viewData);
         }
@@ -32,7 +32,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public IActionResult Update(Guid id)
         {
-            CarBuyUpdateViewModel viewData = new CarBuyUpdateViewModel(Guid.Empty, Guid.Empty, "", 0, 0, 0, 0, "", 0, 0, 0, Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, new List<Guid>(), "", new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>());
+            CarBuyUpdateViewModel viewData = new CarBuyUpdateViewModel(Guid.Empty, Guid.Empty, "", 0, 0, 0, 0, "", 0, 0, 0, Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, new List<Guid>(), new List<IFormFile>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>(), new List<SelectListItem>());
 
             return View(viewData);
         }
