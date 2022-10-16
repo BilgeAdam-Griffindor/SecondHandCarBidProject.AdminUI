@@ -5,6 +5,7 @@ using SecondHandCarBidProject.AdminUI.DAL;
 using SecondHandCarBidProject.AdminUI.DTO.BidDtos;
 using SecondHandCarBidProject.AdminUI.DTO.UserDtos;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SecondHandCarBidProject.AdminUI.DAL.Concrete;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
