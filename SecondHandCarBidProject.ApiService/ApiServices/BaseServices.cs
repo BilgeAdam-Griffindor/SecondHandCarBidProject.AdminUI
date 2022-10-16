@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using SecondHandCarBidProject.AdminUI.DTO;
 using SecondHandCarBidProject.AdminUI.DTO.Validation;
 using SecondHandCarBidProject.ApiService.ApServicesInterfaces;
@@ -21,7 +22,7 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
         {
             _client = client;
         }
-        public async Task<ResponseModel<T>> LoginAsync<T, TData>(string loginUrl, TData postData)
+        public async Task<ResponseModel<TResponse>> LoginAsync<TResponse, TData>(string loginUrl, TData postData)
         {
             var body = new StringContent(JsonConvert.SerializeObject(postData));
             body.Headers.ContentType = new MediaTypeHeaderValue("application/json");
@@ -33,7 +34,7 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
                 return null;
             }
 
-            return JsonConvert.DeserializeObject<ResponseModel<T>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseModel<TResponse>>(await response.Content.ReadAsStringAsync());
         }
 
         public async Task<ResponseModel<List<T>>> ListAll<T>(string route, string token)
@@ -140,8 +141,11 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             }
         }
 
-        public async Task<ResponseModel<T>> RemoveAsync<T>(object id, string route, string token)
+        public async Task<ResponseModel<T>> RemoveByFilterAsync<T>(string filterQueryString, string route, string token)
         {
+            if (!string.IsNullOrEmpty(filterQueryString))
+                route += "?" + filterQueryString;
+
             ResponseModel<T> responseModel = new ResponseModel<T>();
             if (String.IsNullOrEmpty(token))
             {
@@ -153,8 +157,13 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             {
                 _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
                 var _response = await _client.DeleteAsync(route);
-                responseModel.IsSuccess = _response.IsSuccessStatusCode;
-                return responseModel;
+                if (!_response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+                return JsonConvert.DeserializeObject<ResponseModel<T>>(await _response.Content.ReadAsStringAsync());
+
+
             }
         }
 

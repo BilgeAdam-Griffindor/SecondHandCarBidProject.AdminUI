@@ -9,8 +9,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
     public class ActionAuthTypeController : Controller
     {
-        ILoggerFactoryMethod logger;
-        public ActionAuthTypeController(ILoggerFactoryMethod _logger)
+        ILoggerFactoryMethod<MongoLogModel> logger;
+        public ActionAuthTypeController(ILoggerFactoryMethod<MongoLogModel> _logger)
         {
             logger=_logger; 
         }

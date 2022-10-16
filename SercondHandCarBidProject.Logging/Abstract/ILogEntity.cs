@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SecondHandCarBidProject.AdminUI.DTO.CorporationDtos
+namespace SercondHandCarBidProject.Logging.Abstract
 {
-    public record CorporationAddSendDTO
+    public interface ILogEntity
     {
     }
 }

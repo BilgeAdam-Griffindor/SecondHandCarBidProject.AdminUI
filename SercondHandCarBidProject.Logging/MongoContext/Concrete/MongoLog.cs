@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace SercondHandCarBidProject.Logging.MongoContext.Concrete
 {
-    public class MongoLog : IMongoLog
+    public class MongoLog<T> : IMongoLog<T> where T:class
     {
 
-        IMongoCollection<LogModel> _mongoLog;
+        IMongoCollection<T> _mongoLog;
         public MongoLog(IOptions<MongoSettings> MongoSettings)
         {
             
@@ -21,9 +21,9 @@ namespace SercondHandCarBidProject.Logging.MongoContext.Concrete
             mongoSettings.ServerApi = new ServerApi(ServerApiVersion.V1);
             var client = new MongoClient(mongoSettings);
             var logForMongoDB = client.GetDatabase(MongoSettings.Value.DatabaseName);
-            _mongoLog = logForMongoDB.GetCollection<LogModel>(MongoSettings.Value.SecondHandCarAdminLogCollection);
+            _mongoLog = logForMongoDB.GetCollection<T>(MongoSettings.Value.SecondHandCarAdminLogCollection);
         }
-        public async Task<bool> AddLogToMongo(LogModel log)
+        public async Task<bool> AddLogToMongo(T log)
         {
             try
             {

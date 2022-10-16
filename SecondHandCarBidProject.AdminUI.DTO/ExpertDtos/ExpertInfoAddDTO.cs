@@ -12,7 +12,6 @@ namespace SecondHandCarBidProject.AdminUI.DTO.ExpertDtos
         decimal? Longitude,
         decimal? Latitude,
         byte[]? Picture,
-        byte IsActive,
         string? ExpertAddress,
         DateTime CreatedDate,
         DateTime? ModifiedDate,

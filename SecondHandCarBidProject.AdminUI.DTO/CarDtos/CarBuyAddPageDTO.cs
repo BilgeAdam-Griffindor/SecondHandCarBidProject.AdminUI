@@ -10,7 +10,6 @@
         List<IdNameListDTO> VersionList,
         List<IdNameListDTO> ColorList,
         List<IdNameListDTO> OptionalHardwareList
-        //TODO Pull tramer info
         );
 
 }

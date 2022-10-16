@@ -4,6 +4,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
 {
     public record CarBuyStatusHistoryListViewModel
     (
-        List<CarBuyStatusHistoryTableRow> TableRows
+        List<CarBuyStatusHistoryTableRow> TableRows,
+        int maxPages
     );
 }

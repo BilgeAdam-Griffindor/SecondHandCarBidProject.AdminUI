@@ -10,35 +10,10 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            //TODO Lists might be cached to avoid requesting same lists again and again
-            //TODO call api and get response as CarListPageDTO
             CarListPageDTO carListPageDTO = new CarListPageDTO(null, null, null, null);
 
-            //Convert response to ViewModel
             CarListViewModel carListViewModel = new CarListViewModel(0 , new List<SelectListItem>(), 0, new List<SelectListItem>(), 0, new List<SelectListItem>(), new List<CarListTableRowDTO>(), 0, 0);
 
-            //TODO which is better?
-            //carListViewModel.CarTableRows = carListPageDTO.CarTableRows; //Method 1
-            //carListViewModel.CarTableRows = new List<CarListTableRowDTO>(carListPageDTO.CarTableRows); //Method 2
-
-            //TODO Add try catch for EACH list
-            //carListViewModel.BrandList = carListPageDTO.BrandList.Select(x => new SelectListItem()
-            //{
-            //    Text = x.Name,
-            //    Value = x.Id.ToString()
-            //}).ToList();
-
-            //carListViewModel.ModelList = carListPageDTO.ModelList.Select(x => new SelectListItem()
-            //{
-            //    Text = x.Name,
-            //    Value = x.Id.ToString()
-            //}).ToList();
-
-            //carListViewModel.StatusList = carListPageDTO.StatusList.Select(x => new SelectListItem()
-            //{
-            //    Text = x.Name,
-            //    Value = x.Id.ToString()
-            //}).ToList();
 
             return View(carListViewModel);
         }
@@ -55,35 +30,9 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             if (carListView.StatusId != null)
                 queryString += (queryString != "" ? "&" : "") + "statusId=" + carListView.StatusId;
 
-
-            //TODO Lists might be cached and then we just need to get the filtered items
-            //TODO call api and get response as CarListPageDTO, this time with queryString as filter
             CarListPageDTO carListPageDTO = new CarListPageDTO(null, null, null, null);
 
-            //Convert response to ViewModel
             CarListViewModel carListViewModel = new CarListViewModel(0, new List<SelectListItem>(), 0, new List<SelectListItem>(), 0, new List<SelectListItem>(), new List<CarListTableRowDTO>(), carListView.Page, carListView.ItemPerPage);
-
-            //TODO which is better?
-            //carListViewModel.TableRows = carListPageDTO.CarTableRows; //Method 1
-            //carListViewModel.CarTableRows = new List<CarListTableRowDTO>(carListPageDTO.CarTableRows); //Method 2
-
-            //carListViewModel.BrandList = carListPageDTO.BrandList.Select(x => new SelectListItem()
-            //{
-            //    Text = x.Name,
-            //    Value = x.Id.ToString()
-            //}).ToList();
-
-            //carListViewModel.ModelList = carListPageDTO.ModelList.Select(x => new SelectListItem()
-            //{
-            //    Text = x.Name,
-            //    Value = x.Id.ToString()
-            //}).ToList();
-
-            //carListViewModel.StatusList = carListPageDTO.StatusList.Select(x => new SelectListItem()
-            //{
-            //    Text = x.Name,
-            //    Value = x.Id.ToString()
-            //}).ToList();
 
             return View(carListViewModel);
         }
@@ -91,15 +40,6 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public IActionResult DeleteCar(string id)
         {
-            //TODO Call api for delete
-            //TODO Filter lost
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet]
-        public IActionResult UpdateCar(string id)
-        {
-            //TODO Call api for update
             return RedirectToAction("Index");
         }
 
@@ -116,10 +56,23 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
             return View(carDetailDto);
         }
+
         [HttpPost]
-        public IActionResult CarDetailInformation(string deneme)
+        public IActionResult CarDetailInformation(CarDetailAddViewModel viewData)
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult UpdateCar(string id)
+        {
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult UpdateCar(CarDetailUpdateViewModel viewData)
+        {
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> CarSave()//CarDTO carDTO

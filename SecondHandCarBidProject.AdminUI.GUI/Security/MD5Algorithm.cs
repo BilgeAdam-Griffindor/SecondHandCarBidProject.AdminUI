@@ -8,7 +8,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Security
         public static string md5AlgoritmExtension(this string metin)
         {
 
-            metin += "!!YesilEv!!!Eren*Ferid";
+            metin += "!!Griffindor!!!";
             MD5 md5 = new MD5CryptoServiceProvider();
             md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(metin));
             byte[] sonuc = md5.Hash;

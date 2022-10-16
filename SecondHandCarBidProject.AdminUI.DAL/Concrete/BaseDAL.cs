@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO;
 using SecondHandCarBidProject.AdminUI.DTO.Validation;
 using SecondHandCarBidProject.ApiService.ApiServices;
@@ -9,9 +10,9 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SecondHandCarBidProject.AdminUI.DAL
+namespace SecondHandCarBidProject.AdminUI.DAL.Concrete
 {
-    public class BaseDAL
+    public class BaseDAL:IBaseDAL
     {
         BaseServices baseServices;
         public BaseDAL(BaseServices _baseServices)
@@ -32,7 +33,7 @@ namespace SecondHandCarBidProject.AdminUI.DAL
             var response = await baseServices.ListAll<T>(route, token);
             return response;
         }
-      
+
         public async Task<ResponseModel<T>> GetByIdAsync<T>(object id, string route, string token)
         {
             var response = await baseServices.GetByIdAsync<T>(id, route, token);
@@ -57,9 +58,9 @@ namespace SecondHandCarBidProject.AdminUI.DAL
             return response;
         }
 
-        public async Task<ResponseModel<T>> RemoveAsync<T>(object id, string route, string token)
+        public async Task<ResponseModel<T>> RemoveByFilterAsync<T>(string filterQueryString, string route, string token)
         {
-            var response = await baseServices.RemoveAsync<T>(id, route, token);
+            var response = await baseServices.RemoveByFilterAsync<T>(filterQueryString, route, token);
             return response;
         }
 

@@ -3,8 +3,8 @@
     public record CarBuyUpdateSendDTO(
         Guid Id,
         int StatusId,
-        decimal PreValuationPrice,
-        decimal BidPrice,
+        decimal? PreValuationPrice,
+        decimal? BidPrice,
         Guid ModifiedBy
         );
 
