@@ -27,10 +27,10 @@ namespace SecondHandCarBidProject.ApiService.HttpConfiguration
             services.AddSingleton<IMongoLog<MongoLogModel>, MongoLog<MongoLogModel>>();
             services.AddScoped(typeof(ILoggerFactoryMethod<>), typeof(LoggerFactoryMethod<>));
 
-            //services.AddHttpClient<BaseServices>(opt =>
-            //{
-            //    opt.BaseAddress = new Uri(_Configuration.GetSection("BaseUrl").Value);
-            //});
+            services.AddHttpClient<BaseServices>(opt =>
+            {
+                opt.BaseAddress = new Uri(_Configuration.GetSection("BaseUrl").Value);
+            });
         }
     }
 }
