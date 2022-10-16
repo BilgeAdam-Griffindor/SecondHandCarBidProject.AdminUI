@@ -5,13 +5,14 @@ using SecondHandCarBidProject.AdminUI.DTO.TrafficInsuranceDto;
 using SecondHandCarBidProject.AdminUI.DAL;
 using SecondHandCarBidProject.AdminUI.DTO.StatusDtos;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
     public class TrafficInsuranceTrafficInsuranceCarComponentController : Controller
     {
-        private BaseDAL _baseDAL;
-        public TrafficInsuranceTrafficInsuranceCarComponentController(BaseDAL baseDAL)
+        private IBaseDAL _baseDAL;
+        public TrafficInsuranceTrafficInsuranceCarComponentController(IBaseDAL baseDAL)
         {
             _baseDAL = baseDAL;
         }

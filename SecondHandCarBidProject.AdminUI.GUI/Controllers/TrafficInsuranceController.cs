@@ -5,15 +5,16 @@ using SecondHandCarBidProject.AdminUI.DAL;
 using SecondHandCarBidProject.AdminUI.DTO.TrafficInsuranceDto;
 using SecondHandCarBidProject.AdminUI.DTO;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
     public class TrafficInsuranceController : Controller
     {
-        private BaseDAL _baseDAL;
+        private IBaseDAL _baseDAL;
         private IValidator<TrafficInsuranceAddDto> _validator1;
         private IValidator<TrafficInsuranceUpdateDto> _validator2;
-        public TrafficInsuranceController(BaseDAL baseDAL, IValidator<TrafficInsuranceAddDto> validator1, IValidator<TrafficInsuranceUpdateDto> validator2)
+        public TrafficInsuranceController(IBaseDAL baseDAL, IValidator<TrafficInsuranceAddDto> validator1, IValidator<TrafficInsuranceUpdateDto> validator2)
         {
             _baseDAL = baseDAL;
             _validator1 = validator1;

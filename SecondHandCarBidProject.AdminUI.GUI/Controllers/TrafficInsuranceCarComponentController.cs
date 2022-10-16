@@ -2,6 +2,7 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using SecondHandCarBidProject.AdminUI.DAL;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO.TrafficInsuranceDto;
 
 
@@ -9,11 +10,11 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
     public class TrafficInsuranceCarComponentController : Controller
     {
-        private BaseDAL _baseDAL; 
+        private IBaseDAL _baseDAL; 
         
         private IValidator<TrafficInsuranceCarComponentAddDto> _validator1;
         private IValidator<TrafficInsuranceCarComponentUpdateDto> _validator2;
-        public TrafficInsuranceCarComponentController(BaseDAL baseDAL, IValidator<TrafficInsuranceCarComponentAddDto> validator1, IValidator<TrafficInsuranceCarComponentUpdateDto> validator2)
+        public TrafficInsuranceCarComponentController(IBaseDAL baseDAL, IValidator<TrafficInsuranceCarComponentAddDto> validator1, IValidator<TrafficInsuranceCarComponentUpdateDto> validator2)
         {
             _baseDAL = baseDAL;
             _validator1 = validator1;

@@ -3,6 +3,7 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SecondHandCarBidProject.AdminUI.DAL;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO.StatusDtos;
 using System.Web;
 
@@ -10,13 +11,13 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
     public class StatusController : Controller
     {
-        private BaseDAL _baseDAL;
+        private IBaseDAL _baseDAL;
         private IValidator<StatusTypeAddDto> _validator1;
         private IValidator<StatusTypeUpdate> _validator2;
         private IValidator<StatusValueAddDto> _validator3;
         private IValidator<StatusValueUpdateDto> _validator4;
 
-        public StatusController(BaseDAL baseDAL, IValidator<StatusTypeAddDto> validator1, IValidator<StatusTypeUpdate> validator2, IValidator<StatusValueAddDto> validator3, IValidator<StatusValueUpdateDto> validator4)
+        public StatusController(IBaseDAL baseDAL, IValidator<StatusTypeAddDto> validator1, IValidator<StatusTypeUpdate> validator2, IValidator<StatusValueAddDto> validator3, IValidator<StatusValueUpdateDto> validator4)
         {
             _baseDAL = baseDAL;
             _validator1 = validator1;

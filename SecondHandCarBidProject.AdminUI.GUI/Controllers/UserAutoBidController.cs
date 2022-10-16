@@ -6,15 +6,16 @@ using SecondHandCarBidProject.AdminUI.DTO.BidDtos;
 using SecondHandCarBidProject.AdminUI.DTO.UserDtos;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SecondHandCarBidProject.AdminUI.DAL.Concrete;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
     public class UserAutoBidController : Controller
     {
-        private BaseDAL _baseDAL;
+        private IBaseDAL _baseDAL;
         private IValidator<UserAutoBidAddDto> _validator1;
         private IValidator<UserAutoBidUpdateDto> _validator2;
-        public UserAutoBidController(BaseDAL baseDAL, IValidator<UserAutoBidAddDto> validator1, IValidator<UserAutoBidUpdateDto> validator2)
+        public UserAutoBidController(IBaseDAL baseDAL, IValidator<UserAutoBidAddDto> validator1, IValidator<UserAutoBidUpdateDto> validator2)
         {
             _baseDAL = baseDAL;
             _validator1 = validator1;
