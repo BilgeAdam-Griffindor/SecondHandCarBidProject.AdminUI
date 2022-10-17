@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO.CorporationDtos
 {
-    public record CorporationUserAddDTO(int CorporationId, byte IsActive, DateTime CreatedDate, DateTime? ModifiedDate,
+    public record CorporationUserAddDTO(Guid BaseUserId, int CorporationId, DateTime CreatedDate, DateTime? ModifiedDate,
        Guid CreatedBy, Guid? ModifiedBy)
     {
 

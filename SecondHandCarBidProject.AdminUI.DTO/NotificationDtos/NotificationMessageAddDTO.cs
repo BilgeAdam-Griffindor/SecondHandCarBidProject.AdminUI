@@ -8,7 +8,6 @@ namespace SecondHandCarBidProject.AdminUI.DTO.NotificationDtos
 {
     public record NotificationMessageAddDTO(
     string Content,
-    byte IsActive,
     DateTime? ModifiedDate,
     Guid? ModifiedBy)
     {

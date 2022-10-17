@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace SercondHandCarBidProject.Logging.Abstract
 {
-    public interface ILoggerExtension
+    public interface ILoggerExtension<T> where T:class, ILogEntity
     {
-        Task DataLog(LogModel data);
+        Task DataLog(T data);
 
     }
 }

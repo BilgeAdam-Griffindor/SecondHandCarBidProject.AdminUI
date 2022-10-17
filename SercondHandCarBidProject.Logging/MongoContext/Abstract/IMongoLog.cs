@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace SercondHandCarBidProject.Logging.MongoContext.Abstract
 {
-    public interface IMongoLog
+    public interface IMongoLog<T> where T : class
     {
-        Task<bool> AddLogToMongo(LogModel log);
+        Task<bool> AddLogToMongo(T log);
         
     }
 }

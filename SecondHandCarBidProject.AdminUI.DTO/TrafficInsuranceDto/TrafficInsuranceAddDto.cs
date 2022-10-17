@@ -9,8 +9,7 @@ namespace SecondHandCarBidProject.AdminUI.DTO.TrafficInsuranceDto
 {
     public record TrafficInsuranceAddDto(
         string CarId,
-        string Cost,
-        bool IsActive)
+        decimal? Cost)
     {
         public List<SelectListItem> CarItemList { get; set; }
     }

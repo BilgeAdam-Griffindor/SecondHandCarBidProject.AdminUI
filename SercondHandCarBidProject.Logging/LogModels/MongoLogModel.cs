@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SercondHandCarBidProject.Logging.Abstract;
 
 namespace SercondHandCarBidProject.Logging.LogModels
 {
-    public class LogModel
+    public class MongoLogModel: ILogEntity
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO.ActionAuthDtos
 {
-    public class ActionAuthTypeAddDTO
+    public record ActionAuthTypeAddDTO(string AuthorizationName,bool IsActive)
     {
     }
 }

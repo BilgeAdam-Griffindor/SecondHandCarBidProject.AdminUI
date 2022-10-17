@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 namespace SecondHandCarBidProject.AdminUI.DTO.BidDtos
 {
     public record UserAutoBidAddDto(
-        decimal MaximumOffer,
-        decimal IncrementAmount,
-        Guid BaseUserId,
-        Guid BidId,
-        bool IsActive)
+        decimal? MaximumOffer,
+        decimal? IncrementAmount,
+        Guid? BaseUserId,
+        Guid? BidId)
     {
         public List<SelectListItem> BaseUserItemList { get; set; }
         public List<SelectListItem> BidItemList { get; set; }

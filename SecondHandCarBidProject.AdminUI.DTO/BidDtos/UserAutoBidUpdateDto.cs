@@ -9,11 +9,10 @@ namespace SecondHandCarBidProject.AdminUI.DTO.BidDtos
 {
     public record UserAutoBidUpdateDto(
         Guid Id,
-        decimal MaximumOffer,
-        decimal IncrementAmount,
+        decimal? MaximumOffer,
+        decimal? IncrementAmount,
         Guid BaseUserId,
-        Guid BidId,
-        bool IsActive)
+        Guid BidId)
     {
         public List<SelectListItem> BaseUserItemList { get; set; }
         public List<SelectListItem> BidItemList { get; set; }

@@ -9,7 +9,8 @@ namespace SecondHandCarBidProject.AdminUI.DTO.UserDtos
     public record FavoriteUserSearchesUpdateDTO(
         Guid Id,
         string SearchText,
-        Guid BaseUserId, byte IsActive,
+        Guid BaseUserId,
+        bool IsActive,
         DateTime CreatedDate
         )
     {

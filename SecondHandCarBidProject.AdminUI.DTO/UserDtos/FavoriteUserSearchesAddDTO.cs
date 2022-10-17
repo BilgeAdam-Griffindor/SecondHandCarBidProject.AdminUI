@@ -9,7 +9,6 @@ namespace SecondHandCarBidProject.AdminUI.DTO.UserDtos
     public record FavoriteUserSearchesAddDTO(
         string SearchText,
         Guid BaseUserId,
-        byte IsActive,
         DateTime CreatedDate)
         {
             // public BaseUser BaseUser { get; init; }

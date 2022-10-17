@@ -9,7 +9,6 @@ namespace SecondHandCarBidProject.AdminUI.DTO.NotificationDtos
     public record NotificationMessageUserAddDTO(
         int NotificationMessageId,
         Guid SendToBaseUserId,
-        byte IsActive,
         DateTime CreatedDate,
         Guid CreatedBy
         )
