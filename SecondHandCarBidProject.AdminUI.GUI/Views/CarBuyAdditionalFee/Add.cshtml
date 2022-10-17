@@ -22,6 +22,7 @@
                 <select class="form-select" asp-for="CarBuyId" asp-items="@Model.CarBuyList">
                     <option value="">--Seçiniz--</option>
                 </select>
+                <span asp-validation-for="CarBuyId" class="text-danger"></span>
             </div>
 
             <div class="col-12 col-md-4 form-group">
@@ -29,6 +30,7 @@
                 <select class="form-select" asp-for="NotaryFeeId" asp-items="@Model.NotaryFeeList">
                     <option value="">--Seçiniz--</option>
                 </select>
+                <span asp-validation-for="NotaryFeeId" class="text-danger"></span>
             </div>
 
             <div class="col-12 col-md-4 form-group">
@@ -36,6 +38,7 @@
                 <select class="form-select" asp-for="CommissionFeeId" asp-items="@Model.CommissionFeeList">
                     <option value="">--Seçiniz--</option>
                 </select>
+                <span asp-validation-for="CommissionFeeId" class="text-danger"></span>
             </div>
         </div>
     </form>

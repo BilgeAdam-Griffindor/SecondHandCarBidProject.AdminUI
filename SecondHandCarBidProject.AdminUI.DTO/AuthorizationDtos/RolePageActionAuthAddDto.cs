@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO.AuthorizationDtos
 {
-    public record RolePageActionAuthAddDto(Int16 PageAuthTypeId,
-        Int16 ActionAuthTypeId,
-        bool IsActive,
-        DateTime CreatedDate,
-        DateTime ModifiedDate)
+    public record RolePageActionAuthAddDto(
+        Int16? RoleTypeId,
+        Int16? PageAuthTypeId,
+        Int16? ActionAuthTypeId)
     {
+        public List<SelectListItem> RoleTypeItemList
+        {
+            get; set;
+        }
         public List<SelectListItem> PageAuthTypeItemList
         {
             get; set;

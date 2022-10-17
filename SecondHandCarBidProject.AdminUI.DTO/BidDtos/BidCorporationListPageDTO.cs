@@ -8,6 +8,7 @@ namespace SecondHandCarBidProject.AdminUI.DTO.BidDtos
 {
 
     public record BidCorporationListPageDTO(
-        List<BidCorporationListTableRowsDTO> TableRows
+        List<BidCorporationListTableRowsDTO> TableRows,
+        int maxPages
         );
 }

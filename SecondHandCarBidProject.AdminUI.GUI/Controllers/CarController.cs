@@ -43,12 +43,6 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
-        public IActionResult UpdateCar(string id)
-        {
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet]
         public IActionResult CarDetailInformation()
         {
             CarDetailAddDto carDetailDto = new CarDetailAddDto();
@@ -61,10 +55,23 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
             return View(carDetailDto);
         }
+
         [HttpPost]
-        public IActionResult CarDetailInformation(string deneme)
+        public IActionResult CarDetailInformation(CarDetailAddViewModel viewData)
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult UpdateCar(string id)
+        {
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult UpdateCar(CarDetailUpdateViewModel viewData)
+        {
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> CarSave()//CarDTO carDTO

@@ -13,12 +13,7 @@ namespace SecondHandCarBidProject.AdminUI.DTO.BidDtos
         Guid BaseUserId,
         string BaseUserName,
         Guid BidId,
-        string BidName,
-        bool IsActive,
-        DateTime CreatedDate,
-        DateTime ModifiedDate,
-        Guid CreatedBy,
-        Guid ModifiedBy)
+        string BidName)
     {
     }
 }

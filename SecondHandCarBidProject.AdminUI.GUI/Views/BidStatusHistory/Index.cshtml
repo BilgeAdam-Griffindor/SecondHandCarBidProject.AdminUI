@@ -1,6 +1,9 @@
 ﻿@model BidStatusHistoryListViewModel
 @{
     Layout = "~/Views/Shared/AdminLayout.cshtml";
+
+    int page = (int)ViewData["page"];
+    int itemPerPage = (int)ViewData["itemPerPage"];
 }
 
 <div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
@@ -38,17 +41,48 @@
         <div class="p-2 d-flex justify-content-center align-items-end m-2 ">
             <nav aria-label="...">
                 <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1">Previous</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active">
-                        <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
+
+                    @if (page == 1)
+                    {
+                        <li class="page-item disabled">
+                            <a class="page-link" asp-action="Index" asp-route-page="@(page - 1)" asp-route-itemPerPage="@itemPerPage" tabindex="-1">Previous</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-action="Index" asp-route-page="@(page - 1)" asp-route-itemPerPage="@itemPerPage" tabindex="-1">Previous</a>
+                        </li>
+                    }
+
+                    @for (int i = 1; i <= Model.maxPages; i++)
+                    {
+                        if (page != i)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" asp-action="Index" asp-route-page="@i" asp-route-itemPerPage="@itemPerPage">@i</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item active">
+                                <a class="page-link" asp-action="Index" asp-route-page="@i" asp-route-itemPerPage="@itemPerPage">@i <span class="sr-only">(current)</span></a>
+                            </li>
+                        }
+                    }
+
+                    @if (page == Model.maxPages)
+                    {
+                        <li class="page-item disabled">
+                            <a class="page-link" asp-action="Index" asp-route-page="@(page + 1)" asp-route-itemPerPage="@itemPerPage">Next</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-action="Index" asp-route-page="@(page + 1)" asp-route-itemPerPage="@itemPerPage">Next</a>
+                        </li>
+                    }
                 </ul>
             </nav>
         </div>

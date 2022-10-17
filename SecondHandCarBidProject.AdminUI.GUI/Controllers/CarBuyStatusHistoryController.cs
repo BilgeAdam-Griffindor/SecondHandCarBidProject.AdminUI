@@ -1,8 +1,11 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SecondHandCarBidProject.AdminUI.DAL;
+using SecondHandCarBidProject.AdminUI.DAL.Concrete;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO;
 using SecondHandCarBidProject.AdminUI.DTO.AuthorizationDtos;
 using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
@@ -13,37 +16,92 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
     public class CarBuyStatusHistoryController : Controller
     {
         private IValidator<CarBuyStatusHistoryAddSendDTO> _validatorAdd;
-        private IBaseServices _baseService;
+        private IBaseDAL _baseDAL;
 
-        public CarBuyStatusHistoryController(IValidator<CarBuyStatusHistoryAddSendDTO> validatorAdd)
+        public CarBuyStatusHistoryController(IValidator<CarBuyStatusHistoryAddSendDTO> validatorAdd, IBaseDAL baseDAL)
         {
             _validatorAdd = validatorAdd;
-            //_baseService = baseService;
+            _baseDAL = baseDAL;
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int page = 1, int itemPerPage = 100)
         {
-            CarBuyStatusHistoryListViewModel model = new CarBuyStatusHistoryListViewModel(new List<CarBuyStatusHistoryTableRow>());
+            ViewData["page"] = page;
+            ViewData["itemPerPage"] = itemPerPage;
 
-            return View(model);
+            string queryString = "page=" + page + "&itemPerPage=" + itemPerPage;
+
+            //BaseApi
+            try
+            {
+                ResponseModel<CarBuyStatusHistoryListPageDTO> response = await _baseDAL.GetByFilterAsync<CarBuyStatusHistoryListPageDTO>("CarBuyStatusHistory/List", HttpContext.Session.GetString("userToken"), queryString);
+
+                if (response.IsSuccess)
+                {
+                    CarBuyStatusHistoryListViewModel viewData = new CarBuyStatusHistoryListViewModel(response.Data.TableRows , response.Data.maxPages);
+
+
+                    return View(viewData);
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
-            CarBuyStatusHistoryAddViewModel viewData = new CarBuyStatusHistoryAddViewModel(Guid.Empty, 0, "", new List<SelectListItem>(), new List<SelectListItem>());
+
+            //BaseApi
+            try
+            {
+                ResponseModel<CarBuyStatusHistoryAddPageDTO> response = await _baseDAL.GetByFilterAsync<CarBuyStatusHistoryAddPageDTO>("CarBuyStatusHistory/Add", HttpContext.Session.GetString("userToken"));
+
+                if (response.IsSuccess)
+                {
+                    CarBuyStatusHistoryAddViewModel viewData = new CarBuyStatusHistoryAddViewModel(
+                        Guid.Empty,
+                        0,
+                        "",
+                        response.Data.CarBuyList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.StatusValueList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList());
 
 
-            return View(viewData);
+                    return View(viewData);
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> Add(CarBuyStatusHistoryAddViewModel viewData)
         {
             //Convert to send dto (Possibly inefficient to convert before validation)
-            //CarBuyStatusHistoryAddSendDTO addDTO = new CarBuyStatusHistoryAddSendDTO(viewData.CarBuyId, viewData.StatusValueId, viewData.Explanation, new Guid(HttpContext.Session.GetString("currentUserId")));
-            CarBuyStatusHistoryAddSendDTO addDTO = new CarBuyStatusHistoryAddSendDTO(viewData.CarBuyId, viewData.StatusValueId, viewData.Explanation, Guid.Empty);
+            CarBuyStatusHistoryAddSendDTO addDTO = new CarBuyStatusHistoryAddSendDTO(viewData.CarBuyId, viewData.StatusValueId, viewData.Explanation, new Guid(HttpContext.Session.GetString("currentUserId")));
 
             //Validate
             ValidationResult result = await _validatorAdd.ValidateAsync(addDTO);
@@ -63,7 +121,17 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 //BaseApi
                 try
                 {
-                    //_baseService.SaveAsync()
+                    ResponseModel<bool> response = await _baseDAL.SaveAsync<CarBuyStatusHistoryAddSendDTO, bool>(addDTO, "CarBuyStatusHistory/Add", HttpContext.Session.GetString("userToken"));
+
+                    if (response.Data)
+                    {
+
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+
                 }
                 catch (Exception ex)
                 {
@@ -80,13 +148,33 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                     //return RedirectToAction("Index", "Error");
                 }
             }
-            return View();
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            return View();
+            string queryString = "carbuyStatusHistoryId=" + id;
+
+            //BaseApi
+            try
+            {
+                ResponseModel<bool> response = await _baseDAL.RemoveByFilterAsync<bool>(queryString, "CarBuyStatusHistory/Delete", HttpContext.Session.GetString("userToken"));
+
+                if (response.Data)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
     }
 }

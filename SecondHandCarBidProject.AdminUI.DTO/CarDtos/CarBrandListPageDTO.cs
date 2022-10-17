@@ -3,6 +3,7 @@
 namespace SecondHandCarBidProject.AdminUI.DTO
 {
     public record CarBrandListPageDTO(
-        List<CarBrandListTableRow> CarBrands
+        List<CarBrandListTableRow> TableRows,
+        int maxPages
         );
 }
