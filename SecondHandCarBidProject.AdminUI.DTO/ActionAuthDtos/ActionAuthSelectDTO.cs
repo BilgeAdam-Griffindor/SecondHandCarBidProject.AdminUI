@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO.ActionAuthDtos
 {
-    public record SelectActionAuthDTO(short Id,string AuthorizationName,bool IsActive)
+    public record ActionAuthSelectDTO(short Id,string AuthorizationName,bool IsActive)
     {
     }
 }

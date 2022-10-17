@@ -31,7 +31,6 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 queryString += (queryString != "" ? "&" : "") + "statusId=" + carListView.StatusId;
 
             CarListPageDTO carListPageDTO = new CarListPageDTO(null, null, null, null);
-
             CarListViewModel carListViewModel = new CarListViewModel(0, new List<SelectListItem>(), 0, new List<SelectListItem>(), 0, new List<SelectListItem>(), new List<CarListTableRowDTO>(), carListView.Page, carListView.ItemPerPage);
 
             return View(carListViewModel);
