@@ -2,9 +2,8 @@
 @{
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
-<div class="tooltip">
-    <h4><i class="fa-solid fa-lg fa-circle-info"></i>Araç Özelliği Ekleme</h4>
-    <span class="tooltiptext">Bu sayfa admin için gereklidir. Araç Özelliği buradan eklenebilir.</span>
+<div class="col-12 col-md-3">
+    <h4 data-bs-toggle="tooltip" data-bs-placement="top" title="Araç Özellikleri burada halledilir"><i class="fa-solid fa-circle-info"></i>&nbsp;Araç Özellik Ekleme</h4>
 </div>
 <div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
     <form asp-action="CarPropertyAdd" method="post">
