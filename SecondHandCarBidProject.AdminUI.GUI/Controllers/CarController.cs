@@ -1,78 +1,424 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO;
+using SecondHandCarBidProject.AdminUI.DTO.BidDtos;
+using SecondHandCarBidProject.AdminUI.GUI.Commons;
 using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
     public class CarController : Controller
     {
-        [HttpGet]
-        public IActionResult Index()
+        private IValidator<CarDetailAddSendDTO> _validatorAdd;
+        private IValidator<CarDetailUpdateSendDTO> _validatorUpdate;
+        private IBaseDAL _baseDAL;
+
+        public CarController(IValidator<CarDetailAddSendDTO> validatorAdd, IValidator<CarDetailUpdateSendDTO> validatorUpdate, IBaseDAL baseDAL)
         {
-            CarListPageDTO carListPageDTO = new CarListPageDTO(null, null, null, null);
-
-            CarListViewModel carListViewModel = new CarListViewModel(0 , new List<SelectListItem>(), 0, new List<SelectListItem>(), 0, new List<SelectListItem>(), new List<CarListTableRowDTO>(), 0, 0);
-
-
-            return View(carListViewModel);
-        }
-
-        [HttpPost]
-        public IActionResult Index(CarListViewModel carListView)
-        {
-            string queryString = "";
-
-            if (carListView.BrandId != null)
-                queryString += "brandId=" + carListView.BrandId;
-            if (carListView.ModelId != null)
-                queryString += (queryString != "" ? "&" : "") + "modelId=" + carListView.ModelId;
-            if (carListView.StatusId != null)
-                queryString += (queryString != "" ? "&" : "") + "statusId=" + carListView.StatusId;
-
-            CarListPageDTO carListPageDTO = new CarListPageDTO(null, null, null, null);
-
-            CarListViewModel carListViewModel = new CarListViewModel(0, new List<SelectListItem>(), 0, new List<SelectListItem>(), 0, new List<SelectListItem>(), new List<CarListTableRowDTO>(), carListView.Page, carListView.ItemPerPage);
-
-            return View(carListViewModel);
+            _validatorAdd = validatorAdd;
+            _validatorUpdate = validatorUpdate;
+            _baseDAL = baseDAL;
         }
 
         [HttpGet]
-        public IActionResult DeleteCar(string id)
+        [Authorize]
+        public async Task<IActionResult> Index(string brandId = "", string modelId = "", string statusId = "", int page = 1, int itemPerPage = 100)
         {
-            return RedirectToAction("Index");
-        }
+            ViewData["page"] = page;
+            ViewData["itemPerPage"] = itemPerPage;
+            ViewData["brandId"] = brandId;
+            ViewData["modelId"] = modelId;
+            ViewData["statusId"] = statusId;
 
-        [HttpGet]
-        public IActionResult CarDetailInformation()
-        {
-            CarDetailAddDto carDetailDto = new CarDetailAddDto();
-            //carDetailDto.selectItemList = new List<SelectListItem> { new SelectListItem { Text = "Bireysel", Value = "1" }, new SelectListItem { Text = "Kurumsal", Value = "2" } };
-            carDetailDto.BireyselKurumsalListe = new List<SelectListItem>
+            string queryString = "page=" + page + "&itemPerPage=" + itemPerPage;
+            if (!string.IsNullOrEmpty(brandId))
+                queryString += "&brandId=" + brandId;
+            if (!string.IsNullOrEmpty(modelId))
+                queryString += "&modelId=" + modelId;
+            if (!string.IsNullOrEmpty(statusId))
+                queryString += "&statusId=" + statusId;
+
+            //BaseApi
+            try
             {
-                new SelectListItem{ Text="Bireysel", Value="0"},
-                new SelectListItem{ Text="Kurumsal", Value="2"},
-            };
+                ResponseModel<CarListPageDTO> response = await _baseDAL.GetByFilterAsync<CarListPageDTO>("Car/List", HttpContext.Session.GetString("userToken"), queryString);
 
-            return View(carDetailDto);
-        }
+                if (response.IsSuccess)
+                {
+                    CarListViewModel viewData = new CarListViewModel(
+                        response.Data.BrandList.Select(x => new SelectListItem()
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name,
+                            Selected = x.Id.ToString() == brandId
+                        }).ToList(),
+                        response.Data.ModelList.Select(x => new SelectListItem()
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name,
+                            Selected = x.Id.ToString() == modelId
+                        }).ToList(),
+                        response.Data.StatusList.Select(x => new SelectListItem()
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name,
+                            Selected = x.Id.ToString() == statusId
+                        }).ToList(),
+                        response.Data.TableRows,
+                        response.Data.maxPages);
 
-        [HttpPost]
-        public IActionResult CarDetailInformation(CarDetailAddViewModel viewData)
-        {
-            return View();
+                    return View(viewData);
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
 
         [HttpGet]
-        public IActionResult UpdateCar(string id)
+        [Authorize]
+        public async Task<IActionResult> CarDetailInformation() //CarAdd
         {
-            return RedirectToAction("Index");
+            //BaseApi
+            try
+            {
+                ResponseModel<CarDetailAddPageDTO> response = await _baseDAL.GetByFilterAsync<CarDetailAddPageDTO>("Car/Add", HttpContext.Session.GetString("userToken"));
+
+                if (response.IsSuccess)
+                {
+                    CarDetailAddViewModel viewData = new CarDetailAddViewModel(
+                        0, 0, 0, false, "", 0, 0, 0, Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, new List<Guid>(), new List<IFormFile>(),
+                        response.Data.BrandList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.ModelList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.StatusList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.CorporationList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.BodyTypeList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.FuelTypeList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.GearTypeList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.VersionList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.ColorList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.OptionalHardwareList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(), null);
+
+
+                    return View(viewData);
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
 
         [HttpPost]
-        public IActionResult UpdateCar(CarDetailUpdateViewModel viewData)
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CarDetailInformation(CarDetailAddViewModel viewData) //CarAdd
         {
+            //Convert to send dto (Possibly inefficient to convert before validation)
+            CarDetailAddSendDTO addDTO = new CarDetailAddSendDTO(
+                viewData.Price, viewData.Kilometre, viewData.CarYear, viewData.IsCorporate, viewData.CarDescription,
+                viewData.CarBrandId, viewData.CarModelId, viewData.StatusId, viewData.BodyTypeId, viewData.FuelTypeId,
+                viewData.GearTypeId, viewData.VersionId, viewData.ColorId, viewData.OptionalHardwareIds, viewData.CarImages.ToListByteArray(),
+                new Guid(HttpContext.Session.GetString("currentUserId")), viewData.CorporationId);
+
+            //Validate
+            ValidationResult result = await _validatorAdd.ValidateAsync(addDTO);
+            if (!result.IsValid)
+            {
+                //If not valid print errors
+                List<ValidationFailure> errors = result.Errors;
+                foreach (var error in errors)
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+
+                return View(viewData);
+            }
+            else
+            {
+                //BaseApi
+                try
+                {
+                    ResponseModel<bool> response = await _baseDAL.SaveAsync<CarDetailAddSendDTO, bool>(addDTO, "Car/Add", HttpContext.Session.GetString("userToken"));
+
+                    if (response.Data)
+                    {
+
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    return RedirectToAction("Index", "Error");
+                }
+
+                //TODO Logging (May not necessary if there is middleware)
+                try
+                {
+
+                }
+                catch (Exception ex)
+                {
+                    //return RedirectToAction("Index", "Error");
+                }
+            }
+
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Update(Guid id)
+        {
+            string queryString = "carId=" + id;
+
+            //BaseApi
+            try
+            {
+                ResponseModel<CarDetailUpdatePageDTO> response = await _baseDAL.GetByFilterAsync<CarDetailUpdatePageDTO>("Car/Update", HttpContext.Session.GetString("userToken"), queryString);
+
+                if (response.IsSuccess)
+                {
+                    CarDetailUpdateViewModel viewData = new CarDetailUpdateViewModel(
+                        response.Data.Id,
+                        response.Data.Price,
+                        response.Data.Kilometre,
+                        response.Data.CarYear,
+                        response.Data.IsCorporate,
+                        response.Data.CarDescription,
+                        response.Data.CarBrandId,
+                        response.Data.CarModelId,
+                        response.Data.StatusId,
+                        response.Data.BodyTypeId,
+                        response.Data.FuelTypeId,
+                        response.Data.GearTypeId,
+                        response.Data.VersionId,
+                        response.Data.ColorId,
+                        response.Data.OptionalHardwareIds,
+                        new List<IFormFile>(), //TODO placeholder for response.Data.CarImages
+                                               //response.Data.CarImages, //TODO How to display images
+                        response.Data.BrandList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name,
+                            Selected = x.Id.ToString() == response.Data.Id.ToString()
+                        }).ToList(),
+                        response.Data.ModelList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name,
+                            Selected = x.Id.ToString() == response.Data.Id.ToString()
+                        }).ToList(),
+                        response.Data.StatusList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name,
+                            Selected = x.Id.ToString() == response.Data.Id.ToString()
+                        }).ToList(),
+                        response.Data.CorporationList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name,
+                            Selected = x.Id.ToString() == response.Data.Id.ToString()
+                        }).ToList(),
+                        response.Data.BodyTypeList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name,
+                            Selected = x.Id.ToString() == response.Data.Id.ToString()
+                        }).ToList(),
+                        response.Data.FuelTypeList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name,
+                            Selected = x.Id.ToString() == response.Data.Id.ToString()
+                        }).ToList(),
+                        response.Data.GearTypeList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name,
+                            Selected = x.Id.ToString() == response.Data.Id.ToString()
+                        }).ToList(),
+                        response.Data.VersionList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name,
+                            Selected = x.Id.ToString() == response.Data.Id.ToString()
+                        }).ToList(),
+                        response.Data.ColorList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name,
+                            Selected = x.Id.ToString() == response.Data.Id.ToString()
+                        }).ToList(),
+                        response.Data.OptionalHardwareList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name,
+                            Selected = x.Id.ToString() == response.Data.Id.ToString()
+                        }).ToList(),
+                        response.Data.CorporationId);
+
+                    return View(viewData);
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(CarDetailUpdateViewModel viewData)
+        {
+            //Convert to send dto (Possibly inefficient to convert before validation)
+            CarDetailUpdateSendDTO updateDTO = new CarDetailUpdateSendDTO(
+                viewData.Id, viewData.Price, viewData.Kilometre, viewData.CarYear, viewData.IsCorporate, viewData.CarDescription,
+                viewData.CarBrandId, viewData.CarModelId, viewData.StatusId, viewData.BodyTypeId, viewData.FuelTypeId,
+                viewData.GearTypeId, viewData.VersionId, viewData.ColorId, viewData.OptionalHardwareIds, 
+                viewData.CarImages.ToListByteArray(), //TODO placeholder will probably need to be changed
+                viewData.CorporationId,
+                new Guid(HttpContext.Session.GetString("currentUserId")));
+
+            //Validate
+            ValidationResult result = await _validatorUpdate.ValidateAsync(updateDTO);
+            if (!result.IsValid)
+            {
+                //If not valid print errors
+                List<ValidationFailure> errors = result.Errors;
+                foreach (var error in errors)
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+
+                return View(viewData);
+            }
+            else
+            {
+                //BaseApi
+                try
+                {
+                    ResponseModel<bool> response = await _baseDAL.UpdateAsync<CarDetailUpdateSendDTO, bool>(updateDTO, "Car/Update", HttpContext.Session.GetString("userToken"));
+
+                    if (response.Data)
+                    {
+
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    return RedirectToAction("Index", "Error");
+                }
+
+                //TODO Logging (May not necessary if there is middleware)
+                try
+                {
+
+                }
+                catch (Exception ex)
+                {
+                    //return RedirectToAction("Index", "Error");
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            string queryString = "carId=" + id;
+
+            //BaseApi
+            try
+            {
+                ResponseModel<bool> response = await _baseDAL.RemoveByFilterAsync<bool>(queryString, "Car/Delete", HttpContext.Session.GetString("userToken"));
+
+                if (response.Data)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
 
         public async Task<IActionResult> CarSave()//CarDTO carDTO

@@ -1,16 +1,18 @@
 ﻿@using SecondHandCarBidProject.AdminUI.DTO
-@model CarDetailAddDto
+@using SecondHandCarBidProject.AdminUI.Validator
+@model CarDetailAddViewModel
 
 @{
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
-<form>
-  <div class="container overflow-hidden" style="margin-top:50px;">
-     
-      <div class="col-12 col-md-3">
-    <h4 data-bs-toggle="tooltip" data-bs-placement="top" title="Araba detayları burada halledilir"><i class="fa-solid fa-circle-info"></i>&nbsp;Araç Detay Bilgileri</h4>
-    </div>
-  <div class="row gy-8">
+<form action="Add" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <div class="container overflow-hidden" style="margin-top:50px;">
+
+        <div class="col-12 col-md-3">
+            <h4 data-bs-toggle="tooltip" data-bs-placement="top" title="Araba detayları burada halledilir"><i class="fa-solid fa-circle-info"></i>&nbsp;Araç Detay Bilgileri</h4>
+        </div>
+        <div class="row gy-8">
 
             <div class="col-12">
                 <div class="p-3 border bg-light text-justify">
@@ -18,19 +20,30 @@
                         <div class="col">
                             <label class="fw-bold text-dark">Bireysel/Kurumsal</label>
 
-                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                            <select class="form-control" asp-for="IsCorporate">
+                                <option value="@false">Bireysel</option>
+                                <option value="@true">Kurumsal</option>
+                            </select>
+                            <span asp-validation-for="IsCorporate" class="text-danger"></span>
                         </div>
                         <div class="col">
                             <label class="fw-bold text-dark">Kurumsal Şirket Adı</label>
-                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                            <select class="form-control" asp-for="CorporationId" asp-items="@Model.CorporationList">
+                                <option value="">--Seçiniz--</option>
+                            </select>
+                            <span asp-validation-for="CorporationId" class="text-danger"></span>
                         </div>
                         <div class="col">
-                            <label class="fw-bold text-dark">Statü</label>
-                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                            <label class="fw-bold text-dark">Durum</label>
+                            <select class="form-control" asp-for="StatusId" asp-items="@Model.StatusList">
+                                <option value="">--Seçiniz--</option>
+                            </select>
+                            <span asp-validation-for="StatusId" class="text-danger"></span>
                         </div>
                         <div class="col">
                             <label class="fw-bold text-dark">Araç Fiyat</label>
-                            <input type="number" class="form-control" />
+                            <input type="number" asp-for="Price" class="form-control" value="@Model.Price" />
+                            <span asp-validation-for="Price" class="text-danger"></span>
                         </div>
 
                     </div>
@@ -42,49 +55,87 @@
                     <div class="row">
                         <div class="col">
                             <label class="fw-bold text-dark">Araç Marka</label>
-                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                            <select class="form-control" asp-for="CarBrandId" asp-items="@Model.BrandList">
+                                <option value="">--Seçiniz--</option>
+                            </select>
+                            <span asp-validation-for="CarBrandId" class="text-danger"></span>
                         </div>
                         <div class="col">
                             <label class="fw-bold text-dark">Araç Model</label>
-                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                            <select class="form-control" asp-for="CarModelId" asp-items="@Model.ModelList">
+                                <option value="">--Seçiniz--</option>
+                            </select>
+                            <span asp-validation-for="CarModelId" class="text-danger"></span>
                         </div>
                         <div class="col">
                             <label class="fw-bold text-dark">Gövde Tipi</label>
-                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                            <select class="form-control" asp-for="BodyTypeId" asp-items="@Model.BodyTypeList">
+                                <option value="">--Seçiniz--</option>
+                            </select>
+                            <span asp-validation-for="BodyTypeId" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <label class="fw-bold text-dark">Yıl</label>
-                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                            <select class="form-control" asp-for="CarYear">
+                                <option value="">--Seçiniz--</option>
+                                @for (int i = ValidationValues.maxYear; i >= ValidationValues.minYear; i--)
+                                {
+                                    @if (i != Model.CarYear)
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i" selected>@i</option>
+                                    }
+
+                                }
+                            </select>
+                            <span asp-validation-for="CarYear" class="text-danger"></span>
                         </div>
                         <div class="col">
                             <label class="fw-bold text-dark">Yakıt Tipi</label>
-                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                            <select class="form-control" asp-for="FuelTypeId" asp-items="@Model.FuelTypeList">
+                                <option value="">--Seçiniz--</option>
+                            </select>
+                            <span asp-validation-for="FuelTypeId" class="text-danger"></span>
                         </div>
                         <div class="col">
                             <label class="fw-bold text-dark">Vites Tipi</label>
-                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                            <select class="form-control" asp-for="GearTypeId" asp-items="@Model.GearTypeList">
+                                <option value="">--Seçiniz--</option>
+                            </select>
+                            <span asp-validation-for="GearTypeId" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <label class="fw-bold text-dark">Versiyon</label>
-                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                            <select class="form-control" asp-for="VersionId" asp-items="@Model.VersionList">
+                                <option value="">--Seçiniz--</option>
+                            </select>
+                            <span asp-validation-for="VersionId" class="text-danger"></span>
                         </div>
                         <div class="col">
-                            <label class="fw-bold text-dark">Km Bilgisi</label>
-                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                            <label class="fw-bold text-dark">Kilometre</label>
+                            <input type="number" class="form-control" asp-for="Kilometre" value="@Model.Kilometre">
+                            <span asp-validation-for="Kilometre" class="text-danger"></span>
                         </div>
                         <div class="col">
                             <label class="fw-bold text-dark">Renk </label>
-                            <select class="form-control" asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                            <select class="form-control" asp-for="ColorId" asp-items="@Model.ColorList">
+                                <option value="">--Seçiniz--</option>
+                            </select>
+                            <span asp-validation-for="ColorId" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <label class="fw-bold text-dark">Donanım</label>
-                            <select class="form-control" multiple asp-for="BireyselKurumsalId" asp-items="@Model.BireyselKurumsalListe"></select>
+                            <select class="form-control" multiple asp-for="OptionalHardwareIds" asp-items="@Model.OptionalHardwareList">
+                            </select>
                         </div>
                         <div class="col">
                             Boş
@@ -98,15 +149,15 @@
             <div class="col-6">
                 <div class="p-3 border bg-light">
                     <label class="fw-bold text-dark">Fotoğraf Ekle</label>
-                    <input class="form-control" type="file" multiple>
-
-
+                    <input class="form-control" asp-for="CarImages" type="file" accept="image/png, image/jpeg" value="@Model.CarImages" multiple /> @*Possible error in value*@
+                    <span asp-validation-for="CarImages" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-6">
                 <div class="p-3 border bg-light">
                     <label class="fw-bold text-dark">Açıklama</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea class="form-control" asp-for="CarDescription" id="exampleFormControlTextarea1" rows="3">@Model.CarDescription</textarea>
+                    <span asp-validation-for="CarDescription" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-12">
@@ -131,16 +182,11 @@
                             <a class="btn btn-primary car-detail-button">İlan Bilgileri</a>
                         </div>
                         <div class="col">
-                            <a class="btn btn-success car-detail-button">Kaydet</a>
+                            <input class="btn btn-success car-detail-button" type="submit" value="Kaydet" />
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
         </div>
-    </div>
-    </div>
     </div>
 </form>

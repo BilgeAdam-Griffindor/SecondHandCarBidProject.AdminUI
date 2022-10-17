@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -25,6 +26,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index(int page = 1, int itemPerPage = 100)
         {
             ViewData["page"] = page;
@@ -57,12 +59,15 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Add()
         {
             return View(new CarBrandAddViewModel(""));
         }
 
         [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(CarBrandAddViewModel viewData)
         {
             //Convert to send dto (Possibly inefficient to convert before validation)
@@ -118,6 +123,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Update(short id)
         {
             string queryString = "brandId=" + id;
@@ -147,6 +153,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(CarBrandUpdateViewModel viewData)
         {
             //Convert to send dto (Possibly inefficient to convert before validation)
@@ -202,6 +210,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             string queryString = "brandId=" + id;
