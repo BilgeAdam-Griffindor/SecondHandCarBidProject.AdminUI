@@ -4,7 +4,8 @@
         List<IdNameListDTO> BrandList,
         List<IdNameListDTO> ModelList,
         List<IdNameListDTO> StatusList,
-        List<CarBuyListTableRowDTO> TableRows
+        List<CarBuyListTableRowDTO> TableRows,
+        int maxPages
         );
 
 }
