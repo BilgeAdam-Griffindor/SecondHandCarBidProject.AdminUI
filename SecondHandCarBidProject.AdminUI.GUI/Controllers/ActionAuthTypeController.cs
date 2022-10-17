@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO.ActionAuthDtos;
 using SecondHandCarBidProject.AdminUI.DTO.AddressDtos;
 using SecondHandCarBidProject.AdminUI.DTO.AuthorizationDtos;
@@ -18,8 +19,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
     {
         
         ILoggerFactoryMethod<MongoLogModel> logger;
-        IBaseServices service;
-        public ActionAuthTypeController(ILoggerFactoryMethod<MongoLogModel> _logger,IBaseServices _service)
+        IBaseDAL service;
+        public ActionAuthTypeController(ILoggerFactoryMethod<MongoLogModel> _logger, IBaseDAL _service)
         {
             logger=_logger;
             service = _service;
@@ -77,9 +78,23 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ActionAuthTypeUpdate(int id)
+        public async Task<IActionResult> ActionAuthTypeUpdate(string id)
         {
-            
+            try
+            {
+                //todo When Api will be ready after that update apipath and token parameters
+                //var result= await service.GetByFilterAsync<ActionAuthTypeAddDTO>("ApiPath", "Token",id);
+
+            }
+            catch (Exception ex)
+            {
+                MongoLogModel mongoLogModel = new MongoLogModel();
+                mongoLogModel.CreatedDate = DateTime.Now;
+                mongoLogModel.Exception = ex.Message;
+                // todo Make enum logtype
+                mongoLogModel.LogType = "Warning";
+                await logger.FactoryMethod(LoggerFactoryMethod<MongoLogModel>.LoggerType.MongoDatabaseLogger, mongoLogModel);
+            }
             return View();
         }
         [HttpPost]
@@ -93,7 +108,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 if (result.IsValid)
                 {
                     //todo When Api will be ready after that update apipath and token parameters
-                    //await service.SaveAsync<ActionAuthTypeUpdateDTO, Task>(data, "ApiPath", "Token");
+                    //await service.UpdateAsync<ActionAuthTypeUpdateDTO, Task>(data, "ApiPath", "Token");
                 }
             }
             catch (Exception ex)

@@ -2,6 +2,7 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Logging;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO.ActionAuthDtos;
 using SecondHandCarBidProject.AdminUI.DTO.AddressDtos;
 using SecondHandCarBidProject.AdminUI.DTO.AdvertDtos;
@@ -18,8 +19,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
     public class AddressInfoController : Controller
     {
         ILoggerFactoryMethod<MongoLogModel> logger;
-        IBaseServices service;
-        public AddressInfoController(ILoggerFactoryMethod<MongoLogModel> _log,IBaseServices _service)
+        IBaseDAL service;
+        public AddressInfoController(ILoggerFactoryMethod<MongoLogModel> _log,IBaseDAL _service)
         {
             logger = _log;
             service=_service;
@@ -44,7 +45,6 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             return View();
         }
         [HttpGet]
-        
         public async Task<IActionResult> AddressInfoAdd()
         {
             return View();
@@ -79,6 +79,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet] 
         public async Task<IActionResult> UpdateAddressInfo(int id)
         {
+            try
+            {
+                //todo When Api will be ready after that update apipath and token parameters
+                //var result= await service.GetByFilterAsync<AddressInfoUpdateDTO>("ApiPath", "Token",id);
+
+            }
+            catch (Exception ex)
+            {
+                MongoLogModel mongoLogModel = new MongoLogModel();
+                mongoLogModel.CreatedDate = DateTime.Now;
+                mongoLogModel.Exception = ex.Message;
+                // todo Make enum logtype
+                mongoLogModel.LogType = "Warning";
+                await logger.FactoryMethod(LoggerFactoryMethod<MongoLogModel>.LoggerType.MongoDatabaseLogger, mongoLogModel);
+            }
             return View();
         }
         [HttpPost]
@@ -92,7 +107,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 if (result.IsValid)
                 {
                     //todo When Api will be ready after that update apipath and token parameters
-                    //await service.SaveAsync<AddressInfoUpdateDTO, Task>(data, "ApiPath", "Token");
+                    //await service.UpdateAsync<AddressInfoUpdateDTO, Task>(data, "ApiPath", "Token");
                 }
             }
             catch (Exception ex)

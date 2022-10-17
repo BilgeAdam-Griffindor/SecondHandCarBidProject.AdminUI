@@ -1,23 +1,25 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO.AddressDtos;
 using SecondHandCarBidProject.AdminUI.DTO.AdvertDtos;
 using SecondHandCarBidProject.AdminUI.Validator.AddressInfo;
 using SecondHandCarBidProject.AdminUI.Validator.AdvertInfo;
 using SecondHandCarBidProject.ApiService.ApServicesInterfaces;
 using SercondHandCarBidProject.Logging.Abstract;
+using SercondHandCarBidProject.Logging.Concrete;
 using SercondHandCarBidProject.Logging.LogModels;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
     public class AdvertController : Controller
     {
-        ILoggerFactoryMethod<MongoLogModel> log;
-        IBaseServices service;
-        public AdvertController(ILoggerFactoryMethod<MongoLogModel> _log, IBaseServices _service)
+        ILoggerFactoryMethod<MongoLogModel> logger;
+        IBaseDAL service;
+        public AdvertController(ILoggerFactoryMethod<MongoLogModel> _log, IBaseDAL _service)
         {
-            log = _log;
+            logger = _log;
             service = _service;
         }
         public async Task<IActionResult> Index()
@@ -71,6 +73,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public async Task<IActionResult> AdvertUpdate(int id)
         {
+            try
+            {
+                //todo When Api will be ready after that update apipath and token parameters
+                //var result= await service.GetByFilterAsync<AdvertUpdateDTO>("ApiPath", "Token",id);
+
+            }
+            catch (Exception ex)
+            {
+                MongoLogModel mongoLogModel = new MongoLogModel();
+                mongoLogModel.CreatedDate = DateTime.Now;
+                mongoLogModel.Exception = ex.Message;
+                // todo Make enum logtype
+                mongoLogModel.LogType = "Warning";
+                await logger.FactoryMethod(LoggerFactoryMethod<MongoLogModel>.LoggerType.MongoDatabaseLogger, mongoLogModel);
+            }
             return View();
         }
 
@@ -85,7 +102,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 if (result.IsValid)
                 {
                     //todo When Api will be ready after that update apipath and token parameters
-                    //await service.SaveAsync<AdvertUpdateDTO, Task>(data, "ApiPath", "Token");
+                    //await service.UpdateAsync<AdvertUpdateDTO, Task>(data, "ApiPath", "Token");
                 }
             }
             catch (Exception ex)

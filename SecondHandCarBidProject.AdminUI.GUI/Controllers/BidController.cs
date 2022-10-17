@@ -1,5 +1,6 @@
 ﻿using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO.ActionAuthDtos;
 using SecondHandCarBidProject.AdminUI.DTO.BidDtos;
 using SecondHandCarBidProject.AdminUI.DTO.UserDtos;
@@ -16,8 +17,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
     public class BidController : Controller
     {
         ILoggerFactoryMethod<MongoLogModel> logger;
-        IBaseServices service;
-        public BidController(ILoggerFactoryMethod<MongoLogModel> _log, IBaseServices _service)
+        IBaseDAL service;
+        public BidController(ILoggerFactoryMethod<MongoLogModel> _log, IBaseDAL _service)
         {
             logger = _log;
             service = _service;
@@ -76,6 +77,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public async Task<IActionResult> BidUpdate(Guid id)
         {
+            try
+            {
+                //todo When Api will be ready after that update apipath and token parameters
+                //var result= await service.GetByFilterAsync<BidUpdateDTO>("ApiPath", "Token",id);
+
+            }
+            catch (Exception ex)
+            {
+                MongoLogModel mongoLogModel = new MongoLogModel();
+                mongoLogModel.CreatedDate = DateTime.Now;
+                mongoLogModel.Exception = ex.Message;
+                // todo Make enum logtype
+                mongoLogModel.LogType = "Warning";
+                await logger.FactoryMethod(LoggerFactoryMethod<MongoLogModel>.LoggerType.MongoDatabaseLogger, mongoLogModel);
+            }
             return View();
         }
         [HttpPost]
@@ -89,7 +105,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 if (result.IsValid)
                 {
                     //todo When Api will be ready after that update apipath and token parameters
-                   // await service.SaveAsync<BidUpdateDTO, Task>(data, "ApiPath", "Token");
+                    // await service.UpdateAsync<BidUpdateDTO, Task>(data, "ApiPath", "Token");
                 }
             }
             catch (Exception ex)
