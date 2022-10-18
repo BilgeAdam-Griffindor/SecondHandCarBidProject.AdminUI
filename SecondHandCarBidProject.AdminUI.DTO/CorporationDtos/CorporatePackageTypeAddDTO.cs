@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO.CorporationDtos
 {
-    public record CorporatePackageTypeAddDTO(string PackageName, Int16? CountOfBids)
+    public record CorporatePackageTypeAddDTO(string PackageName, Guid CreatedBy ,Int16? CountOfBids)
     {
 
     }

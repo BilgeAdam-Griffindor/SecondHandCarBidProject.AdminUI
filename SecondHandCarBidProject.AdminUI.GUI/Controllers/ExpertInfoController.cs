@@ -1,42 +1,275 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
+using SecondHandCarBidProject.AdminUI.DTO;
+using SecondHandCarBidProject.AdminUI.DTO.CorporationDtos;
+using SecondHandCarBidProject.AdminUI.DTO.ExpertDtos;
 using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
     public class ExpertInfoController : Controller
     {
-        public IActionResult Index()
+        private IValidator<ExpertInfoAddDTO> _validatorAdd;
+        private IValidator<ExpertInfoUpdateDTO> _validatorUpdate;
+        private IBaseDAL _baseDAL;
+
+        public ExpertInfoController(IValidator<ExpertInfoAddDTO> validatorAdd,
+            IValidator<ExpertInfoUpdateDTO> validatorUpdate, IBaseDAL baseDAL)
         {
-            return View();
+            _validatorAdd = validatorAdd;
+            _validatorUpdate = validatorUpdate;
+            _baseDAL = baseDAL;
+        }
+        public async Task<IActionResult> Index(int page = 1, int itemPerPage = 100)
+        {
+            //var data = await _baseDAL.ListAll<ExpertInfoListPageDTO>(null, null);
+            //if (data.IsSuccess)
+            //{
+            //    return View(data.Data);
+            //}
+            ViewData["page"] = page;
+            ViewData["itemPerPage"] = itemPerPage;
+
+            string queryString = "page=" + page + "&itemPerPage=" + itemPerPage;
+
+            //BaseApi
+            try
+            {
+                ResponseModel<ExpertInfoListPageDTO> response = await _baseDAL.GetByFilterAsync<ExpertInfoListPageDTO>("ExpertInfo/List", HttpContext.Session.GetString("userToken"), queryString);
+
+                if (response.IsSuccess)
+                {
+                    ExpertInfoListViewModels viewData = new ExpertInfoListViewModels(response.Data.TableRows, response.Data.maxPages);
+
+
+                    return View(viewData);
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
 
         [HttpGet]
-        public IActionResult AddExpertInfo()
+        public async Task<IActionResult> AddExpertInfo()
         {
-            return View();
+            try
+            {
+                ResponseModel<ExpertInfoAddDTO> response = await _baseDAL.GetByFilterAsync<ExpertInfoAddDTO>("ExpertInfo/AddExpertInfo", HttpContext.Session.GetString("userToken"));
+
+                if (response.IsSuccess)
+                {
+                    ExpertInfoAddViewModels viewData = new ExpertInfoAddViewModels(
+                        "",
+                        0,
+                        0,
+                        0,
+                        null,
+                        1,
+                        "",
+                        DateTime.Now,
+                        DateTime.Now,
+                        Guid.Empty,
+                        Guid.Empty);
+
+
+                    return View(viewData);
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
 
         [HttpPost]
-        public IActionResult AddExpertInfo(ExpertInfoAddViewModels expertInfoAddViewModels)
+        //[ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> AddExpertInfo(ExpertInfoAddViewModels viewData)
         {
-            return View();
+            //Convert to send dto (Possibly inefficient to convert before validation)
+            ExpertInfoAddDTO addDTO = new ExpertInfoAddDTO(viewData.CentreName, viewData.AddressInfoId, viewData.Longitude, viewData.Latitude, viewData.Picture, viewData.ExpertAddress, viewData.CreatedDate, viewData.ModifiedDate, new Guid(HttpContext.Session.GetString("currentUserId")), viewData.ModifiedBy);
+
+            //Validate
+            ValidationResult result = await _validatorAdd.ValidateAsync(addDTO);
+            if (!result.IsValid)
+            {
+                //If not valid print errors
+                List<ValidationFailure> errors = result.Errors;
+                foreach (var error in errors)
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+
+                return View(viewData);
+            }
+            else
+            {
+                //BaseApi
+                try
+                {
+                    ResponseModel<bool> response = await _baseDAL.SaveAsync<ExpertInfoAddDTO, bool>(addDTO, "ExpertInfo/AddExpertInfo", HttpContext.Session.GetString("userToken"));
+
+                    if (response.Data)
+                    {
+
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    return RedirectToAction("Index", "Error");
+                }
+
+                //TODO Logging (May not necessary if there is middleware)
+                try
+                {
+
+                }
+                catch (Exception ex)
+                {
+                    //return RedirectToAction("Index", "Error");
+                }
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult UpdateExpertInfo(int Id)
+        public async Task<IActionResult> UpdateExpertInfo(int Id)
         {
-            return View();
+            string queryString = "ExpertInfoId=" + Id;
+
+            //BaseApi
+            try
+            {
+                ResponseModel<ExpertInfoUpdateDTO> response = await _baseDAL.GetByFilterAsync<ExpertInfoUpdateDTO>("ExpertInfo/UpdateExpertInfo", HttpContext.Session.GetString("userToken"), queryString);
+
+                if (response.IsSuccess)
+                {
+                    ExpertInfoUpdateViewModels viewData = new ExpertInfoUpdateViewModels(
+                        response.Data.Id,
+                        response.Data.CentreName,
+                        response.Data.AddressInfoId,
+                        response.Data.Longitude,
+                        response.Data.Latitude,
+                        response.Data.Picture,
+                        response.Data.IsActive,
+                        response.Data.ExpertAddress,
+                        response.Data.CreatedDate,
+                        response.Data.ModifiedDate,
+                        response.Data.CreatedBy,
+                        response.Data.ModifiedBy);
+
+                    return View(viewData);
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
         [HttpPost]
-        public IActionResult UpdateExpertInfo(ExpertInfoUpdateViewModels expertInfoUpdateView)
+        //[ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> UpdateExpertInfo(ExpertInfoUpdateViewModels viewData)
         {
-            return View();
+            ExpertInfoUpdateDTO updateDTO = new ExpertInfoUpdateDTO(viewData.Id ,viewData.CentreName, viewData.AddressInfoId, viewData.Longitude, viewData.Latitude, viewData.Picture, viewData.IsActive, viewData.ExpertAddress, viewData.CreatedDate, viewData.ModifiedDate, new Guid(HttpContext.Session.GetString("currentUserId")), viewData.ModifiedBy);
+
+            //Validate
+            ValidationResult result = await _validatorUpdate.ValidateAsync(updateDTO);
+            if (!result.IsValid)
+            {
+                //If not valid print errors
+                List<ValidationFailure> errors = result.Errors;
+                foreach (var error in errors)
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+
+                return View(viewData);
+            }
+            else
+            {
+                //BaseApi
+                try
+                {
+                    ResponseModel<bool> response = await _baseDAL.UpdateAsync<ExpertInfoUpdateDTO, bool>(updateDTO, "ExpertInfo/UpdateExpertInfo", HttpContext.Session.GetString("userToken"));
+
+                    if (response.Data)
+                    {
+
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    return RedirectToAction("Index", "Error");
+                }
+
+                //TODO Logging (May not necessary if there is middleware)
+                try
+                {
+
+                }
+                catch (Exception ex)
+                {
+                    //return RedirectToAction("Index", "Error");
+                }
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult RemoveExpertInfo(int Id)
+        public async Task<IActionResult> RemoveExpertInfo(int Id)
         {
-            return View();
+            string queryString = "ExpertInfoId=" + Id;
+
+            //BaseApi
+            try
+            {
+                ResponseModel<bool> response = await _baseDAL.RemoveByFilterAsync<bool>(queryString, "ExpertInfo/Delete", HttpContext.Session.GetString("userToken"));
+
+                if (response.Data)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
     }
 }

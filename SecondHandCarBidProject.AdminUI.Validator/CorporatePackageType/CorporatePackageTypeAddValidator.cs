@@ -12,7 +12,7 @@ namespace SecondHandCarBidProject.AdminUI.Validator.CorporatePackageType
     {
         public CorporatePackageTypeAddValidator()
         {
-            RuleFor(x => x.PackageName).NotEmpty();
+            RuleFor(x => x.PackageName).NotEmpty().WithMessage("Paket adı alanı boş geçilemez...");
 
         }
     }
