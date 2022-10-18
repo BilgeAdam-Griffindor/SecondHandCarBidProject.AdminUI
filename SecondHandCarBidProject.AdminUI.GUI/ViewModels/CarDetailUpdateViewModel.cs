@@ -20,7 +20,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
         Guid VersionId,
         Guid ColorId,
         List<Guid> OptionalHardwareIds,
-        List<CarImageListDTO> CarImages,
+        List<IFormFile> CarImages,
+        //List<CarImageListDTO> CarImages,
         List<SelectListItem> BrandList,
         List<SelectListItem> ModelList,
         List<SelectListItem> StatusList,
@@ -30,6 +31,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
         List<SelectListItem> GearTypeList,
         List<SelectListItem> VersionList,
         List<SelectListItem> ColorList,
-        List<SelectListItem> OptionalHardwareList
+        List<SelectListItem> OptionalHardwareList,
+        int? CorporationId
     );
 }

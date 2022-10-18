@@ -1,4 +1,6 @@
-﻿namespace SecondHandCarBidProject.AdminUI.DTO
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace SecondHandCarBidProject.AdminUI.DTO
 {
     public record CarBuyUpdatePageDTO(
         Guid Id,
@@ -19,7 +21,15 @@
         Guid ColorId,
         List<Guid> OptionalHardwareIds,
         List<CarImageListDTO> CarImages,
-        List<IdNameListDTO> StatusList
+        List<IdNameListDTO> BrandList,
+        List<IdNameListDTO> ModelList,
+        List<IdNameListDTO> StatusList,
+        List<IdNameListDTO> BodyTypeList,
+        List<IdNameListDTO> FuelTypeList,
+        List<IdNameListDTO> GearTypeList,
+        List<IdNameListDTO> VersionList,
+        List<IdNameListDTO> ColorList,
+        List<IdNameListDTO> OptionalHardwareList
         );
 
 }

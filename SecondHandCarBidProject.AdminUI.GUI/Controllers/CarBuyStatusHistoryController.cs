@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -25,6 +26,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index(int page = 1, int itemPerPage = 100)
         {
             ViewData["page"] = page;
@@ -39,7 +41,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                 if (response.IsSuccess)
                 {
-                    CarBuyStatusHistoryListViewModel viewData = new CarBuyStatusHistoryListViewModel(response.Data.TableRows , response.Data.maxPages);
+                    CarBuyStatusHistoryListViewModel viewData = new CarBuyStatusHistoryListViewModel(response.Data.TableRows, response.Data.maxPages);
 
 
                     return View(viewData);
@@ -57,6 +59,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Add()
         {
 
@@ -98,6 +101,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(CarBuyStatusHistoryAddViewModel viewData)
         {
             //Convert to send dto (Possibly inefficient to convert before validation)
@@ -153,6 +158,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Delete(Guid id)
         {
             string queryString = "carbuyStatusHistoryId=" + id;
