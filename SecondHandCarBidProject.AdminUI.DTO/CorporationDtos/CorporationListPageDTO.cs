@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO.CorporationDtos
 {
-    public record CorporatePackageTypeUpdateDTO
-        (Int16 Id,
-        string PackageName,
-        Int16? CountOfBids,
-        bool IsActive,
-         Guid CreatedBy)
-    {
-
-    }
+    public record CorporationListPageDTO
+        (
+        List<CorporationUpdateDTO> TableRows,
+        int maxPages);
 }

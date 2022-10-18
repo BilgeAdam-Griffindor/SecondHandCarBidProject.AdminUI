@@ -11,11 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CorporationDtos\" />
-    <Folder Include="ExpertDtos\" />
     <Folder Include="AddressDtos\" />
     <Folder Include="FavoriteDtos\" />
-    <Folder Include="NotificationDtos\" />
   </ItemGroup>
 
 </Project>

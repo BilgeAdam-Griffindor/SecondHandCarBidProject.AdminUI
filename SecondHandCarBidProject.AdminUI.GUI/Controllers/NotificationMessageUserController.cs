@@ -1,41 +1,260 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
+using SecondHandCarBidProject.AdminUI.DTO;
+using SecondHandCarBidProject.AdminUI.DTO.AdditionalFeeDtos;
+using SecondHandCarBidProject.AdminUI.DTO.CorporationDtos;
+using SecondHandCarBidProject.AdminUI.DTO.ExpertDtos;
+using SecondHandCarBidProject.AdminUI.DTO.NotificationDtos;
 using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
     public class NotificationMessageUserController : Controller
     {
-        public IActionResult Index()
+        private IValidator<NotificationMessageUserAddDTO> _validatorAdd;
+        private IValidator<NotificationMessageUserUpdateDTO> _validatorUpdate;
+        private IBaseDAL _baseDAL;
+
+        public NotificationMessageUserController(IValidator<NotificationMessageUserAddDTO> validatorAdd,
+            IValidator<NotificationMessageUserUpdateDTO> validatorUpdate, IBaseDAL baseDAL)
         {
-            return View();
+            _validatorAdd = validatorAdd;
+            _validatorUpdate = validatorUpdate;
+            _baseDAL = baseDAL;
+        }
+        public async Task<IActionResult> Index(int page = 1, int itemPerPage = 100)
+        {
+            //var data = await _baseDAL.ListAll<NotificationMessageUserListPageDTO>(null, null);
+            //if (data.IsSuccess)
+            //{
+            //    return View(data.Data);
+            //}
+            ViewData["page"] = page;
+            ViewData["itemPerPage"] = itemPerPage;
+
+            string queryString = "page=" + page + "&itemPerPage=" + itemPerPage;
+
+            //BaseApi
+            try
+            {
+                ResponseModel<NotificationMessageUserListPageDTO> response = await _baseDAL.GetByFilterAsync<NotificationMessageUserListPageDTO>("NotificationMessageUser/List", HttpContext.Session.GetString("userToken"), queryString);
+
+                if (response.IsSuccess)
+                {
+                    NotificationMessageUserListViewModels viewData = new NotificationMessageUserListViewModels(response.Data.TableRows, response.Data.maxPages);
+
+
+                    return View(viewData);
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
         [HttpGet]
-        public IActionResult AddNotificationMessageUser()
+        public async Task<IActionResult> AddNotificationMessageUser()
         {
-            return View();
+            try
+            {
+                ResponseModel<NotificationMessageUserAddDTO> response = await _baseDAL.GetByFilterAsync<NotificationMessageUserAddDTO>("NotificationMessageUser/AddNotificationMessageUser", HttpContext.Session.GetString("userToken"));
+
+                if (response.IsSuccess)
+                {
+                    NotificationMessageUserAddViewModels viewData = new NotificationMessageUserAddViewModels(
+                        0,
+                        Guid.Empty,
+                        1,
+                        DateTime.Now,
+                        Guid.Empty);
+
+
+                    return View(viewData);
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
 
         [HttpPost]
-        public IActionResult AddNotificationMessageUser(NotificationMessageUserAddViewModels notificationMessageUserAddViewModels)
-        {
-            return View();
+        public async Task<IActionResult> AddNotificationMessageUser(NotificationMessageUserAddViewModels viewData)
+        {//Convert to send dto (Possibly inefficient to convert before validation)
+            NotificationMessageUserAddDTO addDTO = new NotificationMessageUserAddDTO(viewData.NotificationMessageId, viewData.SendToBaseUserId, viewData.CreatedDate, new Guid(HttpContext.Session.GetString("currentUserId")));
+
+            //Validate
+            ValidationResult result = await _validatorAdd.ValidateAsync(addDTO);
+            if (!result.IsValid)
+            {
+                //If not valid print errors
+                List<ValidationFailure> errors = result.Errors;
+                foreach (var error in errors)
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+
+                return View(viewData);
+            }
+            else
+            {
+                //BaseApi
+                try
+                {
+                    ResponseModel<bool> response = await _baseDAL.SaveAsync<NotificationMessageUserAddDTO, bool>(addDTO, "NotificationMessageUser/AddNotificationMessageUser", HttpContext.Session.GetString("userToken"));
+
+                    if (response.Data)
+                    {
+
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    return RedirectToAction("Index", "Error");
+                }
+
+                //TODO Logging (May not necessary if there is middleware)
+                try
+                {
+
+                }
+                catch (Exception ex)
+                {
+                    //return RedirectToAction("Index", "Error");
+                }
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult UpdateNotificationMessageUser(Guid Id)
+        public async Task<IActionResult> UpdateNotificationMessageUser(Guid Id)
         {
-            return View();
+            string queryString = "NotificationMessageId=" + Id;
+
+            //BaseApi
+            try
+            {
+                ResponseModel<NotificationMessageUserUpdateDTO> response = await _baseDAL.GetByFilterAsync<NotificationMessageUserUpdateDTO>("NotificationMessageUser/UpdateNotificationMessageUser", HttpContext.Session.GetString("userToken"), queryString);
+
+                if (response.IsSuccess)
+                {
+                    NotificationMessageUserUpdateViewModels viewData = new NotificationMessageUserUpdateViewModels(
+                        response.Data.Id,
+                        response.Data.NotificationMessageId,
+                        response.Data.SendToBaseUserId,
+                        response.Data.IsActive,
+                        response.Data.CreatedDate,
+                        response.Data.CreatedBy);
+
+                    return View(viewData);
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
         [HttpPost]
-        public IActionResult UpdateNotificationMessageUser(NotificationMessageUserUpdateViewModels notificationMessageUserUpdateViewModels)
+        public async Task<IActionResult> UpdateNotificationMessageUser(NotificationMessageUserUpdateViewModels viewData)
         {
-            return View();
+            NotificationMessageUserUpdateDTO updateDTO = new NotificationMessageUserUpdateDTO(viewData.Id, viewData.NotificationMessageId, viewData.SendToBaseUserId, viewData.IsActive, viewData.CreatedDate, new Guid(HttpContext.Session.GetString("currentUserId")));
+
+            //Validate
+            ValidationResult result = await _validatorUpdate.ValidateAsync(updateDTO);
+            if (!result.IsValid)
+            {
+                //If not valid print errors
+                List<ValidationFailure> errors = result.Errors;
+                foreach (var error in errors)
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+
+                return View(viewData);
+            }
+            else
+            {
+                //BaseApi
+                try
+                {
+                    ResponseModel<bool> response = await _baseDAL.UpdateAsync<NotificationMessageUserUpdateDTO, bool>(updateDTO, "NotificationMessageUser/UpdateNotificationMessageUser", HttpContext.Session.GetString("userToken"));
+
+                    if (response.Data)
+                    {
+
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    return RedirectToAction("Index", "Error");
+                }
+
+                //TODO Logging (May not necessary if there is middleware)
+                try
+                {
+
+                }
+                catch (Exception ex)
+                {
+                    //return RedirectToAction("Index", "Error");
+                }
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult RemoveNotificationMessageUser(Guid Id)
+        public async Task<IActionResult> RemoveNotificationMessageUser(Guid Id)
         {
-            return View();
+
+            string queryString = "NotificationMessageUserId=" + Id;
+
+            //BaseApi
+            try
+            {
+                ResponseModel<bool> response = await _baseDAL.RemoveByFilterAsync<bool>(queryString, "NotificationMessageUser/Delete", HttpContext.Session.GetString("userToken"));
+
+                if (response.Data)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
     }
 }

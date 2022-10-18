@@ -12,7 +12,7 @@ namespace SecondHandCarBidProject.AdminUI.Validator.CorporationType
     {
         public CorporationTypeAddValidator()
         {
-            RuleFor(x => x.CorporationTypeName).NotEmpty();
+            RuleFor(x => x.CorporationTypeName).NotEmpty().WithMessage("Şirket Tipi alanı boş geçilemez...");
         }
     }
 }

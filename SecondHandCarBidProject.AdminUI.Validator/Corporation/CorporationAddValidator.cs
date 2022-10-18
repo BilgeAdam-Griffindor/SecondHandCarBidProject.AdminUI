@@ -12,9 +12,9 @@ namespace SecondHandCarBidProject.AdminUI.Validator.Corporation
     {
         public CorporationAddValidator()
         {
-            RuleFor(x => x.CompanyName).NotEmpty();
+            RuleFor(x => x.CompanyName).NotEmpty().WithMessage("Şirket adı alanı boş geçilemez...");
             RuleFor(x => x.AddressInfoId).NotEmpty();
-            RuleFor(x => x.PhoneNumber).NotEmpty();
+            RuleFor(x => x.PhoneNumber).NotEmpty().WithMessage("Telefon Numarası alanı boş geçilemez...");
             RuleFor(x => x.CorporationTypeId).NotEmpty();
             RuleFor(x => x.CorporatePackageTypeId).NotEmpty();
         }

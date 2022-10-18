@@ -17,4 +17,3 @@ namespace SecondHandCarBidProject.AdminUI.Validator.NotificationMessageUser
         }
     }
 }
-vvvvv

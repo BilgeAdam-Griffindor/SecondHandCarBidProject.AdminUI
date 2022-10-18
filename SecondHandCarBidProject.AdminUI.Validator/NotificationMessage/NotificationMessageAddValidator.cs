@@ -12,7 +12,7 @@ namespace SecondHandCarBidProject.AdminUI.Validator.NotificationMessage
     {
         public NotificationMessageAddValidator()
         {
-            RuleFor(x => x.Content).NotEmpty();
+            RuleFor(x => x.Content).NotEmpty().WithMessage("Mesaj içeriği alanı boş geçilemez...");
 
         }
     }
