@@ -1,5 +1,6 @@
 ﻿using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO.ActionAuthDtos;
 using SecondHandCarBidProject.AdminUI.DTO.BidDtos;
 using SecondHandCarBidProject.AdminUI.DTO.UserDtos;
@@ -16,8 +17,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
     public class BidController : Controller
     {
         ILoggerFactoryMethod<MongoLogModel> logger;
-        IBaseServices service;
-        public BidController(ILoggerFactoryMethod<MongoLogModel> _log, IBaseServices _service)
+        IBaseDAL service;
+        public BidController(ILoggerFactoryMethod<MongoLogModel> _log, IBaseDAL _service)
         {
             logger = _log;
             service = _service;
