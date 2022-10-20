@@ -12,9 +12,9 @@ namespace SecondHandCarBidProject.AdminUI.Validator.AdditionalFee
     {
         public NotaryFeeAddValidator()
         {
-            RuleFor(x => x.FeeAmount).GreaterThanOrEqualTo(0).NotEmpty();
-            RuleFor(x => x.StartDate).NotEmpty();
-            RuleFor(x => x.EndDate).NotEmpty();
+            RuleFor(x => x.FeeAmount).GreaterThanOrEqualTo(0).NotEmpty().WithMessage("Noter ücret alanı boş geçilemez...");
+            RuleFor(x => x.StartDate).NotEmpty().WithMessage("Başlangıç tarihi boş geçilemez...");
+            RuleFor(x => x.EndDate).NotEmpty().WithMessage("Bitiş tarihi boş geçilemez...");
             RuleFor(x => x.CreatedDate).NotEmpty();
         }
     }

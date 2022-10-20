@@ -11,13 +11,10 @@
     <span class="tooltiptext">Noter Ücret Bilgileri Bu Sayfada Güncellenir.</span>
 </div>
 <div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
-
+        <form asp-action="UpdateNotaryFee" method="post">
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
     <h3 style="text-align:center; color:#002244;font-weight:bold;" class="m-2 p-2 big-title-color">Noter Ücret Bilgileri Güncelleme Ekranı </h3>
     <div class="row text-center p-2">
-           <div class="col-12 col-md-4 form-group">
-                <label class="fw-bold text-dark">Id</label>
-                <input class="form-control" type="text" placeholder="Readonly input here…" readonly>
-            </div>
         <div class="col-12 col-md-4 form-group">
             <label class="fw-bold text-dark">Ücret Miktarı</label>
             <input type="number" class="form-control" id="tabloname" placeholder="Ücret Giriniz">
@@ -76,4 +73,5 @@
             <button class=" m-2 p-2 button-29">KAYDET</button>
         </div>
     </div>
+    </form>
 </div>

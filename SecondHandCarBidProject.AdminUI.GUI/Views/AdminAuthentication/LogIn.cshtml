@@ -1,4 +1,6 @@
-﻿@page
+﻿@*@page*@
+@using SecondHandCarBidProject.AdminUI.DTO.UserDtos
+@model UserLoginAddDTO
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,11 +43,11 @@
 						<img src="~/AdminTemplate/images/adminlogomedium.png" alt="logo icon">
 					</div>
 					<div class="card-title text-uppercase text-center py-3">Giriş Yap</div>
-					<form>
+					<form asp-action="LogIn" method="post">
 						<div class="form-group">
 							<label for="exampleInputUsername" class="sr-only">Username</label>
 							<div class="position-relative has-icon-right">
-								<input type="text" id="exampleInputUsername" class="form-control input-shadow" placeholder="Kullanıcı Adı Giriniz">
+								<input type="text" id="exampleInputUsername" class="form-control input-shadow" asp-for="UserName" placeholder="Kullanıcı Adı Giriniz">
 								<div class="form-control-position">
 									<i class="icon-user"></i>
 								</div>
@@ -54,7 +56,7 @@
 						<div class="form-group">
 							<label for="exampleInputPassword" class="sr-only">Password</label>
 							<div class="position-relative has-icon-right">
-								<input type="password" id="exampleInputPassword" class="form-control input-shadow" placeholder="Şifre Giriniz">
+								<input type="password" id="exampleInputPassword" class="form-control input-shadow" asp-for="Password" placeholder="Şifre Giriniz">
 								<div class="form-control-position">
 									<i class="icon-lock"></i>
 								</div>
