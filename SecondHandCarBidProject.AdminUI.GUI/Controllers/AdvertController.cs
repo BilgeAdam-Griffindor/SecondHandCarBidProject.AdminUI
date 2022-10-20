@@ -16,12 +16,17 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
     public class AdvertController : Controller
     {
         ILoggerFactoryMethod<MongoLogModel> logger;
+        ILogCatcher cathcLog;
         IBaseDAL service;
-        public AdvertController(ILoggerFactoryMethod<MongoLogModel> _log, IBaseDAL _service)
+        IConfiguration configuration;
+        public AdvertController(ILoggerFactoryMethod<MongoLogModel> _logger, IBaseDAL _service, IConfiguration _configuration, ILogCatcher _cathcLog)
         {
-            logger = _log;
+            logger = _logger;
             service = _service;
+            configuration = _configuration;
+            cathcLog = _cathcLog;
         }
+
         public async Task<IActionResult> Index()
         {
             try
@@ -31,12 +36,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             }
             catch (Exception ex)
             {
-                MongoLogModel mongoLogModel = new MongoLogModel();
-                mongoLogModel.CreatedDate = DateTime.Now;
-                mongoLogModel.Exception = ex.Message;
-                // todo Make enum logtype
-                mongoLogModel.LogType = "Warning";
-                throw;
+                await cathcLog.WriteLogWarning(ex);
             }
             return View();
         }
@@ -61,12 +61,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             }
             catch (Exception ex)
             {
-                MongoLogModel mongoLogModel = new MongoLogModel();
-                mongoLogModel.CreatedDate = DateTime.Now;
-                mongoLogModel.Exception = ex.Message;
-                // todo Make enum logtype
-                mongoLogModel.LogType = "Warning";
-                throw;
+                await cathcLog.WriteLogWarning(ex);
             }
             return View();
         }
@@ -81,12 +76,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             }
             catch (Exception ex)
             {
-                MongoLogModel mongoLogModel = new MongoLogModel();
-                mongoLogModel.CreatedDate = DateTime.Now;
-                mongoLogModel.Exception = ex.Message;
-                // todo Make enum logtype
-                mongoLogModel.LogType = "Warning";
-                await logger.FactoryMethod(LoggerFactoryMethod<MongoLogModel>.LoggerType.MongoDatabaseLogger, mongoLogModel);
+                await cathcLog.WriteLogWarning(ex);
             }
             return View();
         }
@@ -107,12 +97,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             }
             catch (Exception ex)
             {
-                MongoLogModel mongoLogModel = new MongoLogModel();
-                mongoLogModel.CreatedDate = DateTime.Now;
-                mongoLogModel.Exception = ex.Message;
-                // todo Make enum logtype
-                mongoLogModel.LogType = "Warning";
-                throw;
+                await cathcLog.WriteLogWarning(ex);
             }
             return View();
         }
