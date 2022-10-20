@@ -4,6 +4,6 @@
         Guid BidId,
         int CorporationId,
         string BidName,
-        string CorporationName
+        string CompanyName
         );
 }

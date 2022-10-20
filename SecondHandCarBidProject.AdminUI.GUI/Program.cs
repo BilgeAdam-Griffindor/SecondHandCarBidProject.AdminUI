@@ -1,13 +1,9 @@
 using FluentValidation;
-using SecondHandCarBidProject.AdminUI.DAL;
 using SecondHandCarBidProject.AdminUI.DAL.Concrete;
 using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
-using SecondHandCarBidProject.AdminUI.Validator.Extension;
 using SecondHandCarBidProject.AdminUI.Validator.PageAuthType;
 using SecondHandCarBidProject.ApiService.ApiServices;
 using SecondHandCarBidProject.ApiService.HttpConfiguration;
-using SercondHandCarBidProject.Logging.MongoContext.Abstract;
-using SercondHandCarBidProject.Logging.MongoContext.Concrete;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +18,11 @@ builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddHttpService(builder.Configuration);
 builder.Services.AddValidatorsFromAssemblyContaining<PageAuthTypeAddValidator>();
 builder.Services.AddScoped<IBaseDAL, BaseDAL>();
-var app = builder.Build(); 
+builder.Services.AddSession(option =>
+{
+    option.IdleTimeout = TimeSpan.FromMinutes(20);
+});
+var app = builder.Build();
 
 
 
@@ -33,7 +33,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
 }
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthorization();

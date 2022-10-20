@@ -61,7 +61,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             //BaseApi
             try
             {
-                ResponseModel<BidCorporationAddPageDTO> response = await _baseDAL.GetByFilterAsync<BidCorporationAddPageDTO>("BidCorporation/Add", HttpContext.Session.GetString("userToken"));
+                ResponseModel<BidCorporationAddPageDTO> response = await _baseDAL.GetByFilterAsync<BidCorporationAddPageDTO>("BidCorporation/AddGet", HttpContext.Session.GetString("userToken"));
 
                 if (response.IsSuccess)
                 {
@@ -120,7 +120,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 //BaseApi
                 try
                 {
-                    ResponseModel<bool> response = await _baseDAL.SaveAsync<BidCorporationAddSendDTO, bool>(addDTO, "BidCorporation/Add", HttpContext.Session.GetString("userToken"));
+                    ResponseModel<bool> response = await _baseDAL.SaveAsync<BidCorporationAddSendDTO, bool>(addDTO, "BidCorporation/AddPost", HttpContext.Session.GetString("userToken"));
 
                     if (response.Data)
                     {
@@ -155,7 +155,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [Authorize]
         public async Task<IActionResult> Delete(Guid bidId, int corporationId)
         {
-            string queryString = "bidId=" + bidId + "&corporationId=" + corporationId;
+            string queryString = "bidId=" + bidId + "&corporationId=" + corporationId
+                + "&modifiedBy="+ HttpContext.Session.GetString("currentUserId");
 
             //BaseApi
             try
