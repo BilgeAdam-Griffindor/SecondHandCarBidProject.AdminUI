@@ -25,6 +25,7 @@ namespace SecondHandCarBidProject.ApiService.HttpConfiguration
             services.Configure<MongoSettings>(_Configuration.GetSection("MongoSettings"));
 
             services.AddSingleton<IMongoLog<MongoLogModel>, MongoLog<MongoLogModel>>();
+            services.AddScoped<ILogCatcher,LogCatcherMongolog>();
             services.AddScoped(typeof(ILoggerFactoryMethod<>), typeof(LoggerFactoryMethod<>));
 
             services.AddHttpClient<BaseServices>(opt =>

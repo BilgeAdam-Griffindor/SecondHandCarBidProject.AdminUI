@@ -17,11 +17,15 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
     public class BidController : Controller
     {
         ILoggerFactoryMethod<MongoLogModel> logger;
+        ILogCatcher cathcLog;
         IBaseDAL service;
-        public BidController(ILoggerFactoryMethod<MongoLogModel> _log, IBaseDAL _service)
+        IConfiguration configuration;
+        public BidController(ILoggerFactoryMethod<MongoLogModel> _logger, IBaseDAL _service, IConfiguration _configuration, ILogCatcher _cathcLog)
         {
-            logger = _log;
+            logger = _logger;
             service = _service;
+            configuration = _configuration;
+            cathcLog = _cathcLog;
         }
         public async Task<IActionResult> Index()
         {
@@ -32,13 +36,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             }
             catch (Exception ex)
             {
-                MongoLogModel mongoLogModel = new MongoLogModel();
-                mongoLogModel.CreatedDate = DateTime.Now;
-                mongoLogModel.Exception = ex.Message;
-                // todo Make enum logtype
-                mongoLogModel.LogType = "Warning";
-                await logger.FactoryMethod(LoggerFactoryMethod<MongoLogModel>.LoggerType.MongoDatabaseLogger, mongoLogModel);
-                throw;
+                await cathcLog.WriteLogWarning(ex);
             }
             return View();
         }
@@ -64,19 +62,23 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             }
             catch (Exception ex)
             {
-                MongoLogModel mongoLogModel = new MongoLogModel();
-                mongoLogModel.CreatedDate = DateTime.Now;
-                mongoLogModel.Exception = ex.Message;
-                // todo Make enum logtype
-                mongoLogModel.LogType = "Warning";
-                await logger.FactoryMethod(LoggerFactoryMethod<MongoLogModel>.LoggerType.MongoDatabaseLogger, mongoLogModel);
-                throw;
+                await cathcLog.WriteLogWarning(ex);
             }
             return View();
         }
         [HttpGet]
         public async Task<IActionResult> BidUpdate(Guid id)
         {
+            try
+            {
+                //todo When Api will be ready after that update apipath and token parameters
+                //var result= await service.GetByFilterAsync<BidUpdateDTO>("ApiPath", "Token",id);
+
+            }
+            catch (Exception ex)
+            {
+                await cathcLog.WriteLogWarning(ex);
+            }
             return View();
         }
         [HttpPost]
@@ -90,18 +92,12 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 if (result.IsValid)
                 {
                     //todo When Api will be ready after that update apipath and token parameters
-                   // await service.SaveAsync<BidUpdateDTO, Task>(data, "ApiPath", "Token");
+                    // await service.UpdateAsync<BidUpdateDTO, Task>(data, "ApiPath", "Token");
                 }
             }
             catch (Exception ex)
             {
-                MongoLogModel mongoLogModel = new MongoLogModel();
-                mongoLogModel.CreatedDate = DateTime.Now;
-                mongoLogModel.Exception = ex.Message;
-                // todo Make enum logtype
-                mongoLogModel.LogType = "Warning";
-                await logger.FactoryMethod(LoggerFactoryMethod<MongoLogModel>.LoggerType.MongoDatabaseLogger, mongoLogModel);
-                throw;
+                await cathcLog.WriteLogWarning(ex);
             }
             return View();
         }

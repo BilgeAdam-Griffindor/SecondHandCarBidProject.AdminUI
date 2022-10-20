@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO.ActionAuthDtos;
 using SecondHandCarBidProject.AdminUI.DTO.AddressDtos;
 using SecondHandCarBidProject.AdminUI.DTO.AuthorizationDtos;
@@ -11,6 +13,7 @@ using SercondHandCarBidProject.Logging.Concrete;
 using SercondHandCarBidProject.Logging.LogModels;
 using SercondHandCarBidProject.Logging.MongoContext.Abstract;
 using System;
+using LogLevel = NLog.LogLevel;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
@@ -18,29 +21,31 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
     {
         
         ILoggerFactoryMethod<MongoLogModel> logger;
-        IBaseServices service;
-        public ActionAuthTypeController(ILoggerFactoryMethod<MongoLogModel> _logger,IBaseServices _service)
+        ILogCatcher cathcLog;
+        IBaseDAL service;
+        IConfiguration configuration;
+        public ActionAuthTypeController(ILoggerFactoryMethod<MongoLogModel> _logger, IBaseDAL _service,IConfiguration _configuration, ILogCatcher _cathcLog)
         {
-            logger=_logger;
+            logger = _logger;
             service = _service;
+            configuration = _configuration;
+            cathcLog = _cathcLog;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             try
             {
+                Exception ex = new Exception();
+                await cathcLog.WriteLogWarning(ex);
                 //todo When Api will be ready after that update apipath and token parameters
                 //var result = await service.ListAll<ActionAuthSelectDTO>("ApiPath", "Token");
             }
             catch (Exception ex)
             {
-                MongoLogModel mongoLogModel = new MongoLogModel();
-                mongoLogModel.CreatedDate = DateTime.Now;
-                mongoLogModel.Exception = ex.Message;
-                // todo Make enum logtype
-                mongoLogModel.LogType = "Warning";
-                await logger.FactoryMethod(LoggerFactoryMethod<MongoLogModel>.LoggerType.MongoDatabaseLogger, mongoLogModel);
-                throw;
+            
+                await cathcLog.WriteLogWarning(ex);
+              
             }
             return View();
         }
@@ -66,20 +71,24 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             }
             catch (Exception ex)
             {
-                MongoLogModel mongoLogModel = new MongoLogModel();
-                mongoLogModel.CreatedDate = DateTime.Now;
-                mongoLogModel.Exception = ex.Message;
-                // todo Make enum logtype
-                mongoLogModel.LogType = "Warning";
-                await logger.FactoryMethod(LoggerFactoryMethod<MongoLogModel>.LoggerType.MongoDatabaseLogger, mongoLogModel);
+                await cathcLog.WriteLogWarning(ex);
             }
             return View();
         }
 
         [HttpGet]
-        public async Task<IActionResult> ActionAuthTypeUpdate(int id)
+        public async Task<IActionResult> ActionAuthTypeUpdate(string id)
         {
-            
+            try
+            {
+                //todo When Api will be ready after that update apipath and token parameters
+                //var result= await service.GetByFilterAsync<ActionAuthTypeAddDTO>("ApiPath", "Token",id);
+
+            }
+            catch (Exception ex)
+            {
+                await cathcLog.WriteLogWarning(ex);
+            }
             return View();
         }
         [HttpPost]
@@ -93,18 +102,13 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 if (result.IsValid)
                 {
                     //todo When Api will be ready after that update apipath and token parameters
-                    //await service.SaveAsync<ActionAuthTypeUpdateDTO, Task>(data, "ApiPath", "Token");
+                    //await service.UpdateAsync<ActionAuthTypeUpdateDTO, Task>(data, "ApiPath", "Token");
                 }
             }
             catch (Exception ex)
             {
-                MongoLogModel mongoLogModel= new MongoLogModel();
-                mongoLogModel.CreatedDate = DateTime.Now;
-                mongoLogModel.Exception = ex.Message;
-                // todo Make enum logtype
-                mongoLogModel.LogType = "Warning";
-                await logger.FactoryMethod(LoggerFactoryMethod<MongoLogModel>.LoggerType.MongoDatabaseLogger, mongoLogModel);
-                throw;
+                await cathcLog.WriteLogWarning(ex);
+
             }
            
             return View();

@@ -1,4 +1,5 @@
-﻿using SercondHandCarBidProject.Logging.Abstract;
+﻿using Microsoft.Extensions.Logging;
+using SercondHandCarBidProject.Logging.Abstract;
 using SercondHandCarBidProject.Logging.LogModels;
 using SercondHandCarBidProject.Logging.MongoContext.Abstract;
 using System;

@@ -2,6 +2,7 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Logging;
+using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO.ActionAuthDtos;
 using SecondHandCarBidProject.AdminUI.DTO.AddressDtos;
 using SecondHandCarBidProject.AdminUI.DTO.AdvertDtos;
@@ -18,11 +19,15 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
     public class AddressInfoController : Controller
     {
         ILoggerFactoryMethod<MongoLogModel> logger;
-        IBaseServices service;
-        public AddressInfoController(ILoggerFactoryMethod<MongoLogModel> _log,IBaseServices _service)
+        ILogCatcher cathcLog;
+        IBaseDAL service;
+        IConfiguration configuration;
+        public AddressInfoController(ILoggerFactoryMethod<MongoLogModel> _logger, IBaseDAL _service, IConfiguration _configuration, ILogCatcher _cathcLog)
         {
-            logger = _log;
-            service=_service;
+            logger = _logger;
+            service = _service;
+            configuration = _configuration;
+            cathcLog = _cathcLog;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -34,17 +39,11 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             }
             catch (Exception ex)
             {
-                MongoLogModel mongoLogModel = new MongoLogModel();
-                mongoLogModel.CreatedDate = DateTime.Now;
-                mongoLogModel.Exception = ex.Message;
-                // todo Make enum logtype
-                mongoLogModel.LogType = "Warning";
-                throw;
+                await cathcLog.WriteLogWarning(ex);
             }
             return View();
         }
         [HttpGet]
-        
         public async Task<IActionResult> AddressInfoAdd()
         {
             return View();
@@ -65,13 +64,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             }
             catch (Exception ex)
             {
-                MongoLogModel mongoLogModel = new MongoLogModel();
-                mongoLogModel.CreatedDate = DateTime.Now;
-                mongoLogModel.Exception = ex.Message;
-                // todo Make enum logtype
-                mongoLogModel.LogType = "Warning";
-                await logger.FactoryMethod(LoggerFactoryMethod<MongoLogModel>.LoggerType.MongoDatabaseLogger, mongoLogModel);
-                throw;
+                await cathcLog.WriteLogWarning(ex);
             }
             return View();
         }
@@ -79,6 +72,16 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet] 
         public async Task<IActionResult> UpdateAddressInfo(int id)
         {
+            try
+            {
+                //todo When Api will be ready after that update apipath and token parameters
+                //var result= await service.GetByFilterAsync<AddressInfoUpdateDTO>("ApiPath", "Token",id);
+
+            }
+            catch (Exception ex)
+            {
+                await cathcLog.WriteLogWarning(ex);
+            }
             return View();
         }
         [HttpPost]
@@ -92,18 +95,12 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 if (result.IsValid)
                 {
                     //todo When Api will be ready after that update apipath and token parameters
-                    //await service.SaveAsync<AddressInfoUpdateDTO, Task>(data, "ApiPath", "Token");
+                    //await service.UpdateAsync<AddressInfoUpdateDTO, Task>(data, "ApiPath", "Token");
                 }
             }
             catch (Exception ex)
             {
-                MongoLogModel mongoLogModel = new MongoLogModel();
-                mongoLogModel.CreatedDate = DateTime.Now;
-                mongoLogModel.Exception = ex.Message;
-                // todo Make enum logtype
-                mongoLogModel.LogType = "Warning";
-                await logger.FactoryMethod(LoggerFactoryMethod<MongoLogModel>.LoggerType.MongoDatabaseLogger, mongoLogModel);
-                throw;
+                await cathcLog.WriteLogWarning(ex);
             }
             return View();
         }
