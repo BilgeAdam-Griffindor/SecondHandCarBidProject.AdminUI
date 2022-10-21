@@ -7,6 +7,7 @@ using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO;
 using SecondHandCarBidProject.AdminUI.DTO.BidDtos;
 using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
+using SercondHandCarBidProject.Logging.Abstract;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
@@ -15,9 +16,11 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         private IValidator<BidOfferAddSendDTO> _validatorAdd;
         private IValidator<BidOfferUpdateSendDTO> _validatorUpdate;
         private IBaseDAL _baseDAL;
+        ILogCatcher _logCatcher;
 
-        public BidOfferController(IValidator<BidOfferAddSendDTO> validatorAdd, IValidator<BidOfferUpdateSendDTO> validatorUpdate, IBaseDAL baseDAL)
+        public BidOfferController(IValidator<BidOfferAddSendDTO> validatorAdd, IValidator<BidOfferUpdateSendDTO> validatorUpdate, IBaseDAL baseDAL, ILogCatcher logCatcher)
         {
+            _logCatcher = logCatcher;
             _validatorAdd = validatorAdd;
             _validatorUpdate = validatorUpdate;
             _baseDAL = baseDAL;
@@ -46,12 +49,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. BidOffer/Index Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -88,12 +100,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. BidOffer/Add [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -128,31 +149,29 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
-
+                        return RedirectToAction("Index");
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. BidOffer/Add [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                        //Just so that the program won't break if there is a problem with logging
+                    }
+
                     return RedirectToAction("Index", "Error");
-                }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
                 }
             }
 
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -189,12 +208,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. BidOffer/Update [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -229,31 +257,28 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
-
+                        return RedirectToAction("Index");
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. BidOffer/Update [POST] Kod: " + response.statusCode);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                        //Just so that the program won't break if there is a problem with logging
                     }
 
-                }
-                catch (Exception ex)
-                {
                     return RedirectToAction("Index", "Error");
-                }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
                 }
             }
 
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -273,11 +298,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. BidOffer/Delete Kod: " + response.statusCode);
                 }
+
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
