@@ -12,8 +12,8 @@ namespace SecondHandCarBidProject.AdminUI.Validator.BidResult
     {
         public BidResultAddSendValidator()
         {
-            RuleFor(x => x.BidOfferId).NotEmpty();
-            RuleFor(x => x.Explanation).NotEmpty();
+            RuleFor(x => x.BidOfferId).NotEmpty().WithMessage("Boş olamaz.");
+            RuleFor(x => x.Explanation).NotEmpty().WithMessage("Boş olamaz.");
         }
     }
 }

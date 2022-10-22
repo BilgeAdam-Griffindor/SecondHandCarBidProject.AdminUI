@@ -8,7 +8,7 @@ namespace SecondHandCarBidProject.AdminUI.Validator.Car
         public CarImagesAddValidator()
         {
             RuleFor(x => x.CarId).NotEmpty().WithMessage("Lütfen Araba Seçiniz");
-            RuleFor(x => x.CarImage).NotEmpty().Must(x => x.Length < ValidationValues.maxImageSize).WithMessage("Lütfen 1 MB Boyutundan Küçük Resim Seçiniz");
+            RuleFor(x => x.CarImage).NotEmpty().Must(x => x.Length < ValidationValues.maxImageSizeInBytes).WithMessage("Lütfen 1 MB Boyutundan Küçük Resim Seçiniz");
         }
     }
 }

@@ -12,9 +12,9 @@ namespace SecondHandCarBidProject.AdminUI.Validator.CarBuyAdditionalFee
     {
         public CarBuyAdditionalFeeAddSendValidator()
         {
-            RuleFor(x => x.CarBuyId).NotEmpty();
-            RuleFor(x => x.NotaryFeeId).NotEmpty();
-            RuleFor(x => x.CommissionFeeId).NotEmpty();
+            RuleFor(x => x.CarBuyId).NotEmpty().WithMessage("Boş olamaz.");
+            RuleFor(x => x.NotaryFeeId).NotEmpty().WithMessage("Boş olamaz.");
+            RuleFor(x => x.CommissionFeeId).NotEmpty().WithMessage("Boş olamaz.");
         }
     }
 }
