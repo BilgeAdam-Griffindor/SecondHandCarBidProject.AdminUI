@@ -12,10 +12,10 @@ namespace SecondHandCarBidProject.AdminUI.Validator.BdOffer
     {
         public BidOfferAddSendValidator()
         {
-            RuleFor(x => x.OfferAmount).GreaterThanOrEqualTo(0);
-            RuleFor(x => x.BaseUserId).NotEmpty();
-            RuleFor(x => x.BidId).NotEmpty();
-            RuleFor(x => x.Explanation).NotEmpty();
+            RuleFor(x => x.OfferAmount).GreaterThanOrEqualTo(0).WithMessage("Negatif olamaz.");
+            RuleFor(x => x.BaseUserId).NotEmpty().WithMessage("Boş olamaz.");
+            RuleFor(x => x.BidId).NotEmpty().WithMessage("Boş olamaz.");
+            RuleFor(x => x.Explanation).NotEmpty().WithMessage("Boş olamaz.");
         }
     }
 }

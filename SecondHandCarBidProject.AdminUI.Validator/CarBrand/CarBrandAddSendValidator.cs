@@ -12,7 +12,7 @@ namespace SecondHandCarBidProject.AdminUI.Validator.CarBrand
     {
         public CarBrandAddSendValidator()
         {
-            RuleFor(x => x.BrandName).NotEmpty();
+            RuleFor(x => x.BrandName).NotEmpty().WithMessage("Boş olamaz.");
         }
     }
 }

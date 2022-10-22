@@ -7,8 +7,8 @@ namespace SecondHandCarBidProject.AdminUI.Validator.CarBuy
     {
         public CarBuyUpdateSendValidator()
         {
-            RuleFor(x => x.Id).NotEmpty();
-            RuleFor(x => x.StatusId).NotEmpty();
+            RuleFor(x => x.Id).NotEmpty().WithMessage("Boş olamaz.");
+            RuleFor(x => x.StatusId).NotEmpty().WithMessage("Boş olamaz.");
         }
     }
 }
