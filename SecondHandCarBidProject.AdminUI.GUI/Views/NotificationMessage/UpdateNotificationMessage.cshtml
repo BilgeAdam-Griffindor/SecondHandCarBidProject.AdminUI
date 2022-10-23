@@ -17,20 +17,23 @@
         <div class="row text-center p-2">
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Mesaj İçeriği</label>
-                <input type="text" class="form-control" id="tabloname" placeholder="Mesaj Giriniz">
+                <input type="number" class="form-control" asp-for="Content" value="@Model.Content" placeholder="">
+                <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div class="col-12 col-md-4">
                 <label class="fw-bold text-dark">
                     Düzenlenme Tarihi
                 </label>
-                <input class="form-control" type="datetime-local" id="DateTime1">
+                <input type="number" class="form-control" asp-for="ModifiedDate" value="@Model.ModifiedDate" placeholder="">
+                <span asp-validation-for="ModifiedDate" class="text-danger"></span>
             </div>
 
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Düzenleme Yapan Kişi</label>
-                <select class="form-select" id="tabloname1">
+                <select class="form-select" asp-for="ModifiedBy" asp-items="@Model.ModifiedByList">
                     <option value="">--Seçiniz--</option>
                 </select>
+                <span asp-validation-for="ModifiedBy" class="text-danger"></span>
             </div>
         </div>
         <div class="row justify-content-end m-2 mb-2">

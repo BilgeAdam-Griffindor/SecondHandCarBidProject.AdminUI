@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO;
@@ -23,6 +24,9 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             _validatorUpdate = validatorUpdate;
             _baseDAL = baseDAL;
         }
+
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index(int page = 1, int itemPerPage = 100)
         {
             //var data = await _baseDAL.ListAll<CorporationTypeListPageDTO>(null, null);
@@ -59,12 +63,14 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             }
         }
 
+
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> AddCorporationType()
         {
             try
             {
-                ResponseModel<CorporationTypeAddDTO> response = await _baseDAL.GetByFilterAsync<CorporationTypeAddDTO>("CorporationType/AddCorporation", HttpContext.Session.GetString("userToken"));
+                ResponseModel<CorporationTypeAddPageDTO> response = await _baseDAL.GetByFilterAsync<CorporationTypeAddPageDTO>("CorporationType/AddCorporation", HttpContext.Session.GetString("userToken"));
 
                 if (response.IsSuccess)
                 {
@@ -88,6 +94,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddCorporationType(CorporationTypeAddViewModels viewData)
         {
             //Convert to send dto (Possibly inefficient to convert before validation)
@@ -143,6 +151,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> UpdateCorporationType(int Id)
         {
             string queryString = "CorporationTypeId=" + Id;
@@ -150,7 +159,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             //BaseApi
             try
             {
-                ResponseModel<CorporationTypeUpdateDTO> response = await _baseDAL.GetByFilterAsync<CorporationTypeUpdateDTO>("Corporation/UpdateCorporation", HttpContext.Session.GetString("userToken"), queryString);
+                ResponseModel<CorporationTypeUpdatePageDTO> response = await _baseDAL.GetByFilterAsync<CorporationTypeUpdatePageDTO>("Corporation/UpdateCorporation", HttpContext.Session.GetString("userToken"), queryString);
 
                 if (response.IsSuccess)
                 {
@@ -173,6 +182,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             }
         }
         [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateCorporationType(CorporationTypeUpdateViewModels viewData)
         {
             CorporationTypeUpdateDTO updateDTO = new CorporationTypeUpdateDTO(viewData.Id, viewData.CorporationTypeName, viewData.IsActive, new Guid(HttpContext.Session.GetString("currentUserId")));
@@ -227,6 +238,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> RemoveCorporationType(int Id)
         {
             string queryString = "CorporationTypeId=" + Id;

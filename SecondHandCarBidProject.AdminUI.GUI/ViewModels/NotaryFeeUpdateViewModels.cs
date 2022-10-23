@@ -1,4 +1,6 @@
-﻿namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
 {
         public record NotaryFeeUpdateViewModels(
        Guid Id,
@@ -9,5 +11,7 @@
        DateTime CreatedDate,
        DateTime? ModifiedDate,
        Guid CreatedBy,
-       Guid? ModifiedBy);
+       Guid? ModifiedBy,
+       List<SelectListItem> CreatedByList,
+       List<SelectListItem> ModifiedByList);
 }

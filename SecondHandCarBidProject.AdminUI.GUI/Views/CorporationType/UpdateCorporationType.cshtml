@@ -19,7 +19,8 @@
             <label class="fw-bold text-dark">
                 Şirket Tipi
             </label>
-            <input type="text" class="form-control" id="tabloname" placeholder="Şirket Tipi Giriniz">
+            <input type="number" class="form-control" asp-for="CorporationTypeName" value="@Model.CorporationTypeName" placeholder="size ulaşabileceğimiz bir iletişim numarası giriniz...">
+            <span asp-validation-for="CorporationTypeName" class="text-danger"></span>
         </div>
 @*        </div>
 *@    <div class="row justify-content-end m-2 mb-2">

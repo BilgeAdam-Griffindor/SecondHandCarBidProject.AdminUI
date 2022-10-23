@@ -7,67 +7,71 @@
 }
 
 
-    <div class="tooltip">
-        <h4><i class="fa-solid fa-lg fa-circle-info"></i> Şirket-Kullanıcı Güncelleme Ekranı</h4>
-        <span class="tooltiptext">Bu Sayfada Şirketler ve Şirketlerin Yetkilendirdiği Kişiler Güncellenebilmektedir.</span>
-    </div>
+<div class="tooltip">
+    <h4><i class="fa-solid fa-lg fa-circle-info"></i> Şirket-Kullanıcı Güncelleme Ekranı</h4>
+    <span class="tooltiptext">Bu Sayfada Şirketler ve Şirketlerin Yetkilendirdiği Kişiler Güncellenebilmektedir.</span>
+</div>
 
 </div>
 <div class="mt-2 p-3" style="box-shadow:  6px 20px 40px #000000;border-radius:10px ">
-        <form asp-action="UpdateCorporateionUser" method="post">
-@*        <input type="hidden" asp-for="Id" value="@Model.Id" />
-*@    <h3 style="text-align:center; color:#002244;font-weight:bold;" class="m-2 p-2 big-title-color">Şirket-Kullanıcı Güncelleme Ekranı</h3> 
-    <div class="row text-center p-2">
-        <div class="col-12 col-md-4 form-group">
-            <label class="fw-bold text-dark">Kullanıcı</label>
-            <select class="form-select" id="tabloname1">
-               <option value="">--Seçiniz--</option>
-            </select>
+    <form asp-action="UpdateCorporateionUser" method="post">
+        @*        <input type="hidden" asp-for="Id" value="@Model.Id" />
+        *@    <h3 style="text-align:center; color:#002244;font-weight:bold;" class="m-2 p-2 big-title-color">Şirket-Kullanıcı Güncelleme Ekranı</h3>
+        <div class="row text-center p-2">
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Kullanıcı</label>
+                <select class="form-select" asp-for="BaseUserId" asp-items="@Model.BaseUserList">
+                    <option value="">--Seçiniz--</option>
+                </select>
+                <span asp-validation-for="BaseUserId" class="text-danger"></span>
+            </div>
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">Şirket</label>
+                <select class="form-select" asp-for="CorporationId" asp-items="@Model.CorporationList">
+                    <option value="">--Seçiniz--</option>
+                </select>
+            </div>
+            <div class="col-12 col-md-4">
+                <label class="fw-bold text-dark">
+                    Kayıt Tarihi
+                </label>
+                <input type="number" class="form-control" asp-for="CreatedDate" value="@Model.CreatedDate" placeholder="">
+                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+            </div>
         </div>
-        <div class="col-12 col-md-4 form-group">
-            <label class="fw-bold text-dark">Şirket</label>
-            <select class="form-select" id="tabloname1">
-                <option value="">--Seçiniz--</option>
-            </select>
-        </div>
-        <div class="col-12 col-md-4">
-            <label class="fw-bold text-dark">
-                Kayıt Tarihi
-            </label>
-            <input class="form-control" type="datetime-local" id="DateTime1">
-        </div>
-    </div>
-    <div class="row text-center mt-3 p-2 mb-2 form-group">
-        <div class="col-12 col-md-4 form-group">
-            <label class="fw-bold text-dark">
-                Kayıt Yapan Kişi
-            </label>
-            <select class="form-select" id="tabloname2">
-                <option value="">--Seçiniz--</option>
+        <div class="row text-center mt-3 p-2 mb-2 form-group">
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">
+                    Kayıt Yapan Kişi
+                </label>
+                <select class="form-select" asp-for="CreatedBy" asp-items="@Model.CreatedByList">
+                    <option value="">--Seçiniz--</option>
+                </select>
+                <span asp-validation-for="CreatedBy" class="text-danger"></span>
+            </div>
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">
+                    Düzenleme Yapan Kişi
+                </label>
+                <select class="form-select" asp-for="ModifiedBy" asp-items="@Model.ModifiedByList">
+                    <option value="">--Seçiniz--</option>
+                </select>
+                <span asp-validation-for="ModifiedBy" class="text-danger"></span>
+            </div>
+            <div class="col-12 col-md-4 form-group">
+                <label class="fw-bold text-dark">
+                    Düzenlenme Tarihi
+                </label>
+                <input type="number" class="form-control" asp-for="ModifiedDate" value="@Model.ModifiedDate" placeholder="size ulaşabileceğimiz bir iletişim numarası giriniz...">
+                <span asp-validation-for="ModifiedDate" class="text-danger"></span>
+            </div>
 
-            </select>
-        </div>            <div class="col-12 col-md-4 form-group">
-            <label class="fw-bold text-dark">
-                Düzenleme Yapan Kişi
-            </label>
-            <select class="form-select" id="tabloname2">
-                <option value="">--Seçiniz--</option>
-
-            </select>
-        </div>
-        <div class="col-12 col-md-4 form-group">
-            <label class="fw-bold text-dark">
-                Düzenlenme Tarihi
-            </label>
-            <input class="form-control" type="datetime-local" id="DateTime2">
         </div>
 
-    </div>
-
-    <div class="row justify-content-end m-2 mb-2">
-        <div class="col align-self-end">
-            <button class=" m-2 p-2 button-29">KAYDET</button>
+        <div class="row justify-content-end m-2 mb-2">
+            <div class="col align-self-end">
+                <button class=" m-2 p-2 button-29">KAYDET</button>
+            </div>
         </div>
-    </div>
     </form>
 </div>

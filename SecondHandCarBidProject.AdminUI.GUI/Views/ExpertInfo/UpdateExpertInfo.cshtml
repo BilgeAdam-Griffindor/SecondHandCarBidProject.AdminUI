@@ -18,13 +18,15 @@
 
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Ekspertiz Merkezi Adı</label>
-            <input type="text" class="form-control" id="tabloname" placeholder="Ekspertiz Merkezi Adı Giriniz">
+                <input type="number" class="form-control" asp-for="CentreName" value="@Model.CentreName" placeholder="">
+                <span asp-validation-for="CentreName" class="text-danger"></span>
             </div>
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">
                 Ekspertiz Merkezi Adresi
                 </label>
-            <input type="text" class="form-control" id="tabloname" placeholder="Ekspertiz Merkezi Adresi Giriniz">
+                <input type="number" class="form-control" asp-for="ExpertAddress" value="@Model.ExpertAddress" placeholder="">
+                <span asp-validation-for="ExpertAddress" class="text-danger"></span>
             </div>
 
           
@@ -32,20 +34,23 @@
     <div class="row text-center p-2">
         <div class="col-12 col-md-4 form-group">
             <label class="fw-bold text-dark">Adres Bilgisi</label>
-            <select class="form-select" id="tabloname1">
-                <option value="">--Seçiniz--</option>
-            </select>
+                <select class="form-select" asp-for="AddressInfoId" asp-items="@Model.AddressOnfoList">
+                    <option value="">--Seçiniz--</option>
+                </select>
+                <span asp-validation-for="AddressInfoId" class="text-danger"></span>
         </div>
         <div class="col-12 col-md-4 form-group">
             <label class="fw-bold text-dark">Enlem</label>
-            <input type="text" class="form-control" id="tabloname" placeholder="Enlem Giriniz">
-        </div>
+                <input type="number" class="form-control" asp-for="Latitude" value="@Model.Latitude" placeholder="">
+                <span asp-validation-for="Latitude" class="text-danger"></span>
+            </div>
         <div class="col-12 col-md-4 form-group">
             <label class="fw-bold text-dark">
                 Boylam
             </label>
-            <input type="text" class="form-control" id="tabloname" placeholder="Boylam Giriniz">
-        </div>
+                <input type="number" class="form-control" asp-for="Longitude" value="@Model.Longitude" placeholder="">
+                <span asp-validation-for="Longitude" class="text-danger"></span>
+            </div>
        
        
     </div>
@@ -54,22 +59,24 @@
             <label class="fw-bold text-dark">
                 Düzenleme Yapan Kişi
             </label>
-            <select class="form-select" id="tabloname2">
-                <option value="">--Seçiniz--</option>
-
-            </select>
+                <select class="form-select" asp-for="ModifiedBy" asp-items="@Model.ModifiedByList">
+                    <option value="">--Seçiniz--</option>
+                </select>
+                <span asp-validation-for="ModifiedBy" class="text-danger"></span>
         </div>
             <div class="col-12 col-md-4">
                 <label class="fw-bold text-dark">
                     Kayıt Tarihi
                 </label>
-                <input class="form-control" type="datetime-local" id="DateTime1">
+                <input type="number" class="form-control" asp-for="CreatedDate" value="@Model.CreatedDate" placeholder="">
+                <span asp-validation-for="CreatedDate" class="text-danger"></span>
             </div>
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">
                     Düzenlenme Tarihi
                 </label>
-                <input class="form-control" type="datetime-local" id="DateTime2">
+                <input type="number" class="form-control" asp-for="ModifiedDate" value="@Model.ModifiedDate" placeholder="">
+                <span asp-validation-for="ModifiedDate" class="text-danger"></span>
             </div>
            
         </div>
@@ -78,15 +85,16 @@
             <label class="fw-bold text-dark">
                 Kayıt Yapan Kişi
             </label>
-            <select class="form-select" id="tabloname2">
-                <option value="">--Seçiniz--</option>
-
-            </select>
+                <select class="form-select" asp-for="CreatedBy" asp-items="@Model.CreatedByList">
+                    <option value="">--Seçiniz--</option>
+                </select>
+                <span asp-validation-for="CreatedBy" class="text-danger"></span>
         </div>
         <div class="col-12 col-md-4">
                 <label class="fw-bold text-dark">Fotoğraf Ekle</label>
-                <input class="form-control" type="file" id="formFileMultiple" multiple>
-        </div>
+                <input type="number" class="form-control" asp-for="Picture" value="@Model.Picture" placeholder="">
+                <span asp-validation-for="Picture" class="text-danger"></span>
+            </div>
     </div>
         <div class="row justify-content-end m-2 mb-2">
             <div class="col align-self-end">

@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SecondHandCarBidProject.AdminUI.DAL.Concrete;
 using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO;
@@ -26,6 +28,9 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             _validatorUpdate = validatorUpdate;
             _baseDAL = baseDAL;
         }
+
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index(int page = 1, int itemPerPage = 100)
         {
             //var data = await _baseDAL.ListAll<CorporationListPageDTO>(null, null);
@@ -61,12 +66,14 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 return RedirectToAction("Index", "Error");
             }
         }
+
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> AddCorporation()
         {
             try
             {
-                ResponseModel<CorporationAddDTO> response = await _baseDAL.GetByFilterAsync<CorporationAddDTO>("Corporation/AddCorporation", HttpContext.Session.GetString("userToken"));
+                ResponseModel<CorporationAddPageDTO> response = await _baseDAL.GetByFilterAsync<CorporationAddPageDTO>("Corporation/AddCorporation", HttpContext.Session.GetString("userToken"));
 
                 if (response.IsSuccess)
                 {
@@ -76,11 +83,36 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                         "",
                         0,
                         0,
-                        1,
+                        true,
                         DateTime.Now,
-                        null,
+                        DateTime.Now,
                         Guid.Empty,
-                        null);
+                        Guid.Empty,
+                         response.Data.AddressInfoList.Select(x => new SelectListItem
+                         {
+                             Value = x.Id.ToString(),
+                             Text = x.Name
+                         }).ToList(),
+                        response.Data.CorporationTypeList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                         response.Data.CorporatePackageTypeList.Select(x => new SelectListItem
+                         {
+                             Value = x.Id.ToString(),
+                             Text = x.Name
+                         }).ToList(),
+                        response.Data.CreatedByList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.ModifiedByList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList());
 
 
                     return View(viewData);
@@ -98,10 +130,12 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddCCorporation(CorporationAddViewModels viewData)
         {
             //Convert to send dto (Possibly inefficient to convert before validation)
-            CorporationAddDTO addDTO = new CorporationAddDTO(viewData.CompanyName, viewData.AddressInfoId, viewData.PhoneNumber, viewData.CorporationTypeId, viewData.CorporatePackageTypeId, viewData.CreatedDate, viewData.ModifiedDate, new Guid(HttpContext.Session.GetString("currentUserId")), viewData.ModifiedBy);
+            CorporationAddDTO addDTO = new CorporationAddDTO(viewData.CompanyName, viewData.AddressInfoId, viewData.PhoneNumber, viewData.CorporationTypeId, viewData.CorporatePackageTypeId, viewData.CreatedDate, new Guid(HttpContext.Session.GetString("currentUserId")));
 
             //Validate
             ValidationResult result = await _validatorAdd.ValidateAsync(addDTO);
@@ -153,6 +187,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> UpdateCorporation(int Id)
         {
             string queryString = "CorporatePackageTypeId=" + Id;
@@ -160,7 +195,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             //BaseApi
             try
             {
-                ResponseModel<CorporationUpdateDTO> response = await _baseDAL.GetByFilterAsync<CorporationUpdateDTO>("Corporation/UpdateCorporation", HttpContext.Session.GetString("userToken"), queryString);
+                ResponseModel<CorporationUpdatePageDTO> response = await _baseDAL.GetByFilterAsync<CorporationUpdatePageDTO>("Corporation/UpdateCorporation", HttpContext.Session.GetString("userToken"), queryString);
 
                 if (response.IsSuccess)
                 {
@@ -175,7 +210,32 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                         response.Data.CreatedDate,
                         response.Data.ModifiedDate,
                         response.Data.CreatedBy,
-                        response.Data.ModifiedBy);
+                        response.Data.ModifiedBy,
+                         response.Data.AddressInfoList.Select(x => new SelectListItem
+                         {
+                             Value = x.Id.ToString(),
+                             Text = x.Name
+                         }).ToList(),
+                        response.Data.CorporationTypeList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                         response.Data.CorporationPackageTypeList.Select(x => new SelectListItem
+                         {
+                             Value = x.Id.ToString(),
+                             Text = x.Name
+                         }).ToList(),
+                        response.Data.CreatedByList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.ModifiedByList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList());
 
                     return View(viewData);
                 }
@@ -190,6 +250,9 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 return RedirectToAction("Index", "Error");
             }
         }
+
+        [Authorize]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> UpdateCorporation(CorporationUpdateViewModels viewData)
         {
@@ -245,6 +308,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> RemoveCorporation(int Id)
         {
             string queryString = "CorporationId=" + Id;

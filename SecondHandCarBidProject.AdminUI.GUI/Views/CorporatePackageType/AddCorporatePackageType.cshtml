@@ -18,16 +18,17 @@
 
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">Paket Adı</label>
-                <select class="form-select" id="tabloname1">
-                    <option value="">--Seçiniz--</option>
-                </select>
+                <input type="number" class="form-control" asp-for="PackageName" placeholder="Paket Adı Giriniz">
+                <span asp-validation-for="PackageName" class="text-danger"></span>
             </div>
 
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">
                     İhale Sayısı
                 </label>
-                <input type="number" class="form-control" id="tabloname" placeholder="İhale Sayısı Giriniz">
+                <input type="number" class="form-control" asp-for="CountOfBids" placeholder="Teklif Fiyatı Giriniz">
+                <span asp-validation-for="CountOfBids" class="text-danger"></span>
+
             </div>
             </br>
 

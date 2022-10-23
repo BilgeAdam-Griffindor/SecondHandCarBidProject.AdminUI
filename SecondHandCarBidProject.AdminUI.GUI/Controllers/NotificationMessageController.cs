@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO;
 using SecondHandCarBidProject.AdminUI.DTO.AdditionalFeeDtos;
@@ -24,6 +26,9 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             _validatorUpdate = validatorUpdate;
             _baseDAL = baseDAL;
         }
+
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index(int page = 1, int itemPerPage = 100)
         {
             //var data = await _baseDAL.ListAll<NotificationMessageListPageDTO>(null, null);
@@ -59,12 +64,14 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 return RedirectToAction("Index", "Error");
             }
         }
+
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> AddNotificationMessage()
         {
             try
             {
-                ResponseModel<NotificationMessageAddDTO> response = await _baseDAL.GetByFilterAsync<NotificationMessageAddDTO>("NotificationMessage/AddNotificationMessage", HttpContext.Session.GetString("userToken"));
+                ResponseModel<NotificationMessageAddPageDTO> response = await _baseDAL.GetByFilterAsync<NotificationMessageAddPageDTO>("NotificationMessage/AddNotificationMessage", HttpContext.Session.GetString("userToken"));
 
                 if (response.IsSuccess)
                 {
@@ -72,7 +79,12 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                         "",
                         1,
                         DateTime.Now,
-                        Guid.Empty);
+                        Guid.Empty,
+                         response.Data.ModifiedByList.Select(x => new SelectListItem
+                         {
+                             Value = x.Id.ToString(),
+                             Text = x.Name
+                         }).ToList());
 
 
                     return View(viewData);
@@ -90,8 +102,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddNotificationMessage(NotificationMessageAddViewModels viewData)
         {
             //Convert to send dto (Possibly inefficient to convert before validation)
@@ -147,6 +159,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> UpdateNotificationMessage(int Id)
         {
             string queryString = "NotificationMessageId=" + Id;
@@ -154,7 +167,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             //BaseApi
             try
             {
-                ResponseModel<NotificationMessageUpdateDTO> response = await _baseDAL.GetByFilterAsync<NotificationMessageUpdateDTO>("NotificationMessage/UpdateNotificationMessage", HttpContext.Session.GetString("userToken"), queryString);
+                ResponseModel<NotificationMessageUpdatePageDTO> response = await _baseDAL.GetByFilterAsync<NotificationMessageUpdatePageDTO>("NotificationMessage/UpdateNotificationMessage", HttpContext.Session.GetString("userToken"), queryString);
 
                 if (response.IsSuccess)
                 {
@@ -163,7 +176,12 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                         response.Data.Content,
                         response.Data.IsActive,
                         response.Data.ModifiedDate,
-                        response.Data.ModifiedBy);
+                        response.Data.ModifiedBy,
+                         response.Data.ModifiedByList.Select(x => new SelectListItem
+                         {
+                             Value = x.Id.ToString(),
+                             Text = x.Name
+                         }).ToList());
 
                     return View(viewData);
                 }
@@ -178,7 +196,10 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 return RedirectToAction("Index", "Error");
             }
         }
+
         [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateNotificationMessage(NotificationMessageUpdateViewModels viewData)
         {
             NotificationMessageUpdateDTO updateDTO = new NotificationMessageUpdateDTO(viewData.Id, viewData.Content, viewData.IsActive, viewData.ModifiedDate, new Guid(HttpContext.Session.GetString("currentUserId")));
@@ -233,6 +254,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> RemoveNotificationMessage(int Id)
         {
             string queryString = "NotificationMessageId=" + Id;
