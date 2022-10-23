@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO;
 using SecondHandCarBidProject.AdminUI.DTO.CorporationDtos;
@@ -23,6 +25,9 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             _validatorUpdate = validatorUpdate;
             _baseDAL = baseDAL;
         }
+
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index(int page = 1, int itemPerPage = 100)
         {
             //var data = await _baseDAL.ListAll<FavoriteUserSearchesListPageDTO>(null, null);
@@ -60,11 +65,12 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> AddFavoriteUserSearches()
         {
             try
             {
-                ResponseModel<FavoriteUserSearchesAddDTO> response = await _baseDAL.GetByFilterAsync<FavoriteUserSearchesAddDTO>("FavoriteUserSearches/AddFavoriteUserSearches", HttpContext.Session.GetString("userToken"));
+                ResponseModel<FavoriteUserSearchesAddPageDTO> response = await _baseDAL.GetByFilterAsync<FavoriteUserSearchesAddPageDTO>("FavoriteUserSearches/AddFavoriteUserSearches", HttpContext.Session.GetString("userToken"));
 
                 if (response.IsSuccess)
                 {
@@ -72,7 +78,12 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                         "",
                         Guid.Empty,
                         1,
-                        DateTime.Now);
+                        DateTime.Now,
+                        response.Data.BaseUserList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList());
 
 
                     return View(viewData);
@@ -90,8 +101,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddFavoriteUserSearches(FavoriteUserSearchesAddViewModels viewData)
         {
 
@@ -145,10 +156,11 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             }
 
             return RedirectToAction("Index");
-        
-    }
+        }
+    
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> UpdateFavoriteUserSearches(Guid Id)
         {
             string queryString = "CorporationTypeId=" + Id;
@@ -156,7 +168,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             //BaseApi
             try
             {
-                ResponseModel<FavoriteUserSearchesUpdateDTO> response = await _baseDAL.GetByFilterAsync<FavoriteUserSearchesUpdateDTO>("FavoriteUserSearches/UpdateFavoriteUserSearches", HttpContext.Session.GetString("userToken"), queryString);
+                ResponseModel<FavoriteUserSearchesUpdatePageDTO> response = await _baseDAL.GetByFilterAsync<FavoriteUserSearchesUpdatePageDTO>("FavoriteUserSearches/UpdateFavoriteUserSearches", HttpContext.Session.GetString("userToken"), queryString);
 
                 if (response.IsSuccess)
                 {
@@ -165,7 +177,12 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                         response.Data.SearchText,
                         response.Data.BaseUserId,
                         response.Data.IsActive,
-                        response.Data.CreatedDate);
+                        response.Data.CreatedDate,
+                         response.Data.BaseUserList.Select(x => new SelectListItem
+                         {
+                             Value = x.Id.ToString(),
+                             Text = x.Name
+                         }).ToList());
 
                     return View(viewData);
                 }
@@ -180,9 +197,10 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 return RedirectToAction("Index", "Error");
             }
         }
-        [HttpPost]
-        //[ValidateAntiForgeryToken]
 
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateFavoriteUserSearches(FavoriteUserSearchesUpdateViewModels viewData)
         {
             FavoriteUserSearchesUpdateDTO updateDTO = new FavoriteUserSearchesUpdateDTO(viewData.Id, viewData.SearchText, new Guid(HttpContext.Session.GetString("currentUserId")), viewData.IsActive, viewData.CreatedDate);
@@ -237,6 +255,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> RemoveFavoriteUserSearches(Guid Id)
         {
             string queryString = "FavoriteUserSearchesID=" + Id;

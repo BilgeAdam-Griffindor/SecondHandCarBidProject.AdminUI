@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
@@ -25,6 +26,9 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             _validatorUpdate = validatorUpdate;
             _baseDAL = baseDAL;
         }
+
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index(int page = 1, int itemPerPage = 100)
         {
             //var data = await _baseDAL.ListAll<CorporatePackageTypeListPageDTO>(null, null);
@@ -63,18 +67,24 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> AddCorporatePackageType()
         {
             try
             {
-                ResponseModel<CorporatePackageTypeAddDTO> response = await _baseDAL.GetByFilterAsync<CorporatePackageTypeAddDTO>("CorporatePackageType/AddCorporatePackageType", HttpContext.Session.GetString("userToken"));
+                ResponseModel<CorporatePackageTypeAddPageDTO> response = await _baseDAL.GetByFilterAsync<CorporatePackageTypeAddPageDTO>("CorporatePackageType/AddCorporatePackageType", HttpContext.Session.GetString("userToken"));
 
                 if (response.IsSuccess)
                 {
                     CorporatePackageTypeAddViewModels viewData = new CorporatePackageTypeAddViewModels(
                         "",
                         0,
-                        1);
+                        1,
+                          response.Data.CreatedByList.Select(x => new SelectListItem
+                          {
+                              Value = x.Id.ToString(),
+                              Text = x.Name
+                          }).ToList());
 
 
                     return View(viewData);
@@ -93,6 +103,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddCorporatePackageType(CorporatePackageTypeAddViewModels viewData)
         {
             //Convert to send dto (Possibly inefficient to convert before validation)
@@ -148,6 +160,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> UpdateCorporatePackageType(Int16 Id)
         {
             string queryString = "CorporatePackageTypeId=" + Id;
@@ -155,7 +168,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             //BaseApi
             try
             {
-                ResponseModel<CorporatePackageTypeUpdateDTO> response = await _baseDAL.GetByFilterAsync<CorporatePackageTypeUpdateDTO>("CorporatePackageType/UpdateCorporatePackageType", HttpContext.Session.GetString("userToken"), queryString);
+                ResponseModel<CorporatePackageTypeUpdatePageDTO> response = await _baseDAL.GetByFilterAsync<CorporatePackageTypeUpdatePageDTO>("CorporatePackageType/UpdateCorporatePackageType", HttpContext.Session.GetString("userToken"), queryString);
 
                 if (response.IsSuccess)
                 {
@@ -163,7 +176,12 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                         response.Data.Id,
                         response.Data.PackageName,
                         response.Data.CountOfBids,
-                        response.Data.IsActive);
+                        response.Data.IsActive,
+                         response.Data.CreatedByList.Select(x => new SelectListItem
+                         {
+                             Value = x.Id.ToString(),
+                             Text = x.Name
+                         }).ToList());
 
                     return View(viewData);
                 }
@@ -178,6 +196,9 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 return RedirectToAction("Index", "Error");
             }
         }
+
+        [Authorize]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> UpdateCorporatePackageType(CorporatePackageTypeUpdateViewModels viewData)
         {
@@ -232,6 +253,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> RemoveCorporatePackageType(Int16 Id)
         {

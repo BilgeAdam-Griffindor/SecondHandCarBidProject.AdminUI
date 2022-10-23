@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO;
 using SecondHandCarBidProject.AdminUI.DTO.AdditionalFeeDtos;
@@ -23,6 +25,9 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             _validatorUpdate = validatorUpdate;
             _baseDAL = baseDAL;
         }
+
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index(int page = 1, int itemPerPage = 100)
         {
             //var data = await _baseDAL.ListAll<NotaryFeeListPageDTO>(null, null);
@@ -58,12 +63,14 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 return RedirectToAction("Index", "Error");
             }
         }
+
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> AddNotaryFee()
         {
             try
             {
-                ResponseModel<NotaryFeeAddDTO> response = await _baseDAL.GetByFilterAsync<NotaryFeeAddDTO>("CorporationType/AddCorporation", HttpContext.Session.GetString("userToken"));
+                ResponseModel<NotaryFeeAddPageDTO> response = await _baseDAL.GetByFilterAsync<NotaryFeeAddPageDTO>("CorporationType/AddCorporation", HttpContext.Session.GetString("userToken"));
 
                 if (response.IsSuccess)
                 {
@@ -75,7 +82,17 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                         DateTime.Now,
                         DateTime.Now,
                         Guid.Empty,
-                        Guid.Empty);
+                        Guid.Empty,
+                        response.Data.CreatedByList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.ModifiedByList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList());
 
 
                     return View(viewData);
@@ -93,10 +110,12 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddNotaryFee(NotaryFeeAddViewModels viewData)
         {
             //Convert to send dto (Possibly inefficient to convert before validation)
-            NotaryFeeAddDTO addDTO = new NotaryFeeAddDTO(viewData.FeeAmount, viewData.StartDate, viewData.EndDate, viewData.CreatedDate, viewData.ModifiedDate, new Guid(HttpContext.Session.GetString("currentUserId")), viewData.ModifiedBy);
+            NotaryFeeAddDTO addDTO = new NotaryFeeAddDTO(viewData.FeeAmount, viewData.StartDate, viewData.EndDate, viewData.CreatedDate, new Guid(HttpContext.Session.GetString("currentUserId")));
 
             //Validate
             ValidationResult result = await _validatorAdd.ValidateAsync(addDTO);
@@ -148,6 +167,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> UpdateNotaryFee(Guid Id)
         {
             string queryString = "CorporationTypeId=" + Id;
@@ -155,7 +175,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             //BaseApi
             try
             {
-                ResponseModel<NotaryFeeUpdateDTO> response = await _baseDAL.GetByFilterAsync<NotaryFeeUpdateDTO>("NotaryFee/UpdateNotaryFee", HttpContext.Session.GetString("userToken"), queryString);
+                ResponseModel<NotaryFeeUpdatePageDTO> response = await _baseDAL.GetByFilterAsync<NotaryFeeUpdatePageDTO>("NotaryFee/UpdateNotaryFee", HttpContext.Session.GetString("userToken"), queryString);
 
                 if (response.IsSuccess)
                 {
@@ -164,11 +184,22 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                             response.Data.FeeAmount,
                             response.Data.StartDate,
                             response.Data.EndDate,
-                            response.Data.IsActive,                         
+                            response.Data.IsActive,
                             response.Data.CreatedDate,
                             response.Data.ModifiedDate,
                             response.Data.CreatedBy,
-                            response.Data.ModifiedBy);
+                            response.Data.ModifiedBy,
+                             response.Data.CreatedByList.Select(x => new SelectListItem
+                             {
+                                 Value = x.Id.ToString(),
+                                 Text = x.Name,
+                             }).ToList(),
+                            response.Data.ModifiedByList.Select(x => new SelectListItem
+                            {
+                                Value = x.Id.ToString(),
+                                Text = x.Name,
+                            }).ToList()
+                            );
 
                     return View(viewData);
                 }
@@ -183,7 +214,10 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 return RedirectToAction("Index", "Error");
             }
         }
+
         [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateNotaryFee(NotaryFeeUpdateViewModels viewData)
         {
             NotaryFeeUpdateDTO updateDTO = new NotaryFeeUpdateDTO(viewData.Id, viewData.FeeAmount, viewData.StartDate, viewData.EndDate, viewData.IsActive, viewData.CreatedDate, viewData.ModifiedDate, new Guid(HttpContext.Session.GetString("currentUserId")), viewData.ModifiedBy);
@@ -238,6 +272,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> RemoveNotaryFee(Guid Id)
         {
             string queryString = "NotaryFeeId=" + Id;

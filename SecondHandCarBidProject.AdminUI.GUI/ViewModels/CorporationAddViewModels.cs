@@ -1,4 +1,6 @@
-﻿namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
 {
     public record CorporationAddViewModels
         (string CompanyName,
@@ -6,11 +8,15 @@
         string PhoneNumber,
         int CorporationTypeId,
         Int16 CorporatePackageTypeId,
-        byte IsActive,
+        bool IsActive,
         DateTime CreatedDate,
-        DateTime? ModifiedDate,
+        DateTime ModifiedDate,
+        Guid ModifiedBy,
         Guid CreatedBy,
-        Guid? ModifiedBy)
-    {
-    }
+        List<SelectListItem> AdressInfoList,
+        List<SelectListItem> CorporationTypeList,
+        List<SelectListItem> CorporatePackageTypeList,
+        List<SelectListItem> CreatedByList, 
+        List<SelectListItem> ModifiedByList
+);
 }

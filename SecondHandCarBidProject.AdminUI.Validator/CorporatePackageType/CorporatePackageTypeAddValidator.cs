@@ -13,6 +13,7 @@ namespace SecondHandCarBidProject.AdminUI.Validator.CorporatePackageType
         public CorporatePackageTypeAddValidator()
         {
             RuleFor(x => x.PackageName).NotEmpty().WithMessage("Paket adı alanı boş geçilemez...");
+            RuleFor(x => x.CountOfBids).NotEmpty().WithMessage("İhale sayısı en az 3 olmalıdır.");
 
         }
     }

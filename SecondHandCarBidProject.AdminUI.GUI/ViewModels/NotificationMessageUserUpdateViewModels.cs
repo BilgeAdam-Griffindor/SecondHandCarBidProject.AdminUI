@@ -1,4 +1,6 @@
-﻿namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
 {
         public record NotificationMessageUserUpdateViewModels(
      Guid Id,
@@ -6,7 +8,10 @@
      Guid SendToBaseUserId,
      bool IsActive,
      DateTime CreatedDate,
-     Guid CreatedBy
+     Guid CreatedBy,
+     List<SelectListItem> CreatedByList, 
+     List<SelectListItem> NotificationMessageList,
+     List<SelectListItem> SendToBaseUserList
      );
 
 }

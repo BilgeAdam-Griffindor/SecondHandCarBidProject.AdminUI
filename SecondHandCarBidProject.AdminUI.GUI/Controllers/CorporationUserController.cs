@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO;
 using SecondHandCarBidProject.AdminUI.DTO.CorporationDtos;
@@ -21,6 +23,9 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             _validatorUpdate = validatorUpdate;
             _baseDAL = baseDAL;
         }
+
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index(int page = 1, int itemPerPage = 100)
         {
             //var data = await _baseDAL.ListAll<CorporationUserListPageDTO>(null, null);
@@ -56,12 +61,14 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 return RedirectToAction("Index", "Error");
             }
         }
+
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> AddCorporationUser()
         {
             try
             {
-                ResponseModel<CorporationUserAddDTO> response = await _baseDAL.GetByFilterAsync<CorporationUserAddDTO>("CorporationUser/AddCorporation", HttpContext.Session.GetString("userToken"));
+                ResponseModel<CorporationUserAddPageDTO> response = await _baseDAL.GetByFilterAsync<CorporationUserAddPageDTO>("CorporationUser/AddCorporation", HttpContext.Session.GetString("userToken"));
 
                 if (response.IsSuccess)
                 {
@@ -72,7 +79,27 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                         DateTime.Now,
                         DateTime.Now,
                         Guid.Empty,
-                        Guid.Empty);
+                        Guid.Empty,
+                         response.Data.BaseUserList.Select(x => new SelectListItem
+                         {
+                             Value = x.Id.ToString(),
+                             Text = x.Name
+                         }).ToList(),
+                        response.Data.CorporationList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                         response.Data.CreatedByList.Select(x => new SelectListItem
+                         {
+                             Value = x.Id.ToString(),
+                             Text = x.Name
+                         }).ToList(),
+                        response.Data.ModifiedByList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList());
 
 
                     return View(viewData);
@@ -90,8 +117,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddCorporationUser(CorporationUserAddViewModels viewData)
         {
             //Convert to send dto (Possibly inefficient to convert before validation)
@@ -147,42 +174,64 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> UpdateCorporationUser(Guid BaseUserId, int CorporationId)
         {
-            //string queryString = "CorporationUserId=" + Id;
+            string queryString = "BaseUserId=" + BaseUserId + "&CorporationId=" + CorporationId
+               + "&modifiedBy=" + HttpContext.Session.GetString("currentUserId");
+            //BaseApi
+            try
+            {
+                ResponseModel<CorporationUserUpdatePageDTO> response = await _baseDAL.GetByFilterAsync<CorporationUserUpdatePageDTO>("Corporation/UpdateCorporation", HttpContext.Session.GetString("userToken"), queryString);
 
-            ////BaseApi
-            //try
-            //{
-            //    ResponseModel<CorporationUserUpdateDTO> response = await _baseDAL.GetByFilterAsync<CorporationUserUpdateDTO>("Corporation/UpdateCorporation", HttpContext.Session.GetString("userToken"), queryString);
+                if (response.IsSuccess)
+                {
+                    CorporationUserUpdateViewModels viewData = new CorporationUserUpdateViewModels(
+                        response.Data.BaseUserId,
+                        response.Data.CorporationId,
+                        response.Data.IsActive,
+                        response.Data.CreatedDate,
+                        response.Data.ModifiedDate,
+                        response.Data.CreatedBy,
+                        response.Data.ModifiedBy,
+                         response.Data.BaseUserList.Select(x => new SelectListItem
+                         {
+                             Value = x.Id.ToString(),
+                             Text = x.Name
+                         }).ToList(),
+                        response.Data.CorporationList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                         response.Data.CreatedByList.Select(x => new SelectListItem
+                         {
+                             Value = x.Id.ToString(),
+                             Text = x.Name
+                         }).ToList(),
+                        response.Data.ModifiedByList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList());
 
-            //    if (response.IsSuccess)
-            //    {
-            //        CorporationUserUpdateViewModels viewData = new CorporationUserUpdateViewModels(
-            //            response.Data.BaseUserId,
-            //            response.Data.CorporationId,
-            //            response.Data.IsActive,
-            //            response.Data.CreatedDate,
-            //            response.Data.ModifiedDate,
-            //            response.Data.CreatedBy,
-            //            response.Data.ModifiedBy);
+                    return View(viewData);
+                }
+                else
+                {
+                    throw new Exception();
+                }
 
-            //        return View(viewData);
-            //    }
-            //    else
-            //    {
-            //        throw new Exception();
-            //    }
-
-            //}
-            //catch (Exception ex)
-            //{
-            return RedirectToAction("Index", "Error");
-            //}
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
-        [HttpPost]
-        //[ValidateAntiForgeryToken]
 
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateCorporationUser(CorporationUserUpdateViewModels viewData)
         {
             CorporationUserUpdateDTO updateDTO = new CorporationUserUpdateDTO(viewData.BaseUserId, viewData.CorporationId, viewData.IsActive, viewData.CreatedDate, viewData.ModifiedDate, new Guid(HttpContext.Session.GetString("currentUserId")), viewData.ModifiedBy);
@@ -237,28 +286,29 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> RemoveCorporationUser(Guid BaseUserId, int CorporationId)
         {
-            //string queryString = "CorporationId=" + Id;
+            string queryString = "BaseUserId=" + BaseUserId + "&CorporationId=" + CorporationId
+               + "&modifiedBy=" + HttpContext.Session.GetString("currentUserId");
+            //BaseApi
+            try
+            {
+                ResponseModel<bool> response = await _baseDAL.RemoveByFilterAsync<bool>(queryString, "CorporationUser/Delete", HttpContext.Session.GetString("userToken"));
 
-            ////BaseApi
-            //try
-            //{
-            //    ResponseModel<bool> response = await _baseDAL.RemoveByFilterAsync<bool>(queryString, "CorporationUser/Delete", HttpContext.Session.GetString("userToken"));
-
-            //    if (response.Data)
-            //    {
-            //        return RedirectToAction("Index");
-            //    }
-            //    else
-            //    {
-            //        throw new Exception();
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            return RedirectToAction("Index", "Error");
-            //}
+                if (response.Data)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO;
 using SecondHandCarBidProject.AdminUI.DTO.CorporationDtos;
@@ -22,6 +24,9 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             _validatorUpdate = validatorUpdate;
             _baseDAL = baseDAL;
         }
+
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index(int page = 1, int itemPerPage = 100)
         {
             //var data = await _baseDAL.ListAll<ExpertInfoListPageDTO>(null, null);
@@ -59,11 +64,12 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> AddExpertInfo()
         {
             try
             {
-                ResponseModel<ExpertInfoAddDTO> response = await _baseDAL.GetByFilterAsync<ExpertInfoAddDTO>("ExpertInfo/AddExpertInfo", HttpContext.Session.GetString("userToken"));
+                ResponseModel<ExpertInfoAddPageDTO> response = await _baseDAL.GetByFilterAsync<ExpertInfoAddPageDTO>("ExpertInfo/AddExpertInfo", HttpContext.Session.GetString("userToken"));
 
                 if (response.IsSuccess)
                 {
@@ -78,7 +84,22 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                         DateTime.Now,
                         DateTime.Now,
                         Guid.Empty,
-                        Guid.Empty);
+                        Guid.Empty,
+                        response.Data.AddressInfoList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.CreatedByList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.ModifiedByList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList());
 
 
                     return View(viewData);
@@ -96,8 +117,8 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddExpertInfo(ExpertInfoAddViewModels viewData)
         {
             //Convert to send dto (Possibly inefficient to convert before validation)
@@ -153,6 +174,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> UpdateExpertInfo(int Id)
         {
             string queryString = "ExpertInfoId=" + Id;
@@ -160,7 +182,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             //BaseApi
             try
             {
-                ResponseModel<ExpertInfoUpdateDTO> response = await _baseDAL.GetByFilterAsync<ExpertInfoUpdateDTO>("ExpertInfo/UpdateExpertInfo", HttpContext.Session.GetString("userToken"), queryString);
+                ResponseModel<ExpertInfoUpdatePageDTO> response = await _baseDAL.GetByFilterAsync<ExpertInfoUpdatePageDTO>("ExpertInfo/UpdateExpertInfo", HttpContext.Session.GetString("userToken"), queryString);
 
                 if (response.IsSuccess)
                 {
@@ -176,7 +198,22 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                         response.Data.CreatedDate,
                         response.Data.ModifiedDate,
                         response.Data.CreatedBy,
-                        response.Data.ModifiedBy);
+                        response.Data.ModifiedBy,
+                        response.Data.AddressInfoList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.CreatedByList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.ModifiedByList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList());
 
                     return View(viewData);
                 }
@@ -192,11 +229,11 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             }
         }
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateExpertInfo(ExpertInfoUpdateViewModels viewData)
         {
-            ExpertInfoUpdateDTO updateDTO = new ExpertInfoUpdateDTO(viewData.Id ,viewData.CentreName, viewData.AddressInfoId, viewData.Longitude, viewData.Latitude, viewData.Picture, viewData.IsActive, viewData.ExpertAddress, viewData.CreatedDate, viewData.ModifiedDate, new Guid(HttpContext.Session.GetString("currentUserId")), viewData.ModifiedBy);
+            ExpertInfoUpdateDTO updateDTO = new ExpertInfoUpdateDTO(viewData.Id, viewData.CentreName, viewData.AddressInfoId, viewData.Longitude, viewData.Latitude, viewData.Picture, viewData.IsActive, viewData.ExpertAddress, viewData.CreatedDate, viewData.ModifiedDate, new Guid(HttpContext.Session.GetString("currentUserId")), viewData.ModifiedBy);
 
             //Validate
             ValidationResult result = await _validatorUpdate.ValidateAsync(updateDTO);
@@ -248,6 +285,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> RemoveExpertInfo(int Id)
         {
             string queryString = "ExpertInfoId=" + Id;
