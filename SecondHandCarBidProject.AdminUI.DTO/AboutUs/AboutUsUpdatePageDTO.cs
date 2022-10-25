@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO.AboutUs
 {
-    public record AboutUsAddDTO
-        (string HeadLine1,
+    public record AboutUsUpdatePageDTO(
+
+        int Id,
+        string HeadLine1,
         string Content1,
         string HeadLine2,
         string Content2,
@@ -15,5 +17,7 @@ namespace SecondHandCarBidProject.AdminUI.DTO.AboutUs
         DateTime CreatedDate,
         DateTime? ModifiedDate,
         Guid CreatedBy,
-        Guid? ModifiedBy);
+        Guid? ModifiedBy,
+        List<IdNameListDTO> CreatedByList,
+        List<IdNameListDTO> ModifiedByList);
 }

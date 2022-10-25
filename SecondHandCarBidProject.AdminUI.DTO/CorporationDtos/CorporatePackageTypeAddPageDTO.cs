@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DTO.CorporationDtos
 {
-    public record CorporatePackageTypeAddPageDTO(string PackageName, Guid CreatedBy, Int16? CountOfBids,List<IdNameListDTO> CreatedByList);
+    public record CorporatePackageTypeAddPageDTO(string PackageName, Guid CreatedBy, Int16? CountOfBids,List<IdNameListDTO> CreatedByList, List<IdNameListDTO> ModifiedByList);
 }

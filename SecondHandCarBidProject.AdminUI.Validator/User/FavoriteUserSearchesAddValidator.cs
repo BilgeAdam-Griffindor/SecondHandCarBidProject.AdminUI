@@ -12,8 +12,8 @@ namespace SecondHandCarBidProject.AdminUI.Validator.User
     {
         public FavoriteUserSearchesAddValidator()
         {
-            RuleFor(x => x.SearchText).NotEmpty();
-            RuleFor(x => x.BaseUserId).NotEmpty();
+            RuleFor(x => x.SearchText).NotEmpty().WithMessage("Bu alan boş geçilemez...");
+            RuleFor(x => x.BaseUserId).NotEmpty().WithMessage("Bu alan boş geçilemez...");
         }
     }
 }

@@ -47,13 +47,6 @@
             </div>
             <div class="col-12 col-md-4 form-group">
                 <label class="fw-bold text-dark">
-                    Düzenlenme Tarihi
-                </label>
-                <input type="number" class="form-control" asp-for="ModifiedDate" value="@Model.ModifiedDate" placeholder="">
-                <span asp-validation-for="ModifiedDate" class="text-danger"></span>
-            </div>
-            <div class="col-12 col-md-4 form-group">
-                <label class="fw-bold text-dark">
                     Şirket Paket Tipi
                 </label>
                 <select class="form-select" asp-for="CorporatePackageTypeId" asp-items="@Model.CorporatePackageTypeList">
@@ -82,15 +75,6 @@
                     <option value="">--Seçiniz--</option>
                 </select>
                 <span asp-validation-for="CreatedBy" class="text-danger"></span>
-            </div>
-            <div class="col-12 col-md-4 form-group">
-                <label class="fw-bold text-dark">
-                    Düzenleme Yapan Kişi
-                </label>
-                <select class="form-select" asp-for="ModifiedBy" asp-items="@Model.ModifiedByList">
-                    <option value="">--Seçiniz--</option>
-                </select>
-                <span asp-validation-for="ModifiedBy" class="text-danger"></span>
             </div>
         </div>
         <div class="row justify-content-end m-2 mb-2">
