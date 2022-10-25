@@ -8,6 +8,7 @@ using SecondHandCarBidProject.AdminUI.DTO.CorporationDtos;
 using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
 using SecondHandCarBidProject.AdminUI.Validator.CorporatePackageType;
 using SecondHandCarBidProject.AdminUI.Validator.CorporationType;
+using SercondHandCarBidProject.Logging.Abstract;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
@@ -16,13 +17,16 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         private IValidator<CorporationTypeAddDTO> _validatorAdd;
         private IValidator<CorporationTypeUpdateDTO> _validatorUpdate;
         private IBaseDAL _baseDAL;
+        ILogCatcher _logCatcher;
+
 
         public CorporationTypeController(IValidator<CorporationTypeAddDTO> validatorAdd,
-            IValidator<CorporationTypeUpdateDTO> validatorUpdate, IBaseDAL baseDAL)
+            IValidator<CorporationTypeUpdateDTO> validatorUpdate, IBaseDAL baseDAL, ILogCatcher logCatcher)
         {
             _validatorAdd = validatorAdd;
             _validatorUpdate = validatorUpdate;
             _baseDAL = baseDAL;
+            _logCatcher = logCatcher;
         }
 
         [HttpGet]
@@ -53,12 +57,20 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. CorporationType/Index Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -76,19 +88,27 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 {
                     CorporationTypeAddViewModels viewData = new CorporationTypeAddViewModels(
                         "",
-                        1);
+                        true);
 
 
                     return View(viewData);
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. CorporationType/AddCorporationType [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -123,31 +143,28 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
+                        return RedirectToAction("Index");
 
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. CorporationType/AddCorporationType [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -172,12 +189,20 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. CorporationType/UpdateCorporationType [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -210,31 +235,29 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
+                        return RedirectToAction("Index");
 
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. CorporationType/UpdateCorporationType [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -254,11 +277,19 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. CorporationType/Delete Kod: " + response.statusCode);
                 }
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }

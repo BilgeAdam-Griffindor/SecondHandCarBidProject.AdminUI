@@ -10,6 +10,7 @@ using SecondHandCarBidProject.AdminUI.DTO.CorporationDtos;
 using SecondHandCarBidProject.AdminUI.DTO.ExpertDtos;
 using SecondHandCarBidProject.AdminUI.DTO.NotificationDtos;
 using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
+using SercondHandCarBidProject.Logging.Abstract;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
@@ -18,13 +19,15 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         private IValidator<NotificationMessageUserAddDTO> _validatorAdd;
         private IValidator<NotificationMessageUserUpdateDTO> _validatorUpdate;
         private IBaseDAL _baseDAL;
+        ILogCatcher _logCatcher;
 
         public NotificationMessageUserController(IValidator<NotificationMessageUserAddDTO> validatorAdd,
-            IValidator<NotificationMessageUserUpdateDTO> validatorUpdate, IBaseDAL baseDAL)
+            IValidator<NotificationMessageUserUpdateDTO> validatorUpdate, IBaseDAL baseDAL, ILogCatcher logCatcher)
         {
             _validatorAdd = validatorAdd;
             _validatorUpdate = validatorUpdate;
             _baseDAL = baseDAL;
+            _logCatcher = logCatcher;
         }
 
         [HttpGet]
@@ -55,12 +58,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. NotificationMessageUser/Index Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -78,7 +90,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                     NotificationMessageUserAddViewModels viewData = new NotificationMessageUserAddViewModels(
                         0,
                         Guid.Empty,
-                        1,
+                        true,
                         DateTime.Now,
                         Guid.Empty,
                          response.Data.CreatedByList.Select(x => new SelectListItem
@@ -102,12 +114,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. NotificationMessageUser/AddNotificationMessageUser [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -141,31 +162,29 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
+                        return RedirectToAction("Index");
 
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. NotificationMessageUser/AddNotificationMessageUser [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                        //Just so that the program won't break if there is a problem with logging
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -208,12 +227,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. NotificationMessageUser/UpdateNotificationMessageUser [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -247,31 +275,28 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
+                        return RedirectToAction("Index");
 
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. NotificationMessageUser/UpdateNotificationMessageUser [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -293,11 +318,20 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. NotificationMessageUser/Delete Kod: " + response.statusCode);
                 }
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }

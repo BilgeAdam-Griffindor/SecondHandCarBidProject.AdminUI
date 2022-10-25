@@ -16,6 +16,7 @@ namespace SecondHandCarBidProject.AdminUI.Validator.AdditionalFee
             RuleFor(x => x.StartDate).NotEmpty().WithMessage("Başlangıç tarihi boş geçilemez...");
             RuleFor(x => x.EndDate).NotEmpty().WithMessage("Bitiş tarihi boş geçilemez...");
             RuleFor(x => x.CreatedDate).NotEmpty();
+            RuleFor(x => x.CreatedBy).NotEmpty();
         }
     }
 }

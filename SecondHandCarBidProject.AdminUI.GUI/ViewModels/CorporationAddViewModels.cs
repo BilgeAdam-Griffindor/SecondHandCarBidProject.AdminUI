@@ -10,13 +10,10 @@ namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
         Int16 CorporatePackageTypeId,
         bool IsActive,
         DateTime CreatedDate,
-        DateTime ModifiedDate,
-        Guid ModifiedBy,
         Guid CreatedBy,
         List<SelectListItem> AdressInfoList,
         List<SelectListItem> CorporationTypeList,
         List<SelectListItem> CorporatePackageTypeList,
-        List<SelectListItem> CreatedByList, 
-        List<SelectListItem> ModifiedByList
+        List<SelectListItem> CreatedByList
 );
 }

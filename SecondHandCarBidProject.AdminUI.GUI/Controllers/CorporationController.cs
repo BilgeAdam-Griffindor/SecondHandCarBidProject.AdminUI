@@ -11,6 +11,7 @@ using SecondHandCarBidProject.AdminUI.DTO.TrafficInsuranceDto;
 using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
 using SecondHandCarBidProject.AdminUI.Validator.CorporatePackageType;
 using SecondHandCarBidProject.AdminUI.Validator.Corporation;
+using SercondHandCarBidProject.Logging.Abstract;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
@@ -18,15 +19,17 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
     {
         private IValidator<CorporationAddDTO> _validatorAdd;
         private IValidator<CorporationUpdateDTO> _validatorUpdate;
-
         private IBaseDAL _baseDAL;
+        ILogCatcher _logCatcher;
+
 
         public CorporationController(IValidator<CorporationAddDTO> validatorAdd,
-            IValidator<CorporationUpdateDTO> validatorUpdate, IBaseDAL baseDAL)
+            IValidator<CorporationUpdateDTO> validatorUpdate, IBaseDAL baseDAL, ILogCatcher logCatcher)
         {
             _validatorAdd = validatorAdd;
             _validatorUpdate = validatorUpdate;
             _baseDAL = baseDAL;
+            _logCatcher = logCatcher;
         }
 
         [HttpGet]
@@ -57,12 +60,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. Corporation/Index Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -85,8 +97,6 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                         0,
                         true,
                         DateTime.Now,
-                        DateTime.Now,
-                        Guid.Empty,
                         Guid.Empty,
                          response.Data.AddressInfoList.Select(x => new SelectListItem
                          {
@@ -107,11 +117,6 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                         {
                             Value = x.Id.ToString(),
                             Text = x.Name
-                        }).ToList(),
-                        response.Data.ModifiedByList.Select(x => new SelectListItem
-                        {
-                            Value = x.Id.ToString(),
-                            Text = x.Name
                         }).ToList());
 
 
@@ -119,12 +124,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. Corporation/AddCorporation [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -159,31 +173,28 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
+                        return RedirectToAction("Index");
 
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. Corporation/AddCorporation [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -241,12 +252,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. Corporation/UpdateCorporation [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -280,31 +300,27 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
-
+                        return RedirectToAction("Index");
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. Corporation/UpdateCorporation [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -324,11 +340,18 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. Corporation/Delete Kod: " + response.statusCode);
                 }
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                }
                 return RedirectToAction("Index", "Error");
             }
         }

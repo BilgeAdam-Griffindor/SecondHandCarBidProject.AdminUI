@@ -9,6 +9,7 @@ using SecondHandCarBidProject.AdminUI.DTO.AdditionalFeeDtos;
 using SecondHandCarBidProject.AdminUI.DTO.CorporationDtos;
 using SecondHandCarBidProject.AdminUI.DTO.ExpertDtos;
 using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
+using SercondHandCarBidProject.Logging.Abstract;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
@@ -17,13 +18,15 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         private IValidator<NotaryFeeAddDTO> _validatorAdd;
         private IValidator<NotaryFeeUpdateDTO> _validatorUpdate;
         private IBaseDAL _baseDAL;
+        ILogCatcher _logCatcher;
 
         public NotaryFeeController(IValidator<NotaryFeeAddDTO> validatorAdd,
-            IValidator<NotaryFeeUpdateDTO> validatorUpdate, IBaseDAL baseDAL)
+            IValidator<NotaryFeeUpdateDTO> validatorUpdate, IBaseDAL baseDAL, ILogCatcher logCatcher)
         {
             _validatorAdd = validatorAdd;
             _validatorUpdate = validatorUpdate;
             _baseDAL = baseDAL;
+            _logCatcher = logCatcher;
         }
 
         [HttpGet]
@@ -54,12 +57,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. NotaryFee/Index Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -70,7 +82,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         {
             try
             {
-                ResponseModel<NotaryFeeAddPageDTO> response = await _baseDAL.GetByFilterAsync<NotaryFeeAddPageDTO>("CorporationType/AddCorporation", HttpContext.Session.GetString("userToken"));
+                ResponseModel<NotaryFeeAddPageDTO> response = await _baseDAL.GetByFilterAsync<NotaryFeeAddPageDTO>("NotaryFee/AddNotaryFee", HttpContext.Session.GetString("userToken"));
 
                 if (response.IsSuccess)
                 {
@@ -78,7 +90,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                         0,
                         DateTime.Now,
                         DateTime.Now,
-                        1,
+                        true,
                         DateTime.Now,
                         DateTime.Now,
                         Guid.Empty,
@@ -99,12 +111,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. NotaryFee/AddNotaryFee [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -135,35 +156,33 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 //BaseApi
                 try
                 {
-                    ResponseModel<bool> response = await _baseDAL.SaveAsync<NotaryFeeAddDTO, bool>(addDTO, "CorporationType/AddCorporationType", HttpContext.Session.GetString("userToken"));
+                    ResponseModel<bool> response = await _baseDAL.SaveAsync<NotaryFeeAddDTO, bool>(addDTO, "NotaryFee/AddNotaryFee", HttpContext.Session.GetString("userToken"));
 
                     if (response.Data)
                     {
+                        return RedirectToAction("Index");
 
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. NotaryFee/AddNotaryFee [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                        //Just so that the program won't break if there is a problem with logging
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -205,12 +224,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. NotaryFee/UpdateNotaryFee [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -244,31 +272,27 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
-
+                        return RedirectToAction("Index");
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. NotaryFee/UpdateNotaryFee [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -288,11 +312,20 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. NotaryFee/Delete Kod: " + response.statusCode);
                 }
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }

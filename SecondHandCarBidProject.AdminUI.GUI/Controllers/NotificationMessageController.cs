@@ -10,6 +10,7 @@ using SecondHandCarBidProject.AdminUI.DTO.CorporationDtos;
 using SecondHandCarBidProject.AdminUI.DTO.ExpertDtos;
 using SecondHandCarBidProject.AdminUI.DTO.NotificationDtos;
 using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
+using SercondHandCarBidProject.Logging.Abstract;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
@@ -18,13 +19,15 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         private IValidator<NotificationMessageAddDTO> _validatorAdd;
         private IValidator<NotificationMessageUpdateDTO> _validatorUpdate;
         private IBaseDAL _baseDAL;
+        ILogCatcher _logCatcher;
 
         public NotificationMessageController(IValidator<NotificationMessageAddDTO> validatorAdd,
-            IValidator<NotificationMessageUpdateDTO> validatorUpdate, IBaseDAL baseDAL)
+            IValidator<NotificationMessageUpdateDTO> validatorUpdate, IBaseDAL baseDAL, ILogCatcher logCatcher)
         {
             _validatorAdd = validatorAdd;
             _validatorUpdate = validatorUpdate;
             _baseDAL = baseDAL;
+            _logCatcher = logCatcher;
         }
 
         [HttpGet]
@@ -55,12 +58,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. NotificationMessage/Index Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -77,7 +89,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 {
                     NotificationMessageAddViewModels viewData = new NotificationMessageAddViewModels(
                         "",
-                        1,
+                        true,
                         DateTime.Now,
                         Guid.Empty,
                          response.Data.ModifiedByList.Select(x => new SelectListItem
@@ -91,12 +103,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. NotificationMessage/AddNotificationMessage [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -131,31 +152,28 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
-
+                        return RedirectToAction("Index");
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. NotificationMessage/AddNotificationMessage [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                        //Just so that the program won't break if there is a problem with logging
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -187,7 +205,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. NotificationMessage/UpdateNotificationMessage [GET] Kod: " + response.statusCode);
                 }
 
             }
@@ -226,31 +244,27 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
-
+                        return RedirectToAction("Index");
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. NotificationMessage/UpdateNotificationMessage [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -270,11 +284,20 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. NotificationMessage/Delete Kod: " + response.statusCode);
                 }
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
