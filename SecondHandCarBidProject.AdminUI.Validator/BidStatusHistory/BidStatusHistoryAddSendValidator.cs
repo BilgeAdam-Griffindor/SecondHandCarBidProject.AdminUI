@@ -12,9 +12,9 @@ namespace SecondHandCarBidProject.AdminUI.Validator.BidStatusHistory
     {
         public BidStatusHistoryAddSendValidator()
         {
-            RuleFor(x => x.BidId).NotEmpty();
-            RuleFor(x => x.StatusValueId).NotEmpty();
-            RuleFor(x => x.Explanation).NotEmpty();
+            RuleFor(x => x.BidId).NotEmpty().WithMessage("Boş olamaz.");
+            RuleFor(x => x.StatusValueId).NotEmpty().WithMessage("Boş olamaz.");
+            RuleFor(x => x.Explanation).NotEmpty().WithMessage("Boş olamaz.");
         }
     }
 }

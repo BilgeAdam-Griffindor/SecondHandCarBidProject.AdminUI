@@ -11,9 +11,8 @@ namespace SecondHandCarBidProject.AdminUI.DTO.AdditionalFeeDtos
         DateTime StartDate,
         DateTime EndDate,
         DateTime CreatedDate,
-        DateTime? ModifiedDate,
-        Guid CreatedBy,
-        Guid? ModifiedBy)
+        Guid CreatedBy
+        )
     {
         //public BaseUserDTO BaseUser { get; init; } 
         // public BaseUserDTO? BaseUser { get; init; } 

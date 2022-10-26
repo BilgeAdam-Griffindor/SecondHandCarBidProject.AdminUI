@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO;
 using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
+using SercondHandCarBidProject.Logging.Abstract;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
@@ -13,9 +14,11 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
     {
         private IValidator<CarBuyAdditionalFeeAddSendDTO> _validatorAdd;
         private IBaseDAL _baseDAL;
+        ILogCatcher _logCatcher;
 
-        public CarBuyAdditionalFeeController(IValidator<CarBuyAdditionalFeeAddSendDTO> validatorAdd, IBaseDAL baseDAL)
+        public CarBuyAdditionalFeeController(IValidator<CarBuyAdditionalFeeAddSendDTO> validatorAdd, IBaseDAL baseDAL, ILogCatcher logCatcher)
         {
+            _logCatcher = logCatcher;
             _validatorAdd = validatorAdd;
             _baseDAL = baseDAL;
         }
@@ -43,12 +46,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. CarBuyAdditionalFee/Index Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -89,12 +101,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. CarBuyAdditionalFee/Add [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -129,38 +150,35 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
-
+                        return RedirectToAction("Index");
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. CarBuyAdditionalFee/Add [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                        //Just so that the program won't break if there is a problem with logging
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Delete(Guid id)
         {
-            string queryString = "carBuyAdditionalFeeId=" + id;
+            string queryString = "carBuyAdditionalFeeId=" + id + "&modifiedBy="+ HttpContext.Session.GetString("currentUserId");
             //BaseApi
             try
             {
@@ -172,11 +190,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. CarBuyAdditionalFee/Delete Kod: " + response.statusCode);
                 }
+
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }

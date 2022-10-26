@@ -1,10 +1,13 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO;
 using SecondHandCarBidProject.AdminUI.DTO.CorporationDtos;
 using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
+using SercondHandCarBidProject.Logging.Abstract;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
@@ -13,14 +16,19 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         private IValidator<CorporationUserAddDTO> _validatorAdd;
         private IValidator<CorporationUserUpdateDTO> _validatorUpdate;
         private IBaseDAL _baseDAL;
+        ILogCatcher _logCatcher;
 
         public CorporationUserController(IValidator<CorporationUserAddDTO> validatorAdd,
-            IValidator<CorporationUserUpdateDTO> validatorUpdate, IBaseDAL baseDAL)
+            IValidator<CorporationUserUpdateDTO> validatorUpdate, IBaseDAL baseDAL, ILogCatcher logCatcher)
         {
             _validatorAdd = validatorAdd;
             _validatorUpdate = validatorUpdate;
             _baseDAL = baseDAL;
+            _logCatcher = logCatcher;
         }
+
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index(int page = 1, int itemPerPage = 100)
         {
             //var data = await _baseDAL.ListAll<CorporationUserListPageDTO>(null, null);
@@ -47,51 +55,91 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. CorporationUser/Index Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
+
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> AddCorporationUser()
         {
             try
             {
-                ResponseModel<CorporationUserAddDTO> response = await _baseDAL.GetByFilterAsync<CorporationUserAddDTO>("CorporationUser/AddCorporation", HttpContext.Session.GetString("userToken"));
+                ResponseModel<CorporationUserAddPageDTO> response = await _baseDAL.GetByFilterAsync<CorporationUserAddPageDTO>("CorporationUser/AddCorporation", HttpContext.Session.GetString("userToken"));
 
                 if (response.IsSuccess)
                 {
                     CorporationUserAddViewModels viewData = new CorporationUserAddViewModels(
                         Guid.Empty,
                         0,
-                        1,
+                        true,
                         DateTime.Now,
                         DateTime.Now,
                         Guid.Empty,
-                        Guid.Empty);
+                        Guid.Empty,
+                         response.Data.BaseUserList.Select(x => new SelectListItem
+                         {
+                             Value = x.Id.ToString(),
+                             Text = x.Name
+                         }).ToList(),
+                        response.Data.CorporationList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                         response.Data.CreatedByList.Select(x => new SelectListItem
+                         {
+                             Value = x.Id.ToString(),
+                             Text = x.Name
+                         }).ToList(),
+                        response.Data.ModifiedByList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList());
 
 
                     return View(viewData);
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. CorporationUser/AddCorporationUser [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddCorporationUser(CorporationUserAddViewModels viewData)
         {
             //Convert to send dto (Possibly inefficient to convert before validation)
@@ -119,70 +167,98 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
-
+                        return RedirectToAction("Index");
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. CorporatePackageType/AddCorporatePackageType [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                        //Just so that the program won't break if there is a problem with logging
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> UpdateCorporationUser(Guid BaseUserId, int CorporationId)
         {
-            //string queryString = "CorporationUserId=" + Id;
+            string queryString = "BaseUserId=" + BaseUserId + "&CorporationId=" + CorporationId
+               + "&modifiedBy=" + HttpContext.Session.GetString("currentUserId");
+            //BaseApi
+            try
+            {
+                ResponseModel<CorporationUserUpdatePageDTO> response = await _baseDAL.GetByFilterAsync<CorporationUserUpdatePageDTO>("Corporation/UpdateCorporation", HttpContext.Session.GetString("userToken"), queryString);
 
-            ////BaseApi
-            //try
-            //{
-            //    ResponseModel<CorporationUserUpdateDTO> response = await _baseDAL.GetByFilterAsync<CorporationUserUpdateDTO>("Corporation/UpdateCorporation", HttpContext.Session.GetString("userToken"), queryString);
+                if (response.IsSuccess)
+                {
+                    CorporationUserUpdateViewModels viewData = new CorporationUserUpdateViewModels(
+                        response.Data.BaseUserId,
+                        response.Data.CorporationId,
+                        response.Data.IsActive,
+                        response.Data.CreatedDate,
+                        response.Data.ModifiedDate,
+                        response.Data.CreatedBy,
+                        response.Data.ModifiedBy,
+                         response.Data.BaseUserList.Select(x => new SelectListItem
+                         {
+                             Value = x.Id.ToString(),
+                             Text = x.Name
+                         }).ToList(),
+                        response.Data.CorporationList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                         response.Data.CreatedByList.Select(x => new SelectListItem
+                         {
+                             Value = x.Id.ToString(),
+                             Text = x.Name
+                         }).ToList(),
+                        response.Data.ModifiedByList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList());
 
-            //    if (response.IsSuccess)
-            //    {
-            //        CorporationUserUpdateViewModels viewData = new CorporationUserUpdateViewModels(
-            //            response.Data.BaseUserId,
-            //            response.Data.CorporationId,
-            //            response.Data.IsActive,
-            //            response.Data.CreatedDate,
-            //            response.Data.ModifiedDate,
-            //            response.Data.CreatedBy,
-            //            response.Data.ModifiedBy);
+                    return View(viewData);
+                }
+                else
+                {
+                    throw new Exception("Başarısız işlem. CorporationUser/UpdateCorporationUser [GET] Kod: " + response.statusCode);
+                }
 
-            //        return View(viewData);
-            //    }
-            //    else
-            //    {
-            //        throw new Exception();
-            //    }
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
 
-            //}
-            //catch (Exception ex)
-            //{
-            return RedirectToAction("Index", "Error");
-            //}
+                return RedirectToAction("Index", "Error");
+            }
         }
-        [HttpPost]
-        //[ValidateAntiForgeryToken]
 
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateCorporationUser(CorporationUserUpdateViewModels viewData)
         {
             CorporationUserUpdateDTO updateDTO = new CorporationUserUpdateDTO(viewData.BaseUserId, viewData.CorporationId, viewData.IsActive, viewData.CreatedDate, viewData.ModifiedDate, new Guid(HttpContext.Session.GetString("currentUserId")), viewData.ModifiedBy);
@@ -209,56 +285,55 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
+                        return RedirectToAction("Index");
 
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. CorporationUser/UpdateCorporationUser [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> RemoveCorporationUser(Guid BaseUserId, int CorporationId)
         {
-            //string queryString = "CorporationId=" + Id;
+            string queryString = "BaseUserId=" + BaseUserId + "&CorporationId=" + CorporationId
+               + "&modifiedBy=" + HttpContext.Session.GetString("currentUserId");
+            //BaseApi
+            try
+            {
+                ResponseModel<bool> response = await _baseDAL.RemoveByFilterAsync<bool>(queryString, "CorporationUser/Delete", HttpContext.Session.GetString("userToken"));
 
-            ////BaseApi
-            //try
-            //{
-            //    ResponseModel<bool> response = await _baseDAL.RemoveByFilterAsync<bool>(queryString, "CorporationUser/Delete", HttpContext.Session.GetString("userToken"));
-
-            //    if (response.Data)
-            //    {
-            //        return RedirectToAction("Index");
-            //    }
-            //    else
-            //    {
-            //        throw new Exception();
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
+                if (response.Data)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    throw new Exception("Başarısız işlem. CorporationUser/Delete Kod: " + response.statusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+            }
             return RedirectToAction("Index", "Error");
-            //}
+
         }
     }
 }

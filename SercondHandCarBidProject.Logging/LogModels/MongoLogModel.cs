@@ -14,10 +14,8 @@ namespace SercondHandCarBidProject.Logging.LogModels
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-        [BsonElement("Log_id")]
-        public int LogId { get; set; }
         [BsonElement("LogType")]
-        public string LogType { get; set; }
+        public int LogType { get; set; }
         [BsonElement("Exception")]
         public string Exception { get; set; }
 

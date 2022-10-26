@@ -12,7 +12,6 @@ namespace SecondHandCarBidProject.AdminUI.Validator.NotificationMessageUser
     {
         public NotificationMessageUserUpdateValidator()
         {
-            RuleFor(x => x.Id).NotEmpty(); 
             RuleFor(x => x.NotificationMessageId).NotEmpty();
             RuleFor(x => x.SendToBaseUserId).NotEmpty();
         }

@@ -7,31 +7,34 @@ namespace SecondHandCarBidProject.AdminUI.Validator.Car
     {
         public CarDetailUpdateSendValidator()
         {
-            RuleFor(x => x.Id).NotEmpty();
-            RuleFor(x => x.Price).GreaterThanOrEqualTo(0);
-            RuleFor(x => x.Kilometre).GreaterThanOrEqualTo(0);
-            RuleFor(x => x.CarYear).GreaterThanOrEqualTo(ValidationValues.minYear).LessThanOrEqualTo(ValidationValues.maxYear);
-            RuleFor(x => x.CarDescription).NotEmpty();
-            RuleFor(x => x.CarBrandId).NotEmpty();
-            RuleFor(x => x.CarModelId).NotEmpty();
-            RuleFor(x => x.StatusId).NotEmpty();
-            RuleFor(x => x.BodyTypeId).NotEmpty();
-            RuleFor(x => x.FuelTypeId).NotEmpty();
-            RuleFor(x => x.GearTypeId).NotEmpty();
-            RuleFor(x => x.VersionId).NotEmpty();
-            RuleFor(x => x.ColorId).NotEmpty();
-            RuleFor(x => x.CarImages).NotEmpty().Must(x => x.Count <= ValidationValues.maxImageCount);
+            RuleFor(x => x.Id).NotEmpty().WithMessage("Boş olamaz.");
+            RuleFor(x => x.Price).GreaterThanOrEqualTo(0).WithMessage("Negatif olamaz.");
+            RuleFor(x => x.Kilometre).GreaterThanOrEqualTo(0).WithMessage("Negatif olamaz.");
+            RuleFor(x => x.CarYear).GreaterThanOrEqualTo(ValidationValues.minYear).WithMessage(ValidationValues.minYear + "'dan küçük olamaz.")
+                .LessThanOrEqualTo(ValidationValues.maxYear).WithMessage(ValidationValues.maxYear + "'dan büyük olamaz.");
+            RuleFor(x => x.CarDescription).NotEmpty().WithMessage("Boş olamaz.");
+            RuleFor(x => x.CarBrandId).NotEmpty().WithMessage("Boş olamaz.");
+            RuleFor(x => x.CarModelId).NotEmpty().WithMessage("Boş olamaz.");
+            RuleFor(x => x.StatusId).NotEmpty().WithMessage("Boş olamaz.");
+            RuleFor(x => x.BodyTypeId).NotEmpty().WithMessage("Boş olamaz.");
+            RuleFor(x => x.FuelTypeId).NotEmpty().WithMessage("Boş olamaz.");
+            RuleFor(x => x.GearTypeId).NotEmpty().WithMessage("Boş olamaz.");
+            RuleFor(x => x.VersionId).NotEmpty().WithMessage("Boş olamaz.");
+            RuleFor(x => x.ColorId).NotEmpty().WithMessage("Boş olamaz.");
+            RuleFor(x => x.CarImages).NotEmpty().WithMessage("Boş olamaz.")
+                .Must(x => x.Count <= ValidationValues.maxImageCount).WithMessage("En fazla " + ValidationValues.maxImageCount + " resim ekleyebilirsiniz.");
             RuleForEach(x => x.CarImages).ChildRules(x =>
             {
-                x.RuleFor(x => x.Length).NotEmpty().LessThan(ValidationValues.maxImageSize);
+                x.RuleFor(x => x.Length).NotEmpty().WithMessage("Boş resim dosyası girilemez.")
+                .LessThan(ValidationValues.maxImageSizeInBytes).WithMessage("Resim dosyası " + ValidationValues.maxImageSizeInMB + "MB'tan büyük olamaz.");
             });
             When(x => x.IsCorporate, () =>
             {
-                RuleFor(x => x.CorporationId).NotEmpty();
+                RuleFor(x => x.CorporationId).NotEmpty().WithMessage("Kurumsal seçilirse kurum boş olamaz.");
             });
             When(x => !x.IsCorporate, () =>
             {
-                RuleFor(x => x.CorporationId).Empty();
+                RuleFor(x => x.CorporationId).Empty().WithMessage("Bireysel seçilirse kurum seçilemez.");
             });
         }
     }

@@ -1,12 +1,15 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO;
 using SecondHandCarBidProject.AdminUI.DTO.CorporationDtos;
 using SecondHandCarBidProject.AdminUI.DTO.ExpertDtos;
 using SecondHandCarBidProject.AdminUI.DTO.UserDtos;
 using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
+using SercondHandCarBidProject.Logging.Abstract;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
@@ -15,14 +18,20 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         private IValidator<FavoriteUserSearchesAddDTO> _validatorAdd;
         private IValidator<FavoriteUserSearchesUpdateDTO> _validatorUpdate;
         private IBaseDAL _baseDAL;
+        ILogCatcher _logCatcher;
+
 
         public FavoriteUserSearchesController(IValidator<FavoriteUserSearchesAddDTO> validatorAdd,
-            IValidator<FavoriteUserSearchesUpdateDTO> validatorUpdate, IBaseDAL baseDAL)
+            IValidator<FavoriteUserSearchesUpdateDTO> validatorUpdate, IBaseDAL baseDAL, ILogCatcher logCatcher)
         {
             _validatorAdd = validatorAdd;
             _validatorUpdate = validatorUpdate;
             _baseDAL = baseDAL;
+            _logCatcher = logCatcher;
         }
+
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index(int page = 1, int itemPerPage = 100)
         {
             //var data = await _baseDAL.ListAll<FavoriteUserSearchesListPageDTO>(null, null);
@@ -49,49 +58,73 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. FavoriteUserSearches/Index Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> AddFavoriteUserSearches()
         {
             try
             {
-                ResponseModel<FavoriteUserSearchesAddDTO> response = await _baseDAL.GetByFilterAsync<FavoriteUserSearchesAddDTO>("FavoriteUserSearches/AddFavoriteUserSearches", HttpContext.Session.GetString("userToken"));
+                ResponseModel<FavoriteUserSearchesAddPageDTO> response = await _baseDAL.GetByFilterAsync<FavoriteUserSearchesAddPageDTO>("FavoriteUserSearches/AddFavoriteUserSearches", HttpContext.Session.GetString("userToken"));
 
                 if (response.IsSuccess)
                 {
                     FavoriteUserSearchesAddViewModels viewData = new FavoriteUserSearchesAddViewModels(
                         "",
                         Guid.Empty,
-                        1,
-                        DateTime.Now);
+                        true,
+                        DateTime.Now,
+                        response.Data.BaseUserList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList());
 
 
                     return View(viewData);
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. FavoriteUserSearches/AddFavoriteUserSearches [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddFavoriteUserSearches(FavoriteUserSearchesAddViewModels viewData)
         {
 
@@ -120,35 +153,34 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
+                        return RedirectToAction("Index");
 
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. FavoriteUserSearches/AddFavoriteUserSearches [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                        //Just so that the program won't break if there is a problem with logging
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
-        
-    }
+        }
+    
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> UpdateFavoriteUserSearches(Guid Id)
         {
             string queryString = "CorporationTypeId=" + Id;
@@ -156,7 +188,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             //BaseApi
             try
             {
-                ResponseModel<FavoriteUserSearchesUpdateDTO> response = await _baseDAL.GetByFilterAsync<FavoriteUserSearchesUpdateDTO>("FavoriteUserSearches/UpdateFavoriteUserSearches", HttpContext.Session.GetString("userToken"), queryString);
+                ResponseModel<FavoriteUserSearchesUpdatePageDTO> response = await _baseDAL.GetByFilterAsync<FavoriteUserSearchesUpdatePageDTO>("FavoriteUserSearches/UpdateFavoriteUserSearches", HttpContext.Session.GetString("userToken"), queryString);
 
                 if (response.IsSuccess)
                 {
@@ -165,24 +197,39 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                         response.Data.SearchText,
                         response.Data.BaseUserId,
                         response.Data.IsActive,
-                        response.Data.CreatedDate);
+                        response.Data.CreatedDate,
+                         response.Data.BaseUserList.Select(x => new SelectListItem
+                         {
+                             Value = x.Id.ToString(),
+                             Text = x.Name
+                         }).ToList());
 
                     return View(viewData);
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. FavoriteUserSearches/FavoriteUserSearchesCorporatePackageType [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
-        [HttpPost]
-        //[ValidateAntiForgeryToken]
 
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateFavoriteUserSearches(FavoriteUserSearchesUpdateViewModels viewData)
         {
             FavoriteUserSearchesUpdateDTO updateDTO = new FavoriteUserSearchesUpdateDTO(viewData.Id, viewData.SearchText, new Guid(HttpContext.Session.GetString("currentUserId")), viewData.IsActive, viewData.CreatedDate);
@@ -205,38 +252,36 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 //BaseApi
                 try
                 {
-                    ResponseModel<bool> response = await _baseDAL.UpdateAsync<FavoriteUserSearchesUpdateDTO, bool>(updateDTO, "CorporationType/UpdateCorporationType", HttpContext.Session.GetString("userToken"));
+                    ResponseModel<bool> response = await _baseDAL.UpdateAsync<FavoriteUserSearchesUpdateDTO, bool>(updateDTO, "FavoriteUserSearches/UpdateFavoriteUserSearches", HttpContext.Session.GetString("userToken"));
 
                     if (response.Data)
                     {
+                        return RedirectToAction("Index");
 
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. FavoriteUserSearches/UpdateFavoriteUserSearches [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> RemoveFavoriteUserSearches(Guid Id)
         {
             string queryString = "FavoriteUserSearchesID=" + Id;
@@ -252,11 +297,20 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. FavoriteUserSearches/Delete Kod: " + response.statusCode);
                 }
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }

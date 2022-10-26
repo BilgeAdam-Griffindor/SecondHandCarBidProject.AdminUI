@@ -14,6 +14,8 @@ namespace SecondHandCarBidProject.AdminUI.Validator.CorporationUser
         {
             RuleFor(x => x.BaseUserId).NotEmpty(); 
             RuleFor(x => x.CorporationId).NotEmpty();
+            RuleFor(x => x.CreatedBy).NotEmpty();
+            RuleFor(x => x.ModifiedBy).NotEmpty();
         }
     }
 }

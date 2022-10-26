@@ -8,17 +8,23 @@ using SecondHandCarBidProject.AdminUI.DTO;
 using SecondHandCarBidProject.AdminUI.DTO.BidDtos;
 using SecondHandCarBidProject.AdminUI.GUI.Commons;
 using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
+using SercondHandCarBidProject.Logging.Abstract;
+using SercondHandCarBidProject.Logging.Concrete;
+using SercondHandCarBidProject.Logging.LogModels;
+using LogLevel = SercondHandCarBidProject.Logging.Concrete.LogLevel;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
     public class CarController : Controller
     {
-        private IValidator<CarDetailAddSendDTO> _validatorAdd;
-        private IValidator<CarDetailUpdateSendDTO> _validatorUpdate;
-        private IBaseDAL _baseDAL;
+        IValidator<CarDetailAddSendDTO> _validatorAdd;
+        IValidator<CarDetailUpdateSendDTO> _validatorUpdate;
+        IBaseDAL _baseDAL;
+        ILogCatcher _logCatcher;
 
-        public CarController(IValidator<CarDetailAddSendDTO> validatorAdd, IValidator<CarDetailUpdateSendDTO> validatorUpdate, IBaseDAL baseDAL)
+        public CarController(IValidator<CarDetailAddSendDTO> validatorAdd, IValidator<CarDetailUpdateSendDTO> validatorUpdate, IBaseDAL baseDAL, ILogCatcher logCatcher)
         {
+            _logCatcher = logCatcher;
             _validatorAdd = validatorAdd;
             _validatorUpdate = validatorUpdate;
             _baseDAL = baseDAL;
@@ -50,37 +56,46 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 if (response.IsSuccess)
                 {
                     CarListViewModel viewData = new CarListViewModel(
-                        response.Data.BrandList.Select(x => new SelectListItem()
-                        {
-                            Value = x.Id.ToString(),
-                            Text = x.Name,
-                            Selected = x.Id.ToString() == brandId
-                        }).ToList(),
-                        response.Data.ModelList.Select(x => new SelectListItem()
-                        {
-                            Value = x.Id.ToString(),
-                            Text = x.Name,
-                            Selected = x.Id.ToString() == modelId
-                        }).ToList(),
-                        response.Data.StatusList.Select(x => new SelectListItem()
-                        {
-                            Value = x.Id.ToString(),
-                            Text = x.Name,
-                            Selected = x.Id.ToString() == statusId
-                        }).ToList(),
-                        response.Data.TableRows,
-                        response.Data.maxPages);
+                       response.Data.BrandList.Select(x => new SelectListItem()
+                       {
+                           Value = x.Id.ToString(),
+                           Text = x.Name,
+                           Selected = x.Id.ToString() == brandId
+                       }).ToList(),
+                       response.Data.ModelList.Select(x => new SelectListItem()
+                       {
+                           Value = x.Id.ToString(),
+                           Text = x.Name,
+                           Selected = x.Id.ToString() == modelId
+                       }).ToList(),
+                       response.Data.StatusList.Select(x => new SelectListItem()
+                       {
+                           Value = x.Id.ToString(),
+                           Text = x.Name,
+                           Selected = x.Id.ToString() == statusId
+                       }).ToList(),
+                       response.Data.TableRows,
+                       response.Data.maxPages);
 
                     return View(viewData);
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. Car/Index Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -154,12 +169,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. Car/CarDetailInformation [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -198,31 +222,28 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
-
+                        return RedirectToAction("Index");
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. Car/CarDetailInformation [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                        //Just so that the program won't break if there is a problem with logging
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -322,12 +343,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. Car/Update [POST] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
@@ -341,7 +371,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             CarDetailUpdateSendDTO updateDTO = new CarDetailUpdateSendDTO(
                 viewData.Id, viewData.Price, viewData.Kilometre, viewData.CarYear, viewData.IsCorporate, viewData.CarDescription,
                 viewData.CarBrandId, viewData.CarModelId, viewData.StatusId, viewData.BodyTypeId, viewData.FuelTypeId,
-                viewData.GearTypeId, viewData.VersionId, viewData.ColorId, viewData.OptionalHardwareIds, 
+                viewData.GearTypeId, viewData.VersionId, viewData.ColorId, viewData.OptionalHardwareIds,
                 viewData.CarImages.ToListByteArray(), //TODO placeholder will probably need to be changed
                 viewData.CorporationId,
                 new Guid(HttpContext.Session.GetString("currentUserId")));
@@ -368,31 +398,28 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
-
+                        return RedirectToAction("Index");
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. Car/Update [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                        //Just so that the program won't break if there is a problem with logging
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -412,11 +439,21 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. Car/Delete Kod: " + response.statusCode);
                 }
+
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }

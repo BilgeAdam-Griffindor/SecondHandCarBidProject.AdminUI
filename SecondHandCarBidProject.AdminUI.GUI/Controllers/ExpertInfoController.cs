@@ -1,11 +1,14 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO;
 using SecondHandCarBidProject.AdminUI.DTO.CorporationDtos;
 using SecondHandCarBidProject.AdminUI.DTO.ExpertDtos;
 using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
+using SercondHandCarBidProject.Logging.Abstract;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
@@ -14,14 +17,20 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         private IValidator<ExpertInfoAddDTO> _validatorAdd;
         private IValidator<ExpertInfoUpdateDTO> _validatorUpdate;
         private IBaseDAL _baseDAL;
+        ILogCatcher _logCatcher;
+
 
         public ExpertInfoController(IValidator<ExpertInfoAddDTO> validatorAdd,
-            IValidator<ExpertInfoUpdateDTO> validatorUpdate, IBaseDAL baseDAL)
+            IValidator<ExpertInfoUpdateDTO> validatorUpdate, IBaseDAL baseDAL, ILogCatcher logCatcher)
         {
             _validatorAdd = validatorAdd;
             _validatorUpdate = validatorUpdate;
             _baseDAL = baseDAL;
+            _logCatcher = logCatcher;
         }
+
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index(int page = 1, int itemPerPage = 100)
         {
             //var data = await _baseDAL.ListAll<ExpertInfoListPageDTO>(null, null);
@@ -48,22 +57,32 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. ExpertInfo/Index Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> AddExpertInfo()
         {
             try
             {
-                ResponseModel<ExpertInfoAddDTO> response = await _baseDAL.GetByFilterAsync<ExpertInfoAddDTO>("ExpertInfo/AddExpertInfo", HttpContext.Session.GetString("userToken"));
+                ResponseModel<ExpertInfoAddPageDTO> response = await _baseDAL.GetByFilterAsync<ExpertInfoAddPageDTO>("ExpertInfo/AddExpertInfo", HttpContext.Session.GetString("userToken"));
 
                 if (response.IsSuccess)
                 {
@@ -73,31 +92,55 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                         0,
                         0,
                         null,
-                        1,
+                        true,
                         "",
                         DateTime.Now,
                         DateTime.Now,
                         Guid.Empty,
-                        Guid.Empty);
+                        Guid.Empty,
+                        response.Data.AddressInfoList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.CreatedByList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.ModifiedByList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList());
 
 
                     return View(viewData);
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. ExpertInfo/AddExpertInfo [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddExpertInfo(ExpertInfoAddViewModels viewData)
         {
             //Convert to send dto (Possibly inefficient to convert before validation)
@@ -125,34 +168,33 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
+                        return RedirectToAction("Index");
 
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. ExpertInfo/AddExpertInfo [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                        //Just so that the program won't break if there is a problem with logging
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> UpdateExpertInfo(int Id)
         {
             string queryString = "ExpertInfoId=" + Id;
@@ -160,7 +202,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             //BaseApi
             try
             {
-                ResponseModel<ExpertInfoUpdateDTO> response = await _baseDAL.GetByFilterAsync<ExpertInfoUpdateDTO>("ExpertInfo/UpdateExpertInfo", HttpContext.Session.GetString("userToken"), queryString);
+                ResponseModel<ExpertInfoUpdatePageDTO> response = await _baseDAL.GetByFilterAsync<ExpertInfoUpdatePageDTO>("ExpertInfo/UpdateExpertInfo", HttpContext.Session.GetString("userToken"), queryString);
 
                 if (response.IsSuccess)
                 {
@@ -176,27 +218,51 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                         response.Data.CreatedDate,
                         response.Data.ModifiedDate,
                         response.Data.CreatedBy,
-                        response.Data.ModifiedBy);
+                        response.Data.ModifiedBy,
+                        response.Data.AddressInfoList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.CreatedByList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.ModifiedByList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList());
 
                     return View(viewData);
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. ExpertInfo/UpdateExpertInfo [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateExpertInfo(ExpertInfoUpdateViewModels viewData)
         {
-            ExpertInfoUpdateDTO updateDTO = new ExpertInfoUpdateDTO(viewData.Id ,viewData.CentreName, viewData.AddressInfoId, viewData.Longitude, viewData.Latitude, viewData.Picture, viewData.IsActive, viewData.ExpertAddress, viewData.CreatedDate, viewData.ModifiedDate, new Guid(HttpContext.Session.GetString("currentUserId")), viewData.ModifiedBy);
+            ExpertInfoUpdateDTO updateDTO = new ExpertInfoUpdateDTO(viewData.Id, viewData.CentreName, viewData.AddressInfoId, viewData.Longitude, viewData.Latitude, viewData.Picture, viewData.IsActive, viewData.ExpertAddress, viewData.CreatedDate, viewData.ModifiedDate, new Guid(HttpContext.Session.GetString("currentUserId")), viewData.ModifiedBy);
 
             //Validate
             ValidationResult result = await _validatorUpdate.ValidateAsync(updateDTO);
@@ -220,34 +286,32 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
+                        return RedirectToAction("Index");
 
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. ExpertInfo/UpdateExpertInfo [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> RemoveExpertInfo(int Id)
         {
             string queryString = "ExpertInfoId=" + Id;
@@ -263,11 +327,20 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. ExpertInfo/Delete Kod: " + response.statusCode);
                 }
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }

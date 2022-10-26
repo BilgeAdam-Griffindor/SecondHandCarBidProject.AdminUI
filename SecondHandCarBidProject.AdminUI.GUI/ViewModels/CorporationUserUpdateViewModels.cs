@@ -1,4 +1,6 @@
-﻿namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
 {
     public record CorporationUserUpdateViewModels
         (Guid BaseUserId,
@@ -7,6 +9,10 @@
         DateTime CreatedDate,
         DateTime? ModifiedDate,
         Guid CreatedBy,
-        Guid? ModifiedBy);
+        Guid? ModifiedBy,
+        List<SelectListItem> BaseUserList,
+        List<SelectListItem> CorporationList,
+        List<SelectListItem> CreatedByList,
+        List<SelectListItem> ModifiedByList);
 
 }
