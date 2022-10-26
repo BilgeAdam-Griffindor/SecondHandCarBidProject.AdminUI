@@ -10,17 +10,31 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
     {
         public IActionResult Index()
         {
-            CarImagesListViewModel carImagesList = new CarImagesListViewModel(new List<CarImagesTableRowDTO>());
+            byte[] resim = System.IO.File.ReadAllBytes("C:\\Users\\emre\\source\\repos\\SecondHandCarBidProject.AdminUI\\SecondHandCarBidProject.AdminUI.GUI\\wwwroot\\AdminTemplate\\images\\adminlogo.png");
+            string imreBase64Data = Convert.ToBase64String(resim);
+            string imgDataURL = string.Format("data:image/png;base64,{0}", imreBase64Data);
+            CarImagesTableRowDTO carImagesTableRowDTO = new CarImagesTableRowDTO(Guid.NewGuid(), "Toyota", "Avensis", resim);
+            CarImagesListViewModel carImagesList = new CarImagesListViewModel(new List<CarImagesTableRowDTO>() { carImagesTableRowDTO });
             return View(carImagesList);
         }
         [HttpGet]
         public IActionResult CarImagesAdd()
         {
-            CarImagesAddViewModel carImagesAdd = new CarImagesAddViewModel(Guid.Empty, null, new List<SelectListItem>());
+            var carList = new List<SelectListItem>() { new SelectListItem() {
+                Text="Mercedes",
+                Value="11"
+            },new SelectListItem() {
+                Text="BMW",
+                Value="12"
+            },new SelectListItem() {
+                Text="Toyota",
+                Value="13"
+            } };
+            CarImagesAddViewModel carImagesAdd = new CarImagesAddViewModel(carList);
+
             return View(carImagesAdd);
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult CarImagesAdd(CarImagesAddViewModel data)
         {
             return View();

@@ -30,7 +30,12 @@
                     <tr>
                         <td>@item.BrandName</td>
                         <td>@item.ModelName</td>
-                        <td>@item.CarImage[0]</td>
+                        @{
+                            string imreBase64Data = Convert.ToBase64String(item.CarImage);
+                            string imgDataURL = string.Format("data:image/png;base64,{0}", imreBase64Data);
+                                <td><img src="@imgDataURL" style="object-fit:cover;width:100px"/></td>
+                        }
+                       
                         <td> <a asp-action="CarImagesUpdate" class=" m-2 p-2 button-gnc"><i class="fas fa-edit"></i>&nbsp;GÜNCELLE</a></td>
                         <td> <a asp-action="Delete" class=" m-2 p-2 button-delete"><i class="far fa-trash-alt"></i>&nbsp;SİL</a></td>
                     </tr>
