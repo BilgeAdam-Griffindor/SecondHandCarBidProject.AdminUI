@@ -1,17 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using SecondHandCarBidProject.AdminUI.DTO;
-using SecondHandCarBidProject.AdminUI.DTO.Validation;
 using SecondHandCarBidProject.ApiService.ApServicesInterfaces;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.ApiService.ApiServices
 {
@@ -26,14 +19,12 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
         {
             var body = new StringContent(JsonConvert.SerializeObject(postData));
             body.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-            var response = await _client.PostAsync(loginUrl, body);
-
+            var content = new StringContent(JsonConvert.SerializeObject(postData), Encoding.UTF8, "application/json");
+            var response = _client.PostAsync(loginUrl, content).Result;
             if (!response.IsSuccessStatusCode)
             {
                 return null;
             }
-
             return JsonConvert.DeserializeObject<ResponseModel<TResponse>>(await response.Content.ReadAsStringAsync());
         }
 
@@ -44,7 +35,7 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             if (String.IsNullOrEmpty(token))
             {
                 response.IsSuccess = false;
-                response.statusCode = StatusCode.Unauthorized;
+                //response.statusCode = StatusCode.Unauthorized;
             }
             else
             {
@@ -61,7 +52,7 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             if (String.IsNullOrEmpty(token))
             {
                 response.IsSuccess = false;
-                response.statusCode = StatusCode.Unauthorized;
+                //response.statusCode = StatusCode.Unauthorized;
             }
             else
             {
@@ -83,7 +74,7 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             if (String.IsNullOrEmpty(token))
             {
                 response.IsSuccess = false;
-                response.statusCode = StatusCode.Unauthorized;
+                //response.statusCode = StatusCode.Unauthorized;
                 return response;
             }
             else
@@ -98,14 +89,14 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             }
         }
 
-        public async Task<ResponseModel<TResponse>> SaveAsync<TData,TResponse>(TData data, string route, string token)
+        public async Task<ResponseModel<TResponse>> SaveAsync<TData, TResponse>(TData data, string route, string token)
         {
             ResponseModel<TResponse> response = new ResponseModel<TResponse>();
 
             if (String.IsNullOrEmpty(token))
             {
                 response.IsSuccess = false;
-                response.statusCode = StatusCode.Unauthorized;
+                //response.statusCode = StatusCode.Unauthorized;
                 return response;
             }
             else
@@ -115,7 +106,7 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
                 if (!_response.IsSuccessStatusCode)
                 {
                     response.IsSuccess = false;
-                    response.statusCode = (StatusCode)_response.StatusCode;
+                    //response.statusCode = (StatusCode)_response.StatusCode;
                     return response;
                 }
                 response = await _response.Content.ReadFromJsonAsync<ResponseModel<TResponse>>();
@@ -129,7 +120,7 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             if (String.IsNullOrEmpty(token))
             {
                 responseModel.IsSuccess = false;
-                responseModel.statusCode = StatusCode.Unauthorized;
+                //responseModel.statusCode = StatusCode.Unauthorized;
                 return responseModel;
             }
             else
@@ -150,7 +141,7 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             if (String.IsNullOrEmpty(token))
             {
                 responseModel.IsSuccess = false;
-                responseModel.statusCode = StatusCode.Unauthorized;
+                //responseModel.statusCode = StatusCode.Unauthorized;
                 return responseModel;
             }
             else

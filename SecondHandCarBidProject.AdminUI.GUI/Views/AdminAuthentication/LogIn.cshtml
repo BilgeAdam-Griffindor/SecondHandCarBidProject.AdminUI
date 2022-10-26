@@ -1,6 +1,5 @@
-﻿@*@page*@
 @using SecondHandCarBidProject.AdminUI.DTO.UserDtos
-@model UserLoginAddDTO
+@model TokenUserRequestDTO
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,11 +42,11 @@
 						<img src="~/AdminTemplate/images/adminlogomedium.png" alt="logo icon">
 					</div>
 					<div class="card-title text-uppercase text-center py-3">Giriş Yap</div>
-					<form asp-action="LogIn" method="post">
+					<form asp-action="LogIn" asp-controller="AdminAuthentication" method="post">
 						<div class="form-group">
 							<label for="exampleInputUsername" class="sr-only">Username</label>
 							<div class="position-relative has-icon-right">
-								<input type="text" id="exampleInputUsername" class="form-control input-shadow" asp-for="UserName" placeholder="Kullanıcı Adı Giriniz">
+								<input type="text" id="exampleInputUsername" class="form-control input-shadow" asp-for="LoginUser" placeholder="Kullanıcı Adı Giriniz">
 								<div class="form-control-position">
 									<i class="icon-user"></i>
 								</div>
@@ -56,7 +55,7 @@
 						<div class="form-group">
 							<label for="exampleInputPassword" class="sr-only">Password</label>
 							<div class="position-relative has-icon-right">
-								<input type="password" id="exampleInputPassword" class="form-control input-shadow" asp-for="Password" placeholder="Şifre Giriniz">
+								<input type="password" id="exampleInputPassword" class="form-control input-shadow" asp-for="LoginPassword" placeholder="Şifre Giriniz">
 								<div class="form-control-position">
 									<i class="icon-lock"></i>
 								</div>
@@ -73,7 +72,7 @@
 								<a asp-action="ResetPassword">Şifre Sıfırla</a>
 							</div>
 						</div>
-						<button type="button" class="btn btn-light btn-block">Giriş Yap</button>
+						<button type="submit" class="btn btn-light btn-block">Giriş Yap</button>
 						<div class="text-center mt-3">Sign In With</div>
 
 						<div class="form-row mt-4">
