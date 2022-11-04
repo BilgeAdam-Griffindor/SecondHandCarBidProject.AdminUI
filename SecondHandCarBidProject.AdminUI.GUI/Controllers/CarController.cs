@@ -81,7 +81,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception("Başarısız işlem. Car/Index Kod: " + response.statusCode);
+                    throw new Exception("Başarısız işlem. Car/Index Kod: ");
                 }
 
             }
@@ -169,7 +169,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception("Başarısız işlem. Car/CarDetailInformation [GET] Kod: " + response.statusCode);
+                    throw new Exception("Başarısız işlem. Car/CarDetailInformation [GET] Kod: ");
                 }
 
             }
@@ -226,7 +226,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                     }
                     else
                     {
-                        throw new Exception("Başarısız işlem. Car/CarDetailInformation [POST] Kod: " + response.statusCode);
+                        throw new Exception("Başarısız işlem. Car/CarDetailInformation [POST] Kod: ");
                     }
 
                 }
@@ -343,7 +343,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception("Başarısız işlem. Car/Update [POST] Kod: " + response.statusCode);
+                    throw new Exception("Başarısız işlem. Car/Update [POST] Kod: ");
                 }
 
             }
@@ -402,7 +402,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                     }
                     else
                     {
-                        throw new Exception("Başarısız işlem. Car/Update [POST] Kod: " + response.statusCode);
+                        throw new Exception("Başarısız işlem. Car/Update [POST] Kod: ");
                     }
 
                 }
@@ -439,7 +439,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception("Başarısız işlem. Car/Delete Kod: " + response.statusCode);
+                    throw new Exception("Başarısız işlem. Car/Delete Kod: " );
                 }
 
             }

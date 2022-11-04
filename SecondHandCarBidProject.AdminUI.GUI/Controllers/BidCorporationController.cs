@@ -25,7 +25,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        
         public async Task<IActionResult> Index(int page = 1, int itemPerPage = 100)
         {
             ViewData["page"] = page;
@@ -36,7 +36,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             //BaseApi
             try
             {
-                ResponseModel<BidCorporationListPageDTO> response = await _baseDAL.GetByFilterAsync<BidCorporationListPageDTO>("BidCorporation/List", HttpContext.Session.GetString("userToken"), queryString);
+                ResponseModel<BidCorporationListPageDTO> response = await _baseDAL.GetByFilterAsync<BidCorporationListPageDTO>("BidCorporation/List", "token", queryString);
 
                 if (response.IsSuccess)
                 {
@@ -47,7 +47,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception("Başarısız işlem. BidCorporation/Index Kod: " + response.statusCode);
+                    throw new Exception("Başarısız işlem. BidCorporation/Index Kod: ");
                 }
 
             }
@@ -96,7 +96,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception("Başarısız işlem. BidCorporation/Add [GET] Kod: " + response.statusCode);
+                    throw new Exception("Başarısız işlem. BidCorporation/Add [GET] Kod: ");
                 }
 
             }
@@ -149,7 +149,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                     }
                     else
                     {
-                        throw new Exception("Başarısız işlem. BidCorporation/Add [POST] Kod: " + response.statusCode);
+                        throw new Exception("Başarısız işlem. BidCorporation/Add [POST] Kod: ");
                     }
 
                 }
@@ -188,7 +188,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception("Başarısız işlem. BidCorporation/Delete Kod: " + response.statusCode);
+                    throw new Exception("Başarısız işlem. BidCorporation/Delete Kod: ");
                 }
 
             }

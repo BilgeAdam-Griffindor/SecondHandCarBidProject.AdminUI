@@ -49,7 +49,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception("Başarısız işlem. BidResult/Index Kod: " + response.statusCode);
+                    throw new Exception("Başarısız işlem. BidResult/Index Kod: " );
                 }
 
             }
@@ -93,7 +93,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception("Başarısız işlem. BidResult/Add [GET] Kod: " + response.statusCode);
+                    throw new Exception("Başarısız işlem. BidResult/Add [GET] Kod: " );
                 }
 
             }
@@ -146,7 +146,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                     }
                     else
                     {
-                        throw new Exception("Başarısız işlem. BidResult/Add [POST] Kod: " + response.statusCode);
+                        throw new Exception("Başarısız işlem. BidResult/Add [POST] Kod: " );
                     }
 
                 }
@@ -185,7 +185,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception("Başarısız işlem. BidResult/Update [GET] Kod: " + response.statusCode);
+                    throw new Exception("Başarısız işlem. BidResult/Update [GET] Kod: ");
                 }
 
             }
@@ -238,7 +238,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                     }
                     else
                     {
-                        throw new Exception("Başarısız işlem. BidResult/Update [POST] Kod: " + response.statusCode);
+                        throw new Exception("Başarısız işlem. BidResult/Update [POST] Kod: " );
                     }
 
                 }
@@ -277,7 +277,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception("Başarısız işlem. BidResult/Delete Kod: " + response.statusCode);
+                    throw new Exception("Başarısız işlem. BidResult/Delete Kod: " );
                 }
 
             }

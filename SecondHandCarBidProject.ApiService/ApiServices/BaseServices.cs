@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using SecondHandCarBidProject.AdminUI.DTO;
+using SecondHandCarBidProject.AdminUI.DTO.AuthorizationDtos;
 using SecondHandCarBidProject.AdminUI.DTO.Validation;
 using SecondHandCarBidProject.ApiService.ApServicesInterfaces;
 using System;
@@ -11,6 +12,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.ApiService.ApiServices
@@ -44,7 +46,7 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             if (String.IsNullOrEmpty(token))
             {
                 response.IsSuccess = false;
-                response.statusCode = StatusCode.Unauthorized;
+                //response.statusCode = StatusCode.Unauthorized;
             }
             else
             {
@@ -61,7 +63,7 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             if (String.IsNullOrEmpty(token))
             {
                 response.IsSuccess = false;
-                response.statusCode = StatusCode.Unauthorized;
+                //response.statusCode = StatusCode.Unauthorized;
             }
             else
             {
@@ -77,35 +79,90 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
         {
             if (!string.IsNullOrEmpty(filterQueryString))
                 route += "?" + filterQueryString;
+            ResponseModel<T> response = new ResponseModel<T>();
+
+            if (string.IsNullOrEmpty(token))
+            {
+                response.IsSuccess = false;
+                //response.statusCode = StatusCode.Unauthorized;
+                return response;
+            }
+            else
+            {
+                //_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
+                var _response = await _client.GetAsync(route);
+                if (!_response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+                try
+                {
+                    var rawData =  _response.Content.ReadAsStringAsync().Result;
+                    // var genericClass = typeof(ResponseModel).MakeGenericType(typeof(T));
+                    //var data = typeof< response >;
+                     var newData = JsonConvert.DeserializeObject<ResponseModel<T>>(rawData);
+
+                    return null;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+
+
+            }
+        }
+        public async Task<ResponseModel<T>> GetByFilter<T>(string route, string token, string filterQueryString = "")
+        {
+            if (!string.IsNullOrEmpty(filterQueryString))
+                route += "?" + filterQueryString;
 
             ResponseModel<T> response = new ResponseModel<T>();
 
             if (String.IsNullOrEmpty(token))
             {
                 response.IsSuccess = false;
-                response.statusCode = StatusCode.Unauthorized;
+                //response.statusCode = StatusCode.Unauthorized;
                 return response;
             }
             else
             {
-                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
+                //_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
                 var _response = await _client.GetAsync(route);
                 if (!_response.IsSuccessStatusCode)
                 {
                     return null;
                 }
-                return JsonConvert.DeserializeObject<ResponseModel<T>>(await _response.Content.ReadAsStringAsync());
+
+                try
+                {
+                    var rawData = await _response.Content.ReadAsStringAsync();
+                    
+                    var newData = JsonConvert.DeserializeObject<ResponseModel<T>>(rawData);
+
+
+                    return newData;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+
+
             }
         }
 
-        public async Task<ResponseModel<TResponse>> SaveAsync<TData,TResponse>(TData data, string route, string token)
+
+
+
+        public async Task<ResponseModel<TResponse>> SaveAsync<TData, TResponse>(TData data, string route, string token)
         {
             ResponseModel<TResponse> response = new ResponseModel<TResponse>();
 
             if (String.IsNullOrEmpty(token))
             {
                 response.IsSuccess = false;
-                response.statusCode = StatusCode.Unauthorized;
+               // response.statusCode = StatusCode.Unauthorized;
                 return response;
             }
             else
@@ -115,7 +172,7 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
                 if (!_response.IsSuccessStatusCode)
                 {
                     response.IsSuccess = false;
-                    response.statusCode = (StatusCode)_response.StatusCode;
+                   // response.statusCode = (StatusCode)_response.StatusCode;
                     return response;
                 }
                 response = await _response.Content.ReadFromJsonAsync<ResponseModel<TResponse>>();
@@ -129,7 +186,7 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             if (String.IsNullOrEmpty(token))
             {
                 responseModel.IsSuccess = false;
-                responseModel.statusCode = StatusCode.Unauthorized;
+                //responseModel.statusCode = StatusCode.Unauthorized;
                 return responseModel;
             }
             else
@@ -150,7 +207,7 @@ namespace SecondHandCarBidProject.ApiService.ApiServices
             if (String.IsNullOrEmpty(token))
             {
                 responseModel.IsSuccess = false;
-                responseModel.statusCode = StatusCode.Unauthorized;
+                //responseModel.statusCode = StatusCode.Unauthorized;
                 return responseModel;
             }
             else
