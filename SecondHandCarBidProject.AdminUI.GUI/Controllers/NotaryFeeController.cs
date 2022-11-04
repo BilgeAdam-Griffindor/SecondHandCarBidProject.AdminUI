@@ -1,12 +1,15 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO;
 using SecondHandCarBidProject.AdminUI.DTO.AdditionalFeeDtos;
 using SecondHandCarBidProject.AdminUI.DTO.CorporationDtos;
 using SecondHandCarBidProject.AdminUI.DTO.ExpertDtos;
 using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
+using SercondHandCarBidProject.Logging.Abstract;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
@@ -15,14 +18,19 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         private IValidator<NotaryFeeAddDTO> _validatorAdd;
         private IValidator<NotaryFeeUpdateDTO> _validatorUpdate;
         private IBaseDAL _baseDAL;
+        ILogCatcher _logCatcher;
 
         public NotaryFeeController(IValidator<NotaryFeeAddDTO> validatorAdd,
-            IValidator<NotaryFeeUpdateDTO> validatorUpdate, IBaseDAL baseDAL)
+            IValidator<NotaryFeeUpdateDTO> validatorUpdate, IBaseDAL baseDAL, ILogCatcher logCatcher)
         {
             _validatorAdd = validatorAdd;
             _validatorUpdate = validatorUpdate;
             _baseDAL = baseDAL;
+            _logCatcher = logCatcher;
         }
+
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index(int page = 1, int itemPerPage = 100)
         {
             //var data = await _baseDAL.ListAll<NotaryFeeListPageDTO>(null, null);
@@ -49,21 +57,32 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. NotaryFee/Index Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
+
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> AddNotaryFee()
         {
             try
             {
-                ResponseModel<NotaryFeeAddDTO> response = await _baseDAL.GetByFilterAsync<NotaryFeeAddDTO>("CorporationType/AddCorporation", HttpContext.Session.GetString("userToken"));
+                ResponseModel<NotaryFeeAddPageDTO> response = await _baseDAL.GetByFilterAsync<NotaryFeeAddPageDTO>("NotaryFee/AddNotaryFee", HttpContext.Session.GetString("userToken"));
 
                 if (response.IsSuccess)
                 {
@@ -71,32 +90,53 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                         0,
                         DateTime.Now,
                         DateTime.Now,
-                        1,
+                        true,
                         DateTime.Now,
                         DateTime.Now,
                         Guid.Empty,
-                        Guid.Empty);
+                        Guid.Empty,
+                        response.Data.CreatedByList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.ModifiedByList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList());
 
 
                     return View(viewData);
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. NotaryFee/AddNotaryFee [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
 
         [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddNotaryFee(NotaryFeeAddViewModels viewData)
         {
             //Convert to send dto (Possibly inefficient to convert before validation)
-            NotaryFeeAddDTO addDTO = new NotaryFeeAddDTO(viewData.FeeAmount, viewData.StartDate, viewData.EndDate, viewData.CreatedDate, viewData.ModifiedDate, new Guid(HttpContext.Session.GetString("currentUserId")), viewData.ModifiedBy);
+            NotaryFeeAddDTO addDTO = new NotaryFeeAddDTO(viewData.FeeAmount, viewData.StartDate, viewData.EndDate, viewData.CreatedDate, new Guid(HttpContext.Session.GetString("currentUserId")));
 
             //Validate
             ValidationResult result = await _validatorAdd.ValidateAsync(addDTO);
@@ -116,38 +156,37 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 //BaseApi
                 try
                 {
-                    ResponseModel<bool> response = await _baseDAL.SaveAsync<NotaryFeeAddDTO, bool>(addDTO, "CorporationType/AddCorporationType", HttpContext.Session.GetString("userToken"));
+                    ResponseModel<bool> response = await _baseDAL.SaveAsync<NotaryFeeAddDTO, bool>(addDTO, "NotaryFee/AddNotaryFee", HttpContext.Session.GetString("userToken"));
 
                     if (response.Data)
                     {
+                        return RedirectToAction("Index");
 
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. NotaryFee/AddNotaryFee [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                        //Just so that the program won't break if there is a problem with logging
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> UpdateNotaryFee(Guid Id)
         {
             string queryString = "CorporationTypeId=" + Id;
@@ -155,7 +194,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             //BaseApi
             try
             {
-                ResponseModel<NotaryFeeUpdateDTO> response = await _baseDAL.GetByFilterAsync<NotaryFeeUpdateDTO>("NotaryFee/UpdateNotaryFee", HttpContext.Session.GetString("userToken"), queryString);
+                ResponseModel<NotaryFeeUpdatePageDTO> response = await _baseDAL.GetByFilterAsync<NotaryFeeUpdatePageDTO>("NotaryFee/UpdateNotaryFee", HttpContext.Session.GetString("userToken"), queryString);
 
                 if (response.IsSuccess)
                 {
@@ -164,26 +203,49 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                             response.Data.FeeAmount,
                             response.Data.StartDate,
                             response.Data.EndDate,
-                            response.Data.IsActive,                         
+                            response.Data.IsActive,
                             response.Data.CreatedDate,
                             response.Data.ModifiedDate,
                             response.Data.CreatedBy,
-                            response.Data.ModifiedBy);
+                            response.Data.ModifiedBy,
+                             response.Data.CreatedByList.Select(x => new SelectListItem
+                             {
+                                 Value = x.Id.ToString(),
+                                 Text = x.Name,
+                             }).ToList(),
+                            response.Data.ModifiedByList.Select(x => new SelectListItem
+                            {
+                                Value = x.Id.ToString(),
+                                Text = x.Name,
+                            }).ToList()
+                            );
 
                     return View(viewData);
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. NotaryFee/UpdateNotaryFee [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
+
         [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateNotaryFee(NotaryFeeUpdateViewModels viewData)
         {
             NotaryFeeUpdateDTO updateDTO = new NotaryFeeUpdateDTO(viewData.Id, viewData.FeeAmount, viewData.StartDate, viewData.EndDate, viewData.IsActive, viewData.CreatedDate, viewData.ModifiedDate, new Guid(HttpContext.Session.GetString("currentUserId")), viewData.ModifiedBy);
@@ -210,34 +272,31 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
-
+                        return RedirectToAction("Index");
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. NotaryFee/UpdateNotaryFee [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> RemoveNotaryFee(Guid Id)
         {
             string queryString = "NotaryFeeId=" + Id;
@@ -253,11 +312,20 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. NotaryFee/Delete Kod: " + response.statusCode);
                 }
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }

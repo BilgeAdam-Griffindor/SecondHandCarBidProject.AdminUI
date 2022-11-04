@@ -17,6 +17,7 @@ namespace SecondHandCarBidProject.AdminUI.Validator.Corporation
             RuleFor(x => x.PhoneNumber).NotEmpty().WithMessage("Telefon Numarası alanı boş geçilemez...");
             RuleFor(x => x.CorporationTypeId).NotEmpty();
             RuleFor(x => x.CorporatePackageTypeId).NotEmpty();
+            RuleFor(x => x.CreatedBy).NotEmpty();
         }
     }
 }

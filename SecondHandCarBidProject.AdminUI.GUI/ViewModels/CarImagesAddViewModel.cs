@@ -3,9 +3,9 @@
 namespace SecondHandCarBidProject.AdminUI.GUI.ViewModels
 {
     public record CarImagesAddViewModel
- (
-     Guid CarId,
-     byte[] CarImage,
-     List<SelectListItem> CarList
- );
+    (
+         List<SelectListItem> CarList,
+         string CarImage = "",
+         int CarId = 1
+    );
 }

@@ -2,7 +2,6 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
-using SecondHandCarBidProject.AdminUI.DTO;
 using SecondHandCarBidProject.AdminUI.DTO.UserDtos;
 using SecondHandCarBidProject.ApiService.Extensions;
 
@@ -10,9 +9,9 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
     public class AdminAuthenticationController : Controller
     {
-        private IValidator<UserLoginAddDTO> _validatorAdd;
+        private IValidator<TokenUserRequestDTO> _validatorAdd;
         private IBaseDAL _baseDAL;
-        public AdminAuthenticationController(IValidator<UserLoginAddDTO> validator, IBaseDAL baseDAL)
+        public AdminAuthenticationController(IValidator<TokenUserRequestDTO> validator, IBaseDAL baseDAL)
         {
             _validatorAdd = validator;
             _baseDAL = baseDAL;
@@ -24,11 +23,11 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [HttpGet]
         public IActionResult LogIn()
         {
-            UserLoginAddDTO userLogin = new UserLoginAddDTO("", "");
+            TokenUserRequestDTO userLogin = new TokenUserRequestDTO("", "");
             return View(userLogin);
         }
         [HttpPost]
-        public async Task<IActionResult> LogIn(UserLoginAddDTO user)
+        public async Task<IActionResult> LogIn(TokenUserRequestDTO user)
         {
             ValidationResult result = await _validatorAdd.ValidateAsync(user);
             if (!result.IsValid)
@@ -44,10 +43,19 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             }
             else
             {
-                var response = _baseDAL.LoginAsync<UserResponseDTO, UserLoginAddDTO>("Login/GetLogin", user);
-                HttpContext.Session.Set<ExampleDTO>("user", response.Result.Data.User);
-                HttpContext.Session.Set<TokenDTO>("token", response.Result.Data.Token);
-                return RedirectToAction();
+                var response = await _baseDAL.LoginAsync<UserResponseDTO, TokenUserRequestDTO>("Login/LoginUser", user);
+                if (response.Errors == null)
+                {
+                    HttpContext.Session.Set<BaseUserDTO>("user", response.Data.User);
+                    HttpContext.Session.Set<string>("accessToken", response.Data.Token.AccessToken);
+                    HttpContext.Session.Set<string>("RefreshToken", response.Data.Token.RefreshToken);
+                    return RedirectToAction("Index", "Base");//todo:should go dashboard
+                }
+                else
+                {
+                    return View(user);
+                }
+
             }
 
         }

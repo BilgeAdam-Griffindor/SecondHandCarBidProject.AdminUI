@@ -285,7 +285,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         [Authorize]
         public async Task<IActionResult> Delete(Guid id)
         {
-            string queryString = "bidOfferId=" + id;
+            string queryString = "bidOfferId=" + id + "&modifiedBy=" + HttpContext.Session.GetString("currentUserId");
 
             //BaseApi
             try

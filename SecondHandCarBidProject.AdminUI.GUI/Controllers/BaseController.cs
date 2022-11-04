@@ -7,6 +7,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
     {
         public IActionResult Index()
         {
+
             return View();
         }
 

@@ -1,18 +1,10 @@
-﻿using Newtonsoft.Json;
-using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
+﻿using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO;
-using SecondHandCarBidProject.AdminUI.DTO.Validation;
 using SecondHandCarBidProject.ApiService.ApiServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SecondHandCarBidProject.AdminUI.DAL.Concrete
 {
-    public class BaseDAL:IBaseDAL
+    public class BaseDAL : IBaseDAL
     {
         BaseServices baseServices;
         public BaseDAL(BaseServices _baseServices)
@@ -20,12 +12,11 @@ namespace SecondHandCarBidProject.AdminUI.DAL.Concrete
             baseServices = _baseServices;
         }
 
-        public async Task<ResponseModel<TResponse>> LoginAsync<TResponse, TData>(string loginUrl,TData postData)
+        public async Task<ResponseModel<TResponse>> LoginAsync<TResponse, TData>(string loginUrl, TData postData)
         {
-            var body = new StringContent(JsonConvert.SerializeObject(postData));
-            body.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-            var response = await baseServices.LoginAsync<TResponse, TData>(loginUrl,postData);
+            //var body = new StringContent(JsonConvert.SerializeObject(postData));
+            //body.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var response = await baseServices.LoginAsync<TResponse, TData>(loginUrl, postData);
             return response;
         }
         public async Task<ResponseModel<List<T>>> ListAll<T>(string route, string token)

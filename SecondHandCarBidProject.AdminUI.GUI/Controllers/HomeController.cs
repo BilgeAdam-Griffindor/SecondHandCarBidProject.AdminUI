@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
@@ -8,5 +9,16 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         {
             return View();
         }
+
+        //public IActionResult Error()
+        //{
+        //    var exceptionHandlerPathFeature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+        //    return View();
+        //}
+
+        //public IActionResult Hata()
+        //{
+        //    throw new System.Exception("Sistemsel hata oluştu");
+        //}
     }
 }

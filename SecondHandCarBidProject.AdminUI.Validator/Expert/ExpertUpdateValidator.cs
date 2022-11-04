@@ -12,8 +12,9 @@ namespace SecondHandCarBidProject.AdminUI.Validator.Expert
     {
         public ExpertUpdateValidator()
         {
-            RuleFor(x => x.Id).NotEmpty(); 
-            RuleFor(x => x.AddressInfoId).NotEmpty(); 
+            RuleFor(x => x.AddressInfoId).NotEmpty().WithMessage("Bu alan boş geçilemez...");
+            RuleFor(x => x.CreatedBy).NotEmpty(); 
+            RuleFor(x => x.ModifiedBy).NotEmpty();
         }
     }
 }

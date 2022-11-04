@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DTO;
 using SecondHandCarBidProject.AdminUI.DTO.AdditionalFeeDtos;
@@ -8,6 +10,7 @@ using SecondHandCarBidProject.AdminUI.DTO.CorporationDtos;
 using SecondHandCarBidProject.AdminUI.DTO.ExpertDtos;
 using SecondHandCarBidProject.AdminUI.DTO.NotificationDtos;
 using SecondHandCarBidProject.AdminUI.GUI.ViewModels;
+using SercondHandCarBidProject.Logging.Abstract;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
@@ -16,14 +19,19 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         private IValidator<NotificationMessageUserAddDTO> _validatorAdd;
         private IValidator<NotificationMessageUserUpdateDTO> _validatorUpdate;
         private IBaseDAL _baseDAL;
+        ILogCatcher _logCatcher;
 
         public NotificationMessageUserController(IValidator<NotificationMessageUserAddDTO> validatorAdd,
-            IValidator<NotificationMessageUserUpdateDTO> validatorUpdate, IBaseDAL baseDAL)
+            IValidator<NotificationMessageUserUpdateDTO> validatorUpdate, IBaseDAL baseDAL, ILogCatcher logCatcher)
         {
             _validatorAdd = validatorAdd;
             _validatorUpdate = validatorUpdate;
             _baseDAL = baseDAL;
+            _logCatcher = logCatcher;
         }
+
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index(int page = 1, int itemPerPage = 100)
         {
             //var data = await _baseDAL.ListAll<NotificationMessageUserListPageDTO>(null, null);
@@ -50,47 +58,84 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. NotificationMessageUser/Index Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
+
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> AddNotificationMessageUser()
         {
             try
             {
-                ResponseModel<NotificationMessageUserAddDTO> response = await _baseDAL.GetByFilterAsync<NotificationMessageUserAddDTO>("NotificationMessageUser/AddNotificationMessageUser", HttpContext.Session.GetString("userToken"));
+                ResponseModel<NotificationMessageUserAddPageDTO> response = await _baseDAL.GetByFilterAsync<NotificationMessageUserAddPageDTO>("NotificationMessageUser/AddNotificationMessageUser", HttpContext.Session.GetString("userToken"));
 
                 if (response.IsSuccess)
                 {
                     NotificationMessageUserAddViewModels viewData = new NotificationMessageUserAddViewModels(
                         0,
                         Guid.Empty,
-                        1,
+                        true,
                         DateTime.Now,
-                        Guid.Empty);
+                        Guid.Empty,
+                         response.Data.CreatedByList.Select(x => new SelectListItem
+                         {
+                             Value = x.Id.ToString(),
+                             Text = x.Name
+                         }).ToList(),
+                        response.Data.NotificationMessageList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.SendToBaseUserList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList());
 
 
                     return View(viewData);
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. NotificationMessageUser/AddNotificationMessageUser [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
 
         [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddNotificationMessageUser(NotificationMessageUserAddViewModels viewData)
         {//Convert to send dto (Possibly inefficient to convert before validation)
             NotificationMessageUserAddDTO addDTO = new NotificationMessageUserAddDTO(viewData.NotificationMessageId, viewData.SendToBaseUserId, viewData.CreatedDate, new Guid(HttpContext.Session.GetString("currentUserId")));
@@ -117,34 +162,33 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
+                        return RedirectToAction("Index");
 
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. NotificationMessageUser/AddNotificationMessageUser [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                        //Just so that the program won't break if there is a problem with logging
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> UpdateNotificationMessageUser(Guid Id)
         {
             string queryString = "NotificationMessageId=" + Id;
@@ -152,7 +196,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
             //BaseApi
             try
             {
-                ResponseModel<NotificationMessageUserUpdateDTO> response = await _baseDAL.GetByFilterAsync<NotificationMessageUserUpdateDTO>("NotificationMessageUser/UpdateNotificationMessageUser", HttpContext.Session.GetString("userToken"), queryString);
+                ResponseModel<NotificationMessageUserUpdatePageDTO> response = await _baseDAL.GetByFilterAsync<NotificationMessageUserUpdatePageDTO>("NotificationMessageUser/UpdateNotificationMessageUser", HttpContext.Session.GetString("userToken"), queryString);
 
                 if (response.IsSuccess)
                 {
@@ -162,22 +206,49 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                         response.Data.SendToBaseUserId,
                         response.Data.IsActive,
                         response.Data.CreatedDate,
-                        response.Data.CreatedBy);
+                        response.Data.CreatedBy,
+                         response.Data.CreatedByList.Select(x => new SelectListItem
+                         {
+                             Value = x.Id.ToString(),
+                             Text = x.Name
+                         }).ToList(),
+                        response.Data.NotificationMessageList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList(),
+                        response.Data.SendToBaseUserList.Select(x => new SelectListItem
+                        {
+                            Value = x.Id.ToString(),
+                            Text = x.Name
+                        }).ToList());
 
                     return View(viewData);
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. NotificationMessageUser/UpdateNotificationMessageUser [GET] Kod: " + response.statusCode);
                 }
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
+
         [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateNotificationMessageUser(NotificationMessageUserUpdateViewModels viewData)
         {
             NotificationMessageUserUpdateDTO updateDTO = new NotificationMessageUserUpdateDTO(viewData.Id, viewData.NotificationMessageId, viewData.SendToBaseUserId, viewData.IsActive, viewData.CreatedDate, new Guid(HttpContext.Session.GetString("currentUserId")));
@@ -204,34 +275,33 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 
                     if (response.Data)
                     {
+                        return RedirectToAction("Index");
 
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Başarısız işlem. NotificationMessageUser/UpdateNotificationMessageUser [POST] Kod: " + response.statusCode);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        await _logCatcher.WriteLogWarning(ex);
+                    }
+                    catch
+                    {
+                    }
+
                     return RedirectToAction("Index", "Error");
                 }
-
-                //TODO Logging (May not necessary if there is middleware)
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    //return RedirectToAction("Index", "Error");
-                }
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpGet]
+        [Authorize]
+
         public async Task<IActionResult> RemoveNotificationMessageUser(Guid Id)
         {
 
@@ -248,11 +318,20 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception("Başarısız işlem. NotificationMessageUser/Delete Kod: " + response.statusCode);
                 }
             }
             catch (Exception ex)
             {
+                try
+                {
+                    await _logCatcher.WriteLogWarning(ex);
+                }
+                catch
+                {
+                    //Just so that the program won't break if there is a problem with logging
+                }
+
                 return RedirectToAction("Index", "Error");
             }
         }
