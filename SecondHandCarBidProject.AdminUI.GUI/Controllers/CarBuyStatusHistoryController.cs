@@ -51,7 +51,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception("Başarısız işlem. CarBuyStatusHistory/Index Kod: " + response.statusCode);
+                    throw new Exception("Başarısız işlem. CarBuyStatusHistory/Index Kod: ");
                 }
 
             }
@@ -102,7 +102,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception("Başarısız işlem. CarBuyStatusHistory/Add [GET] Kod: " + response.statusCode);
+                    throw new Exception("Başarısız işlem. CarBuyStatusHistory/Add [GET] Kod: ");
                 }
 
             }
@@ -155,7 +155,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                     }
                     else
                     {
-                        throw new Exception("Başarısız işlem. CarBuyStatusHistory/Add [POST] Kod: " + response.statusCode);
+                        throw new Exception("Başarısız işlem. CarBuyStatusHistory/Add [POST] Kod: ");
                     }
 
                 }
@@ -192,7 +192,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception("Başarısız işlem. CarBuyStatusHistory/Delete Kod: " + response.statusCode);
+                    throw new Exception("Başarısız işlem. CarBuyStatusHistory/Delete Kod: ");
                 }
 
             }

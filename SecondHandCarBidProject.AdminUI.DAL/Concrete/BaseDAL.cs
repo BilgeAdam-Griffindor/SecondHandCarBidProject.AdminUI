@@ -36,6 +36,11 @@ namespace SecondHandCarBidProject.AdminUI.DAL.Concrete
             var response = await baseServices.GetByFilterAsync<T>(route, token, queryString);
             return response;
         }
+        public async Task<ResponseModel<T>> GetByFilter<T>(string route, string token, string queryString = "")
+        {
+            var response = await baseServices.GetByFilter<T>(route, token, queryString);
+            return response;
+        }
 
         public async Task<ResponseModel<TResponse>> SaveAsync<TData, TResponse>(TData data, string route, string token)
         {
@@ -55,5 +60,6 @@ namespace SecondHandCarBidProject.AdminUI.DAL.Concrete
             return response;
         }
 
+      
     }
 }

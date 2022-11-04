@@ -6,6 +6,7 @@ using SecondHandCarBidProject.AdminUI.DAL.Interfaces;
 using SecondHandCarBidProject.AdminUI.DAL.Concrete;
 using SecondHandCarBidProject.AdminUI.DTO.AuthorizationDtos;
 using SecondHandCarBidProject.ApiService.ApServicesInterfaces;
+using SecondHandCarBidProject.AdminUI.GUI.ViewModels.PageAuthType;
 
 namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
 {
@@ -22,14 +23,40 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> Index()
+        
+        public async Task<IActionResult> Index(string SearchPageAuth, int page = 1, int itemPerPage = 10)
         {
-            var data = await _baseDAL.ListAll<PageAuthTypeDto>(null, null);
-            if (data.IsSuccess)
+            ViewData["SearchPageAuth"] = SearchPageAuth;
+            ViewData["page"] = page;
+            ViewData["itemPerPage"] = itemPerPage;
+            string queryString = "page=" + page + "&itemPerPage=" + itemPerPage;
+            try
             {
-                return View(data.Data);
+                var data = await _baseDAL.GetByFilter<PageAuthTypeClassListDto>("PageAuthType/List", "asdasdad", queryString);
+                if (data.IsSuccess)
+                {
+                    //PageAuthTypeClassListDto pageAuthTypeViewModel = new PageAuthTypeClassListDto();
+                    //pageAuthTypeViewModel.pageAuthTypeDtos = data.Data.;
+                    //pageAuthTypeViewModel.maxPages = data.Data.maxPages;
+
+                    return View(data.Data);
+
+
+                }
+                else
+                {
+                    throw new Exception("Başarısız işlem. Car/Index Kod: ");
+                }
             }
-            return View();
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            
+            
+           
 
         }
         [HttpGet]

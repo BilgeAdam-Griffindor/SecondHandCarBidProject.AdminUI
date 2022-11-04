@@ -51,7 +51,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception("Başarısız işlem. CarBrand/Index Kod: " + response.statusCode);
+                    throw new Exception("Başarısız işlem. CarBrand/Index Kod: " );
                 }
 
             }
@@ -111,7 +111,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                     }
                     else
                     {
-                        throw new Exception("Başarısız işlem. CarBrand/Add [POST] Kod: " + response.statusCode);
+                        throw new Exception("Başarısız işlem. CarBrand/Add [POST] Kod: ");
                     }
 
                 }
@@ -152,7 +152,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception("Başarısız işlem. CarBrand/Update [GET] Kod: " + response.statusCode);
+                    throw new Exception("Başarısız işlem. CarBrand/Update [GET] Kod: ");
                 }
             }
             catch (Exception ex)
@@ -204,7 +204,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                     }
                     else
                     {
-                        throw new Exception("Başarısız işlem. CarBrand/Update [POST] Kod: " + response.statusCode);
+                        throw new Exception("Başarısız işlem. CarBrand/Update [POST] Kod: " );
                     }
 
                 }
@@ -243,7 +243,7 @@ namespace SecondHandCarBidProject.AdminUI.GUI.Controllers
                 }
                 else
                 {
-                    throw new Exception("Başarısız işlem. CarBrand/Delete Kod: " + response.statusCode);
+                    throw new Exception("Başarısız işlem. CarBrand/Delete Kod: " );
                 }
 
             }
